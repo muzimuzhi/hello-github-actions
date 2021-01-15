@@ -25,6 +25,7 @@ jobs:
             ec
             latex
             latex-bin
+            metafont
             psnfss
             texlive-scripts
             texloganalyser
