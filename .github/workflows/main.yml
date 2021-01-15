@@ -21,7 +21,7 @@ jobs:
         uses: pgf-tikz/actions/install-tl@master
         with:
           packages:
-            blacklettert1
+            cm-super
             ec
             latex
             latex-bin
