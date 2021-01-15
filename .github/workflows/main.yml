@@ -21,6 +21,7 @@ jobs:
         uses: pgf-tikz/actions/install-tl@master
         with:
           packages:
+            ec
             latex
             latex-bin
             texloganalyser
