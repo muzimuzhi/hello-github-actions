@@ -26,7 +26,8 @@ jobs:
       - name: Compile TeX file
         run:
           cd tex
-          for file in `ls test-*.tex`; do
+          for file in test-*.tex
+          do
             echo Compile $file
             pdflatex $file > /dev/null
             texloganalyser -nhv ${file/.tex/.log}
