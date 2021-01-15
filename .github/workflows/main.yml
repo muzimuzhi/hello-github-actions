@@ -1,12 +1,33 @@
-name: A workflow for my Hello World file
+name: Learn GitHub Actions
 on: push
 
 jobs:
   build:
-    name: Hello world action
+    name: TeX log analyser
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: ./action-a
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
         with:
-          MY_NAME: "Mona"
+          path: |
+            /tmp/texlive
+            /tmp/tlpkg
+            ~/.texlive
+          key: texlive
+
+      - name: Setup TeX Live environment
+        uses: pgf-tikz/actions/install-tl@master
+        with:
+          packages:
+            texloganalyser
+
+      - name: Compile TeX file
+        run:
+          cd tex
+          for file in `ls test-*.tex`; do
+            echo Compile $file
+            pdflatex $file > /dev/null
+            texloganalyser -nhv ${file/.tex/.log}
+          done
