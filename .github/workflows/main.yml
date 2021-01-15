@@ -21,6 +21,8 @@ jobs:
         uses: pgf-tikz/actions/install-tl@master
         with:
           packages:
+            latex
+            latex-bin
             texloganalyser
 
       - name: Compile TeX file
