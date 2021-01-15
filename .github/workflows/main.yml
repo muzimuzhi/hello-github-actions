@@ -24,7 +24,7 @@ jobs:
             texloganalyser
 
       - name: Compile TeX file
-        run:
+        run: |
           cd tex
           for file in test-*.tex
           do
