@@ -1,0 +1,14 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+\NewDocumentEnvironment{pqr}{s}{begindef}{enddef}
+\def\printDef#1{\par\expandafter\meaning\csname#1\endcsname||}
+
+\ttfamily
+\printDef{pqr}
+\printDef{environment pqr code}
+
+\printDef{endpqr}
+\printDef{environment pqr end aux }
+\end{document}
