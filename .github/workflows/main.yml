@@ -8,7 +8,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - run: |
+      - name: Fetch tags
+        run: |
+          git fetch --unshallow --tags --force
+      
+      - name: Show tags
+        run: |
           echo "lightweight tags"
           git for-each-ref refs/tags | grep commit
           echo "annotated tags"
