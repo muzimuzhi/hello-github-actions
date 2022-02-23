@@ -8,7 +8,7 @@ jobs:
     - run: echo hello > job-a.txt
     - uses: actions/upload-artifact@v2
       with:
-        name: job-a
+        # name: job-a
         path: job-a.txt
   job-b:
     runs-on: ubuntu-latest
@@ -16,7 +16,7 @@ jobs:
     - run: echo hello > job-b.txt
     - uses: actions/upload-artifact@v2
       with:
-        name: job-b
+        # name: job-b
         path: job-b.txt
   release:
     runs-on: ubuntu-latest
