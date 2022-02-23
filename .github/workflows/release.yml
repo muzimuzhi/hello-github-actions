@@ -26,7 +26,7 @@ jobs:
 
     - name: Display structure of downloaded files
       run: |
-        FILE_LIST=$(find . -depth 2)
+        FILE_LIST=$(find . -type f)
         echo "file_list<<EOF" >> $GITHUB_ENV
         echo "$FILE_LIST" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
