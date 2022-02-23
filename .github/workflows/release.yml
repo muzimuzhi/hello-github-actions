@@ -1,0 +1,26 @@
+name: Batch Release
+on: push
+
+jobs:
+  job-a:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo hello > job-a.txt
+    - uses: actions/upload-artifact@v2
+      with:
+        name: job-a
+        path: job-a.txt
+  job-b:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo hello > job-b.txt
+    - uses: actions/upload-artifact@v2
+      with:
+        name: job-b
+        path: job-b.txt
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/download-artifact@v2
+    - name: Display structure of downloaded files
+      run: ls -R
