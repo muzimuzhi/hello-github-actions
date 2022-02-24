@@ -37,6 +37,7 @@ jobs:
         name: release
 
     - name: Display structure of downloaded files
+      if: false
       run: |
         ls -R
         FILE_LIST=$(find . -type f)
@@ -49,7 +50,7 @@ jobs:
     - uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: ${{ env.file_list }}
+        files: ./*
 
     - name: Delete temp artifact
       uses: GeekyEggo/delete-artifact@v1.0.0
