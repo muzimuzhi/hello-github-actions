@@ -24,6 +24,6 @@ jobs:
           path: build/*
 
       - uses: ./action-a
-        if: false()
+        if: false
         with:
           MY_NAME: "Mona"
