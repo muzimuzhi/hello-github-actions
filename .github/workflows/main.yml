@@ -18,7 +18,7 @@ jobs:
           mkdir -p build
           echo "aaa" > build/a.txt
           echo "bbb" > build/b.txt
-          echo "::set-output name=id::$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attemp}}"
+          echo "::set-output name=id::$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}"
 
       - uses: actions/upload-artifact@v3
         with:
