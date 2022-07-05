@@ -13,16 +13,17 @@ jobs:
           fetch-depth: 0
 
       - name: Create dummy files
-        id: new_files
+        # id: new_files
         run: |
           mkdir -p build
           echo "aaa" > build/a.txt
           echo "bbb" > build/b.txt
-          echo "unique_id=$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}" >> $GITHUB_ENV
           # echo "::set-output name=id::$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}"
+          echo "unique_id=$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}" >> $GITHUB_ENV
 
       - uses: actions/upload-artifact@v3
         with:
+          # name: dummy-${{steps.new_files.outputs.id}}
           name: dummy-${{ env.unique_id }}
           path: build/*
 
