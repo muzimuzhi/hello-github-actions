@@ -16,7 +16,7 @@ jobs:
           mkdir -p build
           echo "aaa" > build/a.txt
           echo "bbb" > build/b.txt
-          echo "::set-output name=revision::${git describe --tags}"
+          echo "::set-output name=revision::$(git describe --tags)"
 
       - uses: actions/upload-artifact@v3
         with:
