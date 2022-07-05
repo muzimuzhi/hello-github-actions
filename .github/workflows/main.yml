@@ -18,11 +18,11 @@ jobs:
           mkdir -p build
           echo "aaa" > build/a.txt
           echo "bbb" > build/b.txt
-          echo "::set-output name=revision::$(git describe --tags)"
+          echo "::set-output name=id::$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attemp}}"
 
       - uses: actions/upload-artifact@v3
         with:
-          name: dummy-${{steps.new_files.outputs.revision}}-${{github.run_attempt}}
+          name: dummy-${{steps.new_files.outputs.id}}
           path: build/*
 
       - uses: ./action-a
