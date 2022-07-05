@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: dummy-{{steps.new_files.outputs.revision}}-{{github.run_attempt}}
+          name: dummy-${{steps.new_files.outputs.revision}}-${{github.run_attempt}}
           path: build/*
 
       - uses: ./action-a
