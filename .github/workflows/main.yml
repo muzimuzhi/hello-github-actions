@@ -9,6 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Create dummy files
+        id: new_files
+        run: |
+          mkdir -p build
+          echo "aaa" > build/a.txt
+          echo "bbb" > build/b.txt
+          echo "::set-output name=revision::${git describe --tags}"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: dummy-{{steps.new_files.outputs.revision}}-{{github.run_attempt}}
+          path: build/*
+
       - uses: ./action-a
+        if: false()
         with:
           MY_NAME: "Mona"
