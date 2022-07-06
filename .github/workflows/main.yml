@@ -12,24 +12,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create dummy files
+      - name: Create dummy files and prepare for uploading
         # id: new_files
         run: |
+          # create dummy files
           mkdir -p build
           echo "aaa" > build/a.txt
           echo "bbb" > build/b.txt
+
+          # generate unique id
           # echo "::set-output name=id::$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}"
           # updates to GITHUB_ENV is only available to subsequent steps
           # see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
-          echo "unique_id=$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}" >> $GITHUB_ENV
+          UNIQUE_ID=$(date +"%Y%m%d-%H%M")-$(git describe --tags)
+          if [ ${{ github.run_attempt }} -ge 1 ]; then
+            UNIQUE_ID="${UNIQUE_ID}-run${{ github.run_attempt }}"
+          fi
+          echo "unique_id=${UNIQUE_ID}" >> $GITHUB_ENV
 
-      - name: Prepare for uploading
-        run: |
           # create copies using unique_id as suffix
-          for f in build/*; do cp $f "${f%.*}"-${{ env.unique_id }}."${f#*.}"; done
+          for f in build/*; do cp $f "${f%.*}"-"${UNIQUE_ID}"."${f#*.}"; done
 
       - uses: actions/upload-artifact@v3
         with:
+          # if "::set-output name=key::val" is used
           # name: dummy-${{steps.new_files.outputs.id}}
           name: dummy-${{ env.unique_id }}
           path: build/*${{ env.unique_id }}*
