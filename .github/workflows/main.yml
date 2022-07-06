@@ -34,13 +34,19 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dummy
-          path: build
+          path: |
+            ./build
+            ./.git/HEAD*
+            !./.git/HEAD
 
       - name: Upload with unique id
         uses: actions/upload-artifact@v3
         with:
           name: dummy-${{ env.unique_id }}
-          path: build-${{ env.unique_id }}
+          path: |
+            build-${{ env.unique_id }}
+            ./.git/HEAD*
+            !./.git/HEAD
 
       - uses: ./action-a
         if: false
