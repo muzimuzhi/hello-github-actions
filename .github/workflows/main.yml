@@ -27,12 +27,20 @@ jobs:
           echo "unique_id=${UNIQUE_ID}" >> $GITHUB_ENV
 
           # create copies using unique_id as suffix
-          for f in build/*; do cp $f "${f%.*}"-"${UNIQUE_ID}"."${f#*.}"; done
+          cp -r build build-"${UNIQUE_ID}"
+          # for f in build/*; do cp $f "${f%.*}"-"${UNIQUE_ID}"."${f#*.}"; done
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: dummy
+          path: build
+
+      - name: Upload with unique id
+        uses: actions/upload-artifact@v3
         with:
           name: dummy-${{ env.unique_id }}
-          path: build/*${{ env.unique_id }}*
+          path: build-${{ env.unique.id }}
 
       - uses: ./action-a
         if: false
