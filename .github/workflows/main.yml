@@ -13,7 +13,6 @@ jobs:
           fetch-depth: 0
 
       - name: Create dummy files and prepare for uploading
-        # id: new_files
         run: |
           # create dummy files
           mkdir -p build
@@ -21,9 +20,6 @@ jobs:
           echo "bbb" > build/b.txt
 
           # generate unique id
-          # echo "::set-output name=id::$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}"
-          # updates to GITHUB_ENV is only available to subsequent steps
-          # see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
           UNIQUE_ID="$(date +"%Y%m%d-%H%M")-$(git describe --tags)"
           if [ ${{ github.run_attempt }} -gt 1 ]; then
             UNIQUE_ID="${UNIQUE_ID}-run${{ github.run_attempt }}"
@@ -35,8 +31,6 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          # if "::set-output name=key::val" is used
-          # name: dummy-${{steps.new_files.outputs.id}}
           name: dummy-${{ env.unique_id }}
           path: build/*${{ env.unique_id }}*
 
