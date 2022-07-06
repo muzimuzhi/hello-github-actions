@@ -19,7 +19,12 @@ jobs:
           echo "aaa" > build/a.txt
           echo "bbb" > build/b.txt
           # echo "::set-output name=id::$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}"
+          # updates to GITHUB_ENV is only available to subsequent steps
+          # see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
           echo "unique_id=$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}" >> $GITHUB_ENV
+
+      - name: Prepare for uploading
+        run: |
           # create copies using unique_id as suffix
           for f in build/*; do cp $f "${f%.*}"-${{ env.unique_id }}."${f#*.}"; done
 
