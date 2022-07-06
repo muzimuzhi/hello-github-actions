@@ -24,8 +24,8 @@ jobs:
           # echo "::set-output name=id::$(date +"%Y%m%d-%H%M")-$(git describe --tags)-run${{github.run_attempt}}"
           # updates to GITHUB_ENV is only available to subsequent steps
           # see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
-          UNIQUE_ID=$(date +"%Y%m%d-%H%M")-$(git describe --tags)
-          if [ ${{ github.run_attempt }} -ge 1 ]; then
+          UNIQUE_ID="$(date +"%Y%m%d-%H%M")-$(git describe --tags)"
+          if [ ${{ github.run_attempt }} -gt 1 ]; then
             UNIQUE_ID="${UNIQUE_ID}-run${{ github.run_attempt }}"
           fi
           echo "unique_id=${UNIQUE_ID}" >> $GITHUB_ENV
