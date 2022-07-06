@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dummy-${{ env.unique_id }}
-          path: build-${{ env.unique.id }}
+          path: build-${{ env.unique_id }}
 
       - uses: ./action-a
         if: false
