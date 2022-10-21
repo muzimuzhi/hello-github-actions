@@ -5,10 +5,19 @@ on:
 
 jobs:
   build:
-    name: Hello world action
     runs-on: ubuntu-latest
+    container:
+      image: registry.gitlab.com/islandoftex/images/texlive:latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./action-a
-        with:
-          MY_NAME: "Mona"
+    - uses: actions/checkout@v2
+
+    - name: Analyse manual log and create annotation(s)
+      run: |
+        OVERFULL_HBOX=$(texloganalyser -o ./build/doc/pgfmanual.log)
+        # trick to create multiline annotation: use url-encoded newline %0A
+        #  https://github.com/actions/toolkit/issues/193#issuecomment-605394935
+        OVERFULL_HBOX=$(echo $OVERFLOW_HBOX | tr '\n' '%0A')
+        # setting a warning message:
+        #  https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message
+        echo "::warning file=./build/doc/pgfmanual.log,title=Overfull hbox(es)::$OVERFULL_HBOX"
