@@ -14,10 +14,13 @@ jobs:
 
     - name: Analyse manual log and create annotation(s)
       run: |
-        OVERFULL_HBOX=$(texloganalyser -o ./build/doc/pgfmanual.log)
-        # trick to create multiline annotation: use url-encoded newline %0A
-        #  https://github.com/actions/toolkit/issues/193#issuecomment-605394935
-        OVERFULL_HBOX=$(echo $OVERFLOW_HBOX | tr '\n' '%0A')
         # setting a warning message:
         #  https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message
+        # trick to create multiline annotation:
+        #  use url-encoded newline %0A
+        #  https://github.com/actions/toolkit/issues/193#issuecomment-605394935
+        OVERFULL_HBOX=$( \
+          texloganalyser -o ./build/doc/pgfmanual.log |      \
+          awk 'BEGIN {RS=""}{gsub(/\n/,"%0A",$0); print $0}' \
+        )
         echo "::warning file=./build/doc/pgfmanual.log,title=Overfull hbox(es)::$OVERFULL_HBOX"
