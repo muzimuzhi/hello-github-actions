@@ -20,7 +20,7 @@ jobs:
         #  use url-encoded newline %0A
         #  https://github.com/actions/toolkit/issues/193#issuecomment-605394935
         OVERFULL_HBOX=$( \
-          texloganalyser -o tex/pgfmanual.log |      \
+          grep -r '^Overfull \\hbox' tex/pgfmanual.log |     \
           awk 'BEGIN {RS=""}{gsub(/\n/,"%0A",$0); print $0}' \
         )
         echo "::warning file=tex/pgfmanual.log,title=Overfull hbox(es)::$OVERFULL_HBOX"
