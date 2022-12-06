@@ -1,14 +1,19 @@
-name: A workflow for my Hello World file
+name: Checkout Git LFS
 on: 
   - push
   - workflow_dispatch
 
 jobs:
   build:
-    name: Hello world action
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./action-a
         with:
-          MY_NAME: "Mona"
+          repository: islandoftex/arara
+          lfs: true
+      - run: |
+          du -hd 1 .
+          l website/static/fonts
+      - uses: upload-pages-artifact@1
+        with:
+          path: website
