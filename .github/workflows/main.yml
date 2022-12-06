@@ -13,7 +13,7 @@ jobs:
           lfs: true
       - run: |
           du -hd 1 .
-          l website/static/fonts
+          ls -lah website/static/fonts
       - uses: actions/upload-pages-artifact@v1
         with:
           path: website
