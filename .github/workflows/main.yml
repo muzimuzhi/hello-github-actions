@@ -10,8 +10,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: islandoftex/arara
-          lfs: true
+          # lfs: true
       - run: |
+          git lfs pull --include=website
           du -hd 1 .
           ls -lah website/static/fonts
       - uses: actions/upload-pages-artifact@v1
