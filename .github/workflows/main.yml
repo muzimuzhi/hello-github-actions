@@ -14,6 +14,6 @@ jobs:
       - run: |
           du -hd 1 .
           l website/static/fonts
-      - uses: upload-pages-artifact@1
+      - uses: actions/upload-pages-artifact@v1
         with:
           path: website
