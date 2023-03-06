@@ -48,5 +48,5 @@ jobs:
       - name: Archive
         uses: actions/upload-artifact@v3
         with:
-          name: latex-example-"${{ env.artifact_id }}"
+          name: latex-example-${{ env.artifact_id }}
           path: latex-examples
