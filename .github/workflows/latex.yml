@@ -26,9 +26,9 @@ jobs:
         shell: bash
         run: |
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            os_null = "nul"
+            os_null="nul"
           else
-            os_null = "/dev/null"
+            os_null="/dev/null"
           fi
           pdflatex l3benchmark-gh1182*.tex > "$os_null"
           grep . -rn 'seconds' *.log
