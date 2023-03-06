@@ -24,6 +24,7 @@ jobs:
 
       - name: Run example(s)
         shell: bash
+        working-directory: latex-examples
         run: |
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
             os_null="nul"
@@ -31,7 +32,7 @@ jobs:
             os_null="/dev/null"
           fi
           pdflatex l3benchmark-gh1182*.tex > "$os_null"
-          grep . -rn 'seconds' *.log
+          grep . -rn "seconds" *.log
 
       - name: Generate artifact id
         shell: bash
