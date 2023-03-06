@@ -11,6 +11,7 @@
     \fp_gset:Nn \g_benchmark_ops_fp { \g_benchmark_time_fp / \g__benchmark_one_op_fp }
 %    \iow_term:x
 %      {
+%        [debug]~
 %        ops~ =~ time~ /~ one_op,~
 %        \__benchmark_fp_to_tl:N \g_benchmark_ops_fp~ =~
 %        \__benchmark_fp_to_tl:N \g_benchmark_time_fp~ /~
@@ -28,6 +29,7 @@
     \fp_gset:Nn \g__benchmark_one_op_fp { max(\g_benchmark_time_fp, 1e-16) }
     \iow_term:x
       {
+        [debug]~
         time~ =~ \__benchmark_fp_to_tl:N \g_benchmark_time_fp ,~
         one_op~ = \__benchmark_fp_to_tl:N \g__benchmark_one_op_fp
       }
