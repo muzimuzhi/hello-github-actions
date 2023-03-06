@@ -25,7 +25,7 @@ jobs:
       - name: Run example(s)
         shell: bash
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
             os_null="nul"
           else
             os_null="/dev/null"
@@ -37,7 +37,7 @@ jobs:
         shell: bash
         run: |
           SHORT_SHA1=$(git rev-parse --short HEAD)
-          if [ "${{ github.run_attempt }}" -eq 1 ]; then
+          if [[ "${{ github.run_attempt }}" -eq 1 ]]; then
             ID="$SHORT_SHA1"
           else
             ID="$SHORT_SHA1-${{ github.run_attempt }}"
