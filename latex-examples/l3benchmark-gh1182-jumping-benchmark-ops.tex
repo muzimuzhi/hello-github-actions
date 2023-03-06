@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage{array}
+\usepackage{l3benchmark}
+
+\ExplSyntaxOn
+\cs_new_protected:Npn \runtest #1 #2
+  {
+    #2 %% run the code first to load fonts
+    \prg_replicate:nn { #1 }
+      {
+        \benchmark:n { #2 }
+        % \fp_log:N \g_benchmark_time_fp
+        % \fp_log:N \g_benchmark_ops_fp
+      }
+  }
+\ExplSyntaxOff
+
+\begin{document}
+
+\newcommand\testcode{%
+  \begin{tabular}{|l|c|r|p{4em}|m{4em}|b{4em}|}
+  \hline
+    alpha & beta    & gamma   & delta & epsilon & zeta  \\
+  \hline 
+    eta   & theta   & iota    & kappa & lambda  & mu    \\
+  \hline  
+    nu    & xi      & omicron & pi    & rho     & sigma \\
+  \hline  
+    tau   & upsilon & phi     & chi   & psi     & omega \\
+  \hline
+  \end{tabular}\par
+}
+
+\runtest{5}{\testcode}
+
+\end{document}

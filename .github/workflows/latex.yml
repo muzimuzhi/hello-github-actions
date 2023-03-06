@@ -1,0 +1,51 @@
+name: Test LaTeX
+on: 
+  - push
+  - workflow_dispatch
+
+jobs:
+  run-on-three-os:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install texlive
+        uses: teatimeguest/setup-texlive-action@v2
+        with:
+          package: >-
+            scheme-basic
+            array
+            l3experimental
+
+      - name: Run example(s)
+        shell: bash
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            os_null = "nul"
+          else
+            os_null = "/dev/null"
+          fi
+          pdflatex l3benchmark-gh1182*.tex > "$os_null"
+          grep . -rn 'seconds' *.log
+
+      - name: Generate run id
+        shell: bash
+        run: |
+          SHORT_SHA1=$(git rev-parse --short HEAD)
+          if [ "${{ github.run_attempt }}" -eq 1 ]; then
+            ID="$SHORT_SHA1"
+          else
+            ID="$SHORT_SHA1-${{ github.run_attempt }}"
+          fi
+          echo "artifact_id=$ID" >> $GITHUB_ENV
+
+      - name: Archive
+        uses: actions/upload-artifact@3
+        with:
+          name: latex-example-"${{ env.artifact_id }}"
+          path: latex-examples
