@@ -44,15 +44,15 @@ jobs:
       - name: Generate artifact id
         shell: bash
         run: |
+          SHORT_OS=${{ matrix.os }}
+          SHORT_OS=${SHORT_OS/-latest/}
           SHORT_SHA1=$(git rev-parse --short HEAD)
           if [[ "${{ github.run_attempt }}" -eq 1 ]]; then
-            ID="$SHORT_SHA1"
+            ID="$SHORT_OS-$SHORT_SHA1"
           else
-            ID="$SHORT_SHA1-${{ github.run_attempt }}"
+            ID="$SHORT_OS-$SHORT_SHA1-${{ github.run_attempt }}"
           fi
-          OS_SHORT=${{ matrix.os }}
-          OS_SHORT=${OS_SHORT/-latest/}
-          echo "artifact_id=$OS_SHORT-$ID" >> $GITHUB_ENV
+          echo "artifact_id=$ID" >> $GITHUB_ENV
 
       - name: Archive
         uses: actions/upload-artifact@v3
