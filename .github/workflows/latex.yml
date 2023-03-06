@@ -33,7 +33,7 @@ jobs:
           pdflatex l3benchmark-gh1182*.tex > "$os_null"
           grep . -rn 'seconds' *.log
 
-      - name: Generate run id
+      - name: Generate artifact id
         shell: bash
         run: |
           SHORT_SHA1=$(git rev-parse --short HEAD)
