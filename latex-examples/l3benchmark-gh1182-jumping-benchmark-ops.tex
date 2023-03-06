@@ -8,8 +8,11 @@
     \__benchmark_measure_op:
     \tl_gset:Nn \g__benchmark_code_tl {#1}
     \__benchmark_aux:
-    \fp_log:N \g_benchmark_time_fp
-    \fp_log:N \g__benchmark_one_op_fp
+    \iow_term:x
+      {
+        time~ =~ \__benchmark_fp_to_tl:N \g_benchmark_time_fp,~
+        ops~  =~ \__benchmark_fp_to_tl:N \g__benchmark_one_op_fp
+      }
     \fp_gset:Nn \g_benchmark_ops_fp { \g_benchmark_time_fp / \g__benchmark_one_op_fp }
   }
 
@@ -41,6 +44,6 @@
   \end{tabular}\par
 }
 
-\runtest{5}{\testcode}
+\runtest{20}{\testcode}
 
 \end{document}
