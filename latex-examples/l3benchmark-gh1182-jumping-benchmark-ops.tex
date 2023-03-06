@@ -3,6 +3,16 @@
 \usepackage{l3benchmark}
 
 \ExplSyntaxOn
+\cs_gset_protected:Npn \benchmark_silent:n #1
+  {
+    \__benchmark_measure_op:
+    \tl_gset:Nn \g__benchmark_code_tl {#1}
+    \__benchmark_aux:
+    \fp_log:N \g_benchmark_time_fp
+    \fp_log:N \g__benchmark_one_op_fp
+    \fp_gset:Nn \g_benchmark_ops_fp { \g_benchmark_time_fp / \g__benchmark_one_op_fp }
+  }
+
 \cs_new_protected:Npn \runtest #1 #2
   {
     #2 %% run the code first to load fonts
@@ -21,16 +31,16 @@
   \begin{tabular}{|l|c|r|p{4em}|m{4em}|b{4em}|}
   \hline
     alpha & beta    & gamma   & delta & epsilon & zeta  \\
-  \hline 
+  \hline
     eta   & theta   & iota    & kappa & lambda  & mu    \\
-  \hline  
+  \hline
     nu    & xi      & omicron & pi    & rho     & sigma \\
-  \hline  
+  \hline
     tau   & upsilon & phi     & chi   & psi     & omega \\
   \hline
   \end{tabular}\par
 }
 
-\runtest{20}{\testcode}
+\runtest{5}{\testcode}
 
 \end{document}
