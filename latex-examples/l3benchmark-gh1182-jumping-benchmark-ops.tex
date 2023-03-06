@@ -46,12 +46,12 @@
         \sys_timer: -
         \int_use:c { g__benchmark_ \int_use:N \g__benchmark_nesting_int _int }
       }
-    \iow_term:x
-      {
-        [debug]~
-        start~ =~ \int_use:c { g__benchmark_ \int_use:N \g__benchmark_nesting_int _int } ,~
-        diff~  =~ \int_use:N #1
-      }
+%    \iow_term:x
+%      {
+%        [debug]~
+%        start~ =~ \int_use:c { g__benchmark_ \int_use:N \g__benchmark_nesting_int _int } ,~
+%        diff~  =~ \int_use:N #1
+%      }
     \int_gdecr:N \g__benchmark_nesting_int
   }
 
@@ -61,7 +61,8 @@
     #2 %% run the code first to load fonts
     \prg_replicate:nn { #1 }
       {
-        \benchmark:n { #2 }
+        \box_clear:N \l_tmpa_box
+        \benchmark:n { \hbox_set:Nn \l_tmpa_box {#2} }
         % \fp_log:N \g_benchmark_time_fp
         % \fp_log:N \g_benchmark_ops_fp
       }
