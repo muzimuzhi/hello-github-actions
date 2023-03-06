@@ -27,11 +27,11 @@ jobs:
         working-directory: latex-examples
         run: |
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            os_null="nul"
+            OS_NULL="nul"
           else
-            os_null="/dev/null"
+            OS_NULL="/dev/null"
           fi
-          pdflatex l3benchmark-gh1182*.tex > "$os_null"
+          pdflatex l3benchmark-gh1182*.tex > "$OS_NULL"
           # use "%0A" to throw a multiline warning
           # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
           log_filtered=$(\
@@ -57,5 +57,5 @@ jobs:
       - name: Archive
         uses: actions/upload-artifact@v3
         with:
-          name: latex-example-${{ env.artifact_id }}
+          name: latex-examples-${{ env.artifact_id }}
           path: latex-examples
