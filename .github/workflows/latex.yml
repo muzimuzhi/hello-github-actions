@@ -45,7 +45,7 @@ jobs:
           echo "artifact_id=$ID" >> $GITHUB_ENV
 
       - name: Archive
-        uses: actions/upload-artifact@3
+        uses: actions/upload-artifact@v3
         with:
           name: latex-example-"${{ env.artifact_id }}"
           path: latex-examples
