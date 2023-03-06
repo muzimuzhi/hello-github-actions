@@ -8,12 +8,31 @@
     \__benchmark_measure_op:
     \tl_gset:Nn \g__benchmark_code_tl {#1}
     \__benchmark_aux:
+    \fp_gset:Nn \g_benchmark_ops_fp { \g_benchmark_time_fp / \g__benchmark_one_op_fp }
+%    \iow_term:x
+%      {
+%        ops~ =~ time~ /~ one_op,~
+%        \__benchmark_fp_to_tl:N \g_benchmark_ops_fp~ =~
+%        \__benchmark_fp_to_tl:N \g_benchmark_time_fp~ /~
+%        \__benchmark_fp_to_tl:N \g__benchmark_one_op_fp
+%      }
+  }
+
+\cs_gset_protected:Npn \__benchmark_measure_op:
+  {
+    \int_gset:Nn \g__benchmark_duration_int
+      { \fp_to_int:n { 65536 * \g_benchmark_duration_target_fp } / 4 }
+    \tl_gset:Nn \g__benchmark_code_tl
+      { \int_gadd:Nn \g__benchmark_duration_int { 0 } }
+    \__benchmark_aux:
+    \fp_gset:Nn \g__benchmark_one_op_fp { max(\g_benchmark_time_fp, 1e-16) }
     \iow_term:x
       {
-        time~ =~ \__benchmark_fp_to_tl:N \g_benchmark_time_fp,~
-        ops~  =~ \__benchmark_fp_to_tl:N \g__benchmark_one_op_fp
+        time~ =~ \__benchmark_fp_to_tl:N \g_benchmark_time_fp ,~
+        one_op~ = \__benchmark_fp_to_tl:N \g__benchmark_one_op_fp
       }
-    \fp_gset:Nn \g_benchmark_ops_fp { \g_benchmark_time_fp / \g__benchmark_one_op_fp }
+    \int_gset:Nn \g__benchmark_duration_int
+      { \fp_to_int:n { 65536 * \g_benchmark_duration_target_fp } }
   }
 
 \cs_new_protected:Npn \runtest #1 #2
