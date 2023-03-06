@@ -50,7 +50,9 @@ jobs:
           else
             ID="$SHORT_SHA1-${{ github.run_attempt }}"
           fi
-          echo "artifact_id=$ID" >> $GITHUB_ENV
+          OS_SHORT=${{ matrix.os }}
+          OS_SHORT=${OS_SHORT/-latest/}
+          echo "artifact_id=$OS_SHORT-$ID" >> $GITHUB_ENV
 
       - name: Archive
         uses: actions/upload-artifact@v3
