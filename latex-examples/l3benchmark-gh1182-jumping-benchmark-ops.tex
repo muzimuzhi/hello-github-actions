@@ -39,6 +39,23 @@
       { \fp_to_int:n { 65536 * \g_benchmark_duration_target_fp } }
   }
 
+\cs_gset_protected:Npn \__benchmark_raw_end:N #1
+  {
+    \int_gset:Nn #1
+      {
+        \sys_timer: -
+        \int_use:c { g__benchmark_ \int_use:N \g__benchmark_nesting_int _int }
+      }
+    \iow_term:x
+      {
+        [debug]~
+        start~ =~ \int_use:c { g__benchmark_ \int_use:N \g__benchmark_nesting_int _int } ,~
+        diff~  =~ \int_use:N #1
+      }
+    \int_gdecr:N \g__benchmark_nesting_int
+  }
+
+
 \cs_new_protected:Npn \runtest #1 #2
   {
     #2 %% run the code first to load fonts
