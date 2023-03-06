@@ -32,7 +32,12 @@ jobs:
             os_null="/dev/null"
           fi
           pdflatex l3benchmark-gh1182*.tex > "$os_null"
-          log_filtered=$(grep "seconds" -rh *.log)
+          # use "%0A" to throw a multiline warning
+          # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
+          log_filtered=$(\
+            grep -rh "seconds" *.log | \
+            awk 'BEGIN {RS=""}{gsub(/\n/,"%0A",$0); print $0}' \
+          )
           # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message
           echo "::warning file=l3benchmark-gh1182*.log,line=1,col=1,endColumn=2::$log_filtered"
 
