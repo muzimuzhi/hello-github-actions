@@ -50,7 +50,7 @@ jobs:
           # ENGINES=("pdflatex" "lualatex")
           ENGINES=("pdflatex")
           for engine in ${ENGINES[@]}; do
-            $engine l3benchmark-gh1182*.tex > "${{ env.os_null }}"
+            $engine l3benchmark-gh1182*.tex # > "${{ env.os_null }}"
             # use "%0A" to throw a multiline warning
             # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
             log_filtered=$(\
