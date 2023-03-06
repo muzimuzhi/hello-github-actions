@@ -17,7 +17,7 @@ jobs:
       - name: Install texlive
         uses: teatimeguest/setup-texlive-action@v2
         with:
-          package: >-
+          packages: >-
             scheme-basic
             array
             l3experimental
