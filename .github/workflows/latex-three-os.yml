@@ -1,8 +1,13 @@
 name: Test LaTeX
+
 on: 
   - push
   - pull_request
   - workflow_dispatch
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   run-on-three-os:
@@ -26,7 +31,6 @@ jobs:
           update-all-packages: true
 
       - name: Set env vars
-        shell: bash
         run: |
           # env.os_null
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
@@ -48,7 +52,6 @@ jobs:
           echo "unique_id=$ID" >> $GITHUB_ENV
 
       # - name: Run example(s)
-      #   shell: bash
       #   working-directory: latex-examples
       #   run: |
       #     # ENGINES=("pdflatex" "lualatex")
