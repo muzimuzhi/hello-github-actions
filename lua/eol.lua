@@ -1,5 +1,7 @@
 local function test_eol(fname, content)
-  local file = io.open(fname, "w")
+  -- open file in binary mode, to avoid convertion from \n to \r\n in Win
+  -- http://lua-users.org/lists/lua-l/2015-05/msg00349.html
+  local file = io.open(fname, "wb")
   io.output(file)
   io.write(content)
   io.close(file)
