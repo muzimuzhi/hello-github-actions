@@ -62,4 +62,4 @@ jobs:
         with:
           name: lua-eol-${{ env.artifact_id }}
           path: |
-            *.txt
+            lua/*.txt
