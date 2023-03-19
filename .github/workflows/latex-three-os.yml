@@ -24,26 +24,27 @@ jobs:
             array
             l3experimental
 
-      # - name: Set env vars
-      #   shell: bash
-      #   run: |
-      #     # env.os_null
-      #     if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-      #       OS_NULL="nul"
-      #     else
-      #       OS_NULL="/dev/null"
-      #     fi
-      #     echo "os_null=$OS_NULL" >> $GITHUB_ENV
-      #     # env.artifact_id
-      #     SHORT_OS=${{ matrix.os }}
-      #     SHORT_OS=${SHORT_OS/-latest/}
-      #     SHORT_SHA1=$(git rev-parse --short HEAD)
-      #     if [[ "${{ github.run_attempt }}" -eq 1 ]]; then
-      #       ID="$SHORT_OS-$SHORT_SHA1"
-      #     else
-      #       ID="$SHORT_OS-$SHORT_SHA1-${{ github.run_attempt }}"
-      #     fi
-      #     echo "artifact_id=$ID" >> $GITHUB_ENV
+      - name: Set env vars
+        shell: bash
+        run: |
+          # env.os_null
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            OS_NULL="nul"
+          else
+            OS_NULL="/dev/null"
+          fi
+          echo "os_null=$OS_NULL" >> $GITHUB_ENV
+
+          # env.unique_id
+          OS_SHORT=${{ matrix.os }}
+          OS_SHORT=${OS_SHORT/-latest/}
+          SHA1_SHORT=$(git rev-parse --short HEAD)
+          if [[ "${{ github.run_attempt }}" -eq 1 ]]; then
+            ID="$OS_SHORT-$SHA1_SHORT"
+          else
+            ID="$OS_SHORT-$SHA1_SHORT-${{ github.run_attempt }}"
+          fi
+          echo "unique_id=$ID" >> $GITHUB_ENV
 
       # - name: Run example(s)
       #   shell: bash
@@ -66,5 +67,5 @@ jobs:
       # - name: Archive
       #   uses: actions/upload-artifact@v3
       #   with:
-      #     name: latex-examples-${{ env.artifact_id }}
+      #     name: latex-examples-${{ env.unique_id }}
       #     path: latex-examples
