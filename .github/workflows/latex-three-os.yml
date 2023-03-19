@@ -23,6 +23,7 @@ jobs:
             scheme-basic
             array
             l3experimental
+          update-all-packages: true
 
       - name: Set env vars
         shell: bash
