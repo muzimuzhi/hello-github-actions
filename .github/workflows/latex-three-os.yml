@@ -54,7 +54,7 @@ jobs:
         working-directory: latex-examples
         run: |
           for file in $(ls *.tex); do
-            for engine in "pdflatex" "lualatex" "xelatex"; do
+            for engine in pdflatex lualatex xelatex; do
               $engine $file > "${{ env.os_null }}"
 
               # # use "%0A" to throw a multiline warning
