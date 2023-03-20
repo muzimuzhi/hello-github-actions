@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    if: false
+    # if: false
     name: Hello world action
     runs-on: ubuntu-latest
     steps:
