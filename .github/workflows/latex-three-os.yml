@@ -29,7 +29,7 @@ jobs:
             scheme-basic
             xetex
           update-all-packages: true
-          version: 2022
+          version: 2023
 
       - name: Set env vars
         run: |
