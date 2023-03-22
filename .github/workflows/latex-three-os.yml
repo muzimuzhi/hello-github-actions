@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install texlive
-        uses: muzimuzhi/setup-texlive-action@tl2023
+        uses: muzimuzhi/setup-texlive-action@41f7580b80c58d4772f367efcc6276be15d9489b
         with:
           packages: >-
             scheme-basic
