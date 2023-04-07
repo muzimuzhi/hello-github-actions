@@ -5,9 +5,9 @@ on:
       branches-ignore:
         - 'self/**' # "**"" also matches remaining "/"
     pull_request:
-      branches-x:
-        - 'invalid filter name'
     workflow_dispatch:
+      non-existeng-filter:
+        - 'what'
     merge_group:
       branches-x:
         - 'self/**'
