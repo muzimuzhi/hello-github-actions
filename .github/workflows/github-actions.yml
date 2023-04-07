@@ -4,6 +4,8 @@ on:
     push:
       branches-ignore:
         - 'self/**' # "**"" also matches remaining "/"
+      branches-x:
+        - 'invalid filter name'
     pull_request:
     workflow_dispatch:
     merge_group:
