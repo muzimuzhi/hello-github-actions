@@ -1,0 +1,21 @@
+name: Testing GitHub Actions itself
+
+on: 
+    push:
+      branches-ignore:
+        - 'self/**' # "**"" also matches remaining "/"
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+  test:
+    name: Hello GitHub Actions
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run dummy commands
+        run: |
+          echo "Hello GitHub Actions"
