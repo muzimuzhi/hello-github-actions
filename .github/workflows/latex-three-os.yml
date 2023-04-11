@@ -29,6 +29,7 @@ jobs:
           packages: >-
             scheme-basic
             xetex
+            ctex
           update-all-packages: true
 
       - name: Set env vars
