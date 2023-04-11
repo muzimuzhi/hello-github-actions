@@ -9,6 +9,7 @@ on:
 
 jobs:
   test:
+    if: false
     name: Hello GitHub Actions
 
     runs-on: ubuntu-latest

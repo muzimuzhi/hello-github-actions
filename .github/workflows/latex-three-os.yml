@@ -13,7 +13,7 @@ defaults:
 
 jobs:
   run-on-three-os:
-    if: false
+    # if: false
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
