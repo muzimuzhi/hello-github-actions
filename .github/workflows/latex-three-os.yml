@@ -54,13 +54,14 @@ jobs:
           fi
           echo "unique_id=$ID" >> $GITHUB_ENV
 
-      - name: Install language pack(s) for Win
+      - name: Install supplimental fonts for Win
         if: matrix.os == 'windows-latest'
         shell: pwsh
         # https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/available-language-packs-for-windows?view=windows-11
         # https://learn.microsoft.com/en-us/powershell/module/languagepackmanagement/install-language?view=windowsserver2022-ps
         run: |
-          Get-WindowsCapability -online -name *fonts* | ft Name, DisplayName, Description
+          # Get-WindowsCapability -online -name *fonts* | ft Name, DisplayName, Description
+          Add-WindowsCapability -online -name Language.Fonts.Hant~~~und-HANT~0.0.1.0
 
       - name: Run example(s)
         working-directory: latex-examples
