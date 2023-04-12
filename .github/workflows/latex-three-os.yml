@@ -63,7 +63,8 @@ jobs:
           # Install-Language zh-CN # "Install-Language" is not recognized
           $URL="http://download.windowsupdate.com/d/msdownload/update/software/updt/2016/07/lp_ae02d7fa9f2626e1c7c6c963b28b453f4faf4c90.cab"
           Invoke-WebRequest -URI $URL -OutFile zh-CN.cab
-          Add-WindowsPackage -Online -PackagePath zh-CN.cab
+          # Add-WindowsPackage -Online -PackagePath zh-CN.cab
+          Dism /online /Add-Package /PackagePath:zh-CN.cab
 
       - name: Run example(s)
         working-directory: latex-examples
