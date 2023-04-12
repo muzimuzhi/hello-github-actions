@@ -60,8 +60,10 @@ jobs:
         # https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/available-language-packs-for-windows?view=windows-11
         # https://learn.microsoft.com/en-us/powershell/module/languagepackmanagement/install-language?view=windowsserver2022-ps
         run: |
-          # Install-Language zh-CN # not recognized
-          Get-Module -ListAvailable
+          # Install-Language zh-CN # "Install-Language" is not recognized
+          $URL="http://download.windowsupdate.com/d/msdownload/update/software/updt/2016/07/lp_ae02d7fa9f2626e1c7c6c963b28b453f4faf4c90.cab"
+          Invoke-WebRequest -URI $URL -OutFile zh-CN.cab
+          Add-WindowsPackage -Online -PackagePath zh-CN.cab
 
       - name: Run example(s)
         working-directory: latex-examples
