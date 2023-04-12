@@ -64,8 +64,8 @@ jobs:
         working-directory: latex-examples
         run: |
           for file in $(ls *.tex); do
-            for engine in pdflatex lualatex xelatex; do
-              $engine $file > "${{ env.os_null }}"
+            for engine in xelatex; do
+              $engine -jobname=${file%.*}-$engine $file
 
               # # use "%0A" to throw a multiline warning
               # # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
