@@ -55,7 +55,7 @@ jobs:
 
       - name: Install language pack(s) for Win
         if: matrix.os == 'windows-latest'
-        shell: pwsl
+        shell: pwsh
         run: |
           # https://learn.microsoft.com/en-us/powershell/module/languagepackmanagement/install-language?view=windowsserver2022-ps
           Install-Language zh-CN
