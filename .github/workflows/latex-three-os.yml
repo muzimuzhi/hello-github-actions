@@ -53,6 +53,13 @@ jobs:
           fi
           echo "unique_id=$ID" >> $GITHUB_ENV
 
+      - name: Install language pack(s) for Win
+        if: matrix.os == 'windows-latest'
+        shell: pwsl
+        run: |
+          # https://learn.microsoft.com/en-us/powershell/module/languagepackmanagement/install-language?view=windowsserver2022-ps
+          Install-Language zh-CN
+
       - name: Run example(s)
         working-directory: latex-examples
         run: |
