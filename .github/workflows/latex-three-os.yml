@@ -61,7 +61,7 @@ jobs:
         # https://learn.microsoft.com/en-us/powershell/module/languagepackmanagement/install-language?view=windowsserver2022-ps
         run: |
           # Get-WindowsCapability -online -name *fonts* | ft Name, DisplayName, Description
-          Add-WindowsCapability -online -name Language.Fonts.Hant~~~und-HANT~0.0.1.0
+          Add-WindowsCapability -online -name Language.Fonts.Hans~~~und-HANS~0.0.1.0
 
       - name: Run example(s)
         working-directory: latex-examples
