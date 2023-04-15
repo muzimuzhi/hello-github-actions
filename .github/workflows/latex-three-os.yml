@@ -35,6 +35,7 @@ jobs:
         with:
           packages: >-
             scheme-basic
+            platex
             ptex
             uptex
             xetex
