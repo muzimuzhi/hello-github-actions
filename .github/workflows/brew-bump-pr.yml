@@ -1,9 +1,17 @@
-name: Bump a Homebrew Cask
+name: Bump a Homebrew Formula/Cask
 # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
 
 on:
   workflow_dispatch:
     inputs:
+      command:
+        description: 'Homebrew command to run'
+        required: false
+        default: 'bump-cask-pr'
+        type: choice
+        options:
+          - 'bump-formula-pr'
+          - 'bump-cask-pr'
       cask:
         description: 'Name of cask'
         required: false
@@ -19,7 +27,7 @@ jobs:
     runs-on: macos-12
 
     steps:
-      - name: Run "brew bump-cask-pr"
+      - name: Run bump command
         run: |
           export HOMEBREW_GITHUB_API_TOKEN="${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}"
           git config --global user.name "${{ secrets.GIT_USER_NAME }}"
