@@ -1,11 +1,11 @@
 name: Testing GitHub Actions itself
 
 on: 
-    push:
-      branches-ignore:
-        - 'self/**' # "**"" also matches remaining "/"
-    pull_request:
-    workflow_dispatch:
+  push:
+    branches-ignore:
+      - 'self/**' # "**"" also matches remaining "/"
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
