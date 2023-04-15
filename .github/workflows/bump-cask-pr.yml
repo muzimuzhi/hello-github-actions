@@ -1,0 +1,28 @@
+name: Bump a Homebrew Cask
+# https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
+
+on:
+  workflow_dispatch:
+    inputs:
+      cask:
+        description: 'Name of cask'
+        required: false
+        default: 'texstudio'
+        type: string
+      version:
+        description: 'New version for the cask'
+        required: true
+        type: string
+
+jobs:
+  bump-cask-pr:
+    runs-on: macos-12
+
+    steps:
+      - run: |
+          export HOMEBREW_GITHUB_API_TOKEN="${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}"
+          git config --global user.name ${{ secrets.GIT_USER_NAME }}
+          git config --global user.email ${{ secrets.GIT_USER_EMAIL }}
+
+          brew update
+          brew bump-cask-pr --version=${{ inputs.version }} ${{ inputs.cask }}
