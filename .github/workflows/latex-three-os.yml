@@ -37,6 +37,7 @@ jobs:
             scheme-basic
             platex
             ptex
+            uplatex
             uptex
             xetex
           update-all-packages: true
