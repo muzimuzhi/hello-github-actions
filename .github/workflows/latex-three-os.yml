@@ -36,13 +36,11 @@ jobs:
           packages: >-
             scheme-basic
             platex
-            ptex
             uplatex
-            uptex
             xetex
           update-all-packages: true
 
       - name: Run `l3build check` on l3build itself
         run: |
           cd l3build
-          texlua l3build.lua check
+          texlua l3build.lua check -q
