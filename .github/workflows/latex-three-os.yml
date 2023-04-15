@@ -23,55 +23,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Checkout l3build
+        uses: actions/checkout@v3
+        with:
+          repository: latex3/l3build
+          path: l3build
+          token: ${{ secrets.GH_TOKEN_READ_ONLY }}
+
       - name: Install texlive
         uses: teatimeguest/setup-texlive-action@v2
         with:
           packages: >-
             scheme-basic
+            ptex
+            uptex
             xetex
           update-all-packages: true
 
-      - name: Set env vars
+      - name: Run `l3build check` on l3build itself
         run: |
-          # env.os_null
-          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            OS_NULL="nul"
-          else
-            OS_NULL="/dev/null"
-          fi
-          echo "os_null=$OS_NULL" >> $GITHUB_ENV
-
-          # env.unique_id
-          OS_SHORT=${{ matrix.os }}
-          OS_SHORT=${OS_SHORT/-latest/}
-          SHA1_SHORT=$(git rev-parse --short HEAD)
-          if [[ "${{ github.run_attempt }}" -eq 1 ]]; then
-            ID="$OS_SHORT-$SHA1_SHORT"
-          else
-            ID="$OS_SHORT-$SHA1_SHORT-${{ github.run_attempt }}"
-          fi
-          echo "unique_id=$ID" >> $GITHUB_ENV
-
-      - name: Run example(s)
-        working-directory: latex-examples
-        run: |
-          for file in $(ls *.tex); do
-            for engine in pdflatex lualatex xelatex; do
-              $engine $file > "${{ env.os_null }}"
-
-              # # use "%0A" to throw a multiline warning
-              # # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
-              # log_filtered=$(\
-              #   grep -rh "\[debug\] " *.log | \
-              #   awk 'BEGIN {RS=""}{gsub(/\n/,"%0A",$0); print $0}' \
-              # )
-              # # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message
-              # echo "::warning file=$file-$engine*.log,line=1,col=1,endColumn=2::$log_filtered"
-            done
-          done
-
-      - name: Archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: latex-examples-${{ env.unique_id }}
-          path: latex-examples
+          cd l3build
+          texlua l3build.lua check
