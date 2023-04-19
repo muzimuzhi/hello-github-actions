@@ -37,20 +37,9 @@ jobs:
           update-all-packages: true
 
       - name: Generate unique ID
-        id: unique-id
         uses: ./.github/actions/unique-id
-
-      - name: Set env vars
-        run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            OS_NULL="nul"
-          else
-            OS_NULL="/dev/null"
-          fi
-          echo "os_null=$OS_NULL" >> $GITHUB_ENV
-
-          echo "unique-id=${{ steps.unique-id.outputs.unique_id }}" >> $GITHUB_ENV
-          echo "unique-id-no-os=${{ steps.unique-id.outputs.unique_id_no_os }}" >> $GITHUB_ENV
+        with:
+          set-env-context: true
 
       - name: Run example(s)
         working-directory: latex-examples
@@ -73,11 +62,11 @@ jobs:
       - name: Archive per OS
         uses: actions/upload-artifact@v3
         with:
-          name: latex-examples-${{ env.unique_id }}
+          name: latex-examples-${{ env.unique-id }}
           path: latex-examples
 
       - name: Archive
         uses: actions/upload-artifact@v3
         with:
-          name: latex-examples-${{ env.unique_id_no_os }}
+          name: latex-examples-${{ env.unique-id-no-os }}
           path: latex-examples
