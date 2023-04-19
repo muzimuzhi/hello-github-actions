@@ -70,8 +70,14 @@ jobs:
             done
           done
 
-      - name: Archive
+      - name: Archive per OS
         uses: actions/upload-artifact@v3
         with:
           name: latex-examples-${{ env.unique_id }}
+          path: latex-examples
+
+      - name: Archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: latex-examples-${{ env.unique_id_no_os }}
           path: latex-examples
