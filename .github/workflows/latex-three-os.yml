@@ -38,7 +38,7 @@ jobs:
 
       - name: Generate unique ID
         id: unique-id
-        uses: ./.github/actions/unique-id.yml
+        uses: ./.github/actions/unique-id
 
       - name: Set env vars
         run: |
