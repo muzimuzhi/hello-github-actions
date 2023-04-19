@@ -1,0 +1,30 @@
+# https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+name: Generate unique ID
+
+outputs:
+  os:
+    description: "Context \"runner.os\" in lowercase"
+    value: ${{ steps.run.outputs.os }}
+  unique_id_no_os:
+    description: "A unique id per commit and run attempt, \"<sha1>[-<run>]\""
+    value: ${{ steps.run.outputs.unique-id-no-os }}
+  unique_id:
+    description: "A unique id per OS, commit, and run attempt \"<os>-<sha1>[-<run>]\""
+    value: ${{ steps.run.outputs.unique-id }}
+
+runs:
+  using: "composite"
+  steps:
+    - id: run
+      shell: bash
+      run: |
+        OS=$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]')
+        SHA1_SHORT=$(git rev-parse --short HEAD)
+        if [[ "${{ github.run_attempt }}" -eq 1 ]]; then
+          ID_NO_OS="$SHA1_SHORT"
+        else
+          ID_NO_OS="$SHA1_SHORT-${{ github.run_attempt }}"
+        fi
+        echo "os=$OS" >> $GITHUB_ENV
+        echo "unique_id_no_os=$ID_NO_OS" >> $GITHUB_ENV
+        echo "unique_id=$OS-$ID_NO_OS" >> $GITHUB_ENV

@@ -36,26 +36,21 @@ jobs:
             xetex
           update-all-packages: true
 
+      - name: Generate unique ID
+        id: unique-id
+        uses: ./.github/actions/unique-id.yml
+
       - name: Set env vars
         run: |
-          # env.os_null
-          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
             OS_NULL="nul"
           else
             OS_NULL="/dev/null"
           fi
           echo "os_null=$OS_NULL" >> $GITHUB_ENV
 
-          # env.unique_id
-          OS_SHORT=${{ matrix.os }}
-          OS_SHORT=${OS_SHORT/-latest/}
-          SHA1_SHORT=$(git rev-parse --short HEAD)
-          if [[ "${{ github.run_attempt }}" -eq 1 ]]; then
-            ID="$OS_SHORT-$SHA1_SHORT"
-          else
-            ID="$OS_SHORT-$SHA1_SHORT-${{ github.run_attempt }}"
-          fi
-          echo "unique_id=$ID" >> $GITHUB_ENV
+          echo "unique-id=${{ steps.unique-id.outputs.unique_id }}" >> $GITHUB_ENV
+          echo "unique-id-no-os=${{ steps.unique-id.outputs.unique_id_no_os }}" >> $GITHUB_ENV
 
       - name: Run example(s)
         working-directory: latex-examples
