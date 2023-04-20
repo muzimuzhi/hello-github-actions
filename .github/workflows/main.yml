@@ -12,7 +12,6 @@ on:
 
 jobs:
   build:
-    if: false
     name: Hello world action
     runs-on: ubuntu-latest
     steps:
