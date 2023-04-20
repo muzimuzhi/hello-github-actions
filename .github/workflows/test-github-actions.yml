@@ -1,10 +1,14 @@
-name: Testing GitHub Actions itself
+name: Test GitHub Actions itself
 
 on: 
   push:
     branches-ignore:
       - 'self/**' # "**"" also matches remaining "/"
+    paths:
+      - '.github/workflows/test-github-actions.yml'
   pull_request:
+    paths:
+      - '.github/workflows/test-github-actions.yml'
   workflow_dispatch:
 
 jobs:
