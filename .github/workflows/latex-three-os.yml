@@ -4,7 +4,13 @@ on:
   push:
     branches-ignore:
       - 'self/**' # "**"" also matches remaining "/"
+    paths:
+      - 'latex-examples'
+      - '.github/workflows/latex-three-os.yml'
   pull_request:
+    paths:
+      - 'latex-examples'
+      - '.github/workflows/latex-three-os.yml'
   workflow_dispatch:
 
 defaults:
@@ -13,7 +19,6 @@ defaults:
 
 jobs:
   run-on-three-os:
-    if: false
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
