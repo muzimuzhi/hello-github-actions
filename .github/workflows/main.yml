@@ -1,7 +1,14 @@
 name: A workflow for my Hello World file
 on: 
-  - push
-  - workflow_dispatch
+  push:
+    branches-ignore:
+      - 'self/**'
+    paths:
+      - '.github/workflows/main.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/main.yml'
+  workflow_dispatch:
 
 jobs:
   build:
