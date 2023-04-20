@@ -36,33 +36,17 @@ jobs:
             xetex
           update-all-packages: true
 
-      - name: Set env vars
-        run: |
-          # env.os_null
-          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            OS_NULL="nul"
-          else
-            OS_NULL="/dev/null"
-          fi
-          echo "os_null=$OS_NULL" >> $GITHUB_ENV
-
-          # env.unique_id
-          OS_SHORT=${{ matrix.os }}
-          OS_SHORT=${OS_SHORT/-latest/}
-          SHA1_SHORT=$(git rev-parse --short HEAD)
-          if [[ "${{ github.run_attempt }}" -eq 1 ]]; then
-            ID="$OS_SHORT-$SHA1_SHORT"
-          else
-            ID="$OS_SHORT-$SHA1_SHORT-${{ github.run_attempt }}"
-          fi
-          echo "unique_id=$ID" >> $GITHUB_ENV
+      - name: Generate unique ID
+        uses: ./.github/actions/unique-id
+        with:
+          set-env-context: true
 
       - name: Run example(s)
         working-directory: latex-examples
         run: |
           for file in $(ls *.tex); do
             for engine in pdflatex lualatex xelatex; do
-              $engine $file > "${{ env.os_null }}"
+              $engine -jobname=${file/%.tex}-${{ env.os }}-${engine/la/} $file > /dev/null
 
               # # use "%0A" to throw a multiline warning
               # # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
@@ -75,8 +59,14 @@ jobs:
             done
           done
 
+      - name: Archive per OS
+        uses: actions/upload-artifact@v3
+        with:
+          name: latex-examples-${{ env.unique-id }}
+          path: latex-examples
+
       - name: Archive
         uses: actions/upload-artifact@v3
         with:
-          name: latex-examples-${{ env.unique_id }}
+          name: latex-examples-${{ env.unique-id-no-os }}
           path: latex-examples
