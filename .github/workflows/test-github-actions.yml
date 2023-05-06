@@ -23,3 +23,15 @@ jobs:
       - name: Run dummy commands
         run: |
           echo "Hello GitHub Actions"
+
+      - name: Run dummy commands
+        run: |
+          echo "Hello GitHub Actions"
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: a.txt
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: a.txt
