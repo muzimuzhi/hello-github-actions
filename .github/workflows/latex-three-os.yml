@@ -42,12 +42,18 @@ jobs:
         with:
           set-env-context: true
 
+      - name: LuaTeX font cache - before
+        continue-on-error: true
+        run: |
+          kpsewhich --var-value TEXMFVAR
+          ls $(kpsewhich --var-value TEXMFVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
+
       - name: Run example(s)
         working-directory: latex-examples
         run: |
           set -x
           for file in $(ls *.tex); do
-            for engine in pdflatex lualatex xelatex; do
+            for engine in lualatex; do
               latexmk -$engine -jobname=${file/%.tex}-${{ env.os }}-${engine/la/} $file
 
               # # use "%0A" to throw a multiline warning
@@ -60,6 +66,11 @@ jobs:
               # echo "::warning file=$file-$engine*.log,line=1,col=1,endColumn=2::$log_filtered"
             done
           done
+
+      - name: LuaTeX font cache - after
+        continue-on-error: true
+        run: |
+          ls $(kpsewhich --var-value TEXMFVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
 
       - name: Archive per OS
         uses: actions/upload-artifact@v3
