@@ -45,6 +45,7 @@ jobs:
       - name: Run example(s)
         working-directory: latex-examples
         run: |
+          set -x
           for file in $(ls *.tex); do
             for engine in pdflatex lualatex xelatex; do
               latexmk -$engine -jobname=${file/%.tex}-${{ env.os }}-${engine/la/} $file
