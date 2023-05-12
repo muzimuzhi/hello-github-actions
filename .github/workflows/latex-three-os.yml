@@ -53,7 +53,7 @@ jobs:
       - name: Generate LuaTeX font cache
         if: runner.os == 'Windows'
         run: |
-          luaotfload --update
+          luaotfload-tool --update
           ls $(kpsewhich --var-value TEXMFSYSVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
 
       - name: Run example(s)
