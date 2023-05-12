@@ -46,7 +46,8 @@ jobs:
         continue-on-error: true
         run: |
           kpsewhich --var-value TEXMFVAR
-          ls $(kpsewhich --var-value TEXMFVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
+          kpsewhich --var-value TEXMFSYSVAR
+          ls $(kpsewhich --var-value TEXMFSYSVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
 
       - name: Run example(s)
         working-directory: latex-examples
@@ -70,7 +71,7 @@ jobs:
       - name: LuaTeX font cache - after
         continue-on-error: true
         run: |
-          ls $(kpsewhich --var-value TEXMFVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
+          ls $(kpsewhich --var-value TEXMFSYSVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
 
       - name: Archive per OS
         uses: actions/upload-artifact@v3
