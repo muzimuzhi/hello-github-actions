@@ -45,8 +45,14 @@ jobs:
       - name: LuaTeX font cache - before
         continue-on-error: true
         run: |
-          kpsewhich --var-value TEXMFVAR
-          kpsewhich --var-value TEXMFSYSVAR
+          # kpsewhich --var-value TEXMFVAR
+          # kpsewhich --var-value TEXMFSYSVAR
+          ls $(kpsewhich --var-value TEXMFSYSVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
+
+      - name: Generate LuaTeX font cache
+        if: runner.os == 'Windows'
+        run: |
+          luaotfload --update
           ls $(kpsewhich --var-value TEXMFSYSVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
 
       - name: Run example(s)
