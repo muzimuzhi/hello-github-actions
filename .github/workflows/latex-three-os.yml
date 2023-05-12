@@ -46,7 +46,7 @@ jobs:
         run: |
           for file in $(ls *.tex); do
             for engine in pdflatex lualatex xelatex; do
-              $engine -jobname=${file/%.tex}-${{ env.os }}-${engine/la/} $file > /dev/null
+              $engine -jobname=${file/%.tex}-${{ env.os }}-${engine/la/} $file
 
               # # use "%0A" to throw a multiline warning
               # # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
