@@ -3,7 +3,7 @@ name: Test LaTeX
 on: 
   push:
     branches-ignore:
-      - 'self/**' # "**"" also matches remaining "/"
+      - 'self/**' # "**" also matches remaining "/"
     paths:
       - 'latex-examples'
       - '.github/workflows/latex-three-os.yml'

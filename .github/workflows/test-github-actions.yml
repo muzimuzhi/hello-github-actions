@@ -3,7 +3,7 @@ name: Test GitHub Actions itself
 on: 
   push:
     branches-ignore:
-      - 'self/**' # "**"" also matches remaining "/"
+      - 'self/**' # "**" also matches remaining "/"
     paths:
       - '.github/workflows/test-github-actions.yml'
   pull_request:
