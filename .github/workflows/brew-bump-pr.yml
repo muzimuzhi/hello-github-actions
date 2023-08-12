@@ -12,13 +12,13 @@ on:
         options:
           - 'bump-formula-pr'
           - 'bump-cask-pr'
-      cask:
-        description: 'Name of cask'
+      formula_or_cask:
+        description: 'Name of formula or cask'
         required: false
         default: 'texstudio'
         type: string
       version:
-        description: 'New version for the cask'
+        description: 'New version'
         required: true
         type: string
 
@@ -34,4 +34,4 @@ jobs:
           git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
 
           brew update
-          brew bump-cask-pr --version=${{ inputs.version }} ${{ inputs.cask }}
+          brew bump-cask-pr --version=${{ inputs.version }} ${{ inputs.formula_or_cask }}
