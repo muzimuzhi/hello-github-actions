@@ -1,6 +1,9 @@
 name: Bump a Homebrew Formula/Cask
-# https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
-run-name: ${{ inputs.formula_or_cask }} ${{ inputs.version }}
+# example: 'Bump texstudio cask to 5.0.0'
+run-name: >-
+  Bump ${{ inputs.name }}
+  ${{ inputs.command == 'bump-formula-pr' && 'formula' || 'cask' }}
+  to ${{ inputs.version }}
 
 on:
   workflow_dispatch:
@@ -13,7 +16,7 @@ on:
         options:
           - 'bump-formula-pr'
           - 'bump-cask-pr'
-      formula_or_cask:
+      name:
         description: 'Name of formula or cask'
         required: false
         default: 'texstudio'
@@ -35,4 +38,5 @@ jobs:
           git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
 
           brew update
-          brew bump-cask-pr --version=${{ inputs.version }} ${{ inputs.formula_or_cask }}
+          # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
+          brew bump-cask-pr --version=${{ inputs.version }} ${{ inputs.name }}
