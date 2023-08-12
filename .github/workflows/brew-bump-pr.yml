@@ -1,5 +1,6 @@
 name: Bump a Homebrew Formula/Cask
 # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
+run-name: ${{ inputs.formula_or_cask }} ${{ inputs.version }}
 
 on:
   workflow_dispatch:
