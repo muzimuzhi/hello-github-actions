@@ -31,9 +31,11 @@ jobs:
       - name: Install texlive
         uses: teatimeguest/setup-texlive-action@v2
         with:
+          cache: false
           packages: >-
             scheme-basic
             xetex
+            latexmk
           update-all-packages: true
 
       - name: Generate unique ID
@@ -41,12 +43,26 @@ jobs:
         with:
           set-env-context: true
 
+      - name: LuaTeX font cache - before
+        continue-on-error: true
+        run: |
+          # kpsewhich --var-value TEXMFVAR
+          # kpsewhich --var-value TEXMFSYSVAR
+          ls $(kpsewhich --var-value TEXMFSYSVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
+
+      - name: Generate LuaTeX font cache
+        if: runner.os == 'Windows'
+        run: |
+          luaotfload-tool --update
+          ls $(kpsewhich --var-value TEXMFSYSVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
+
       - name: Run example(s)
         working-directory: latex-examples
         run: |
+          set -x
           for file in $(ls *.tex); do
-            for engine in pdflatex lualatex xelatex; do
-              $engine -jobname=${file/%.tex}-${{ env.os }}-${engine/la/} $file
+            for engine in lualatex; do
+              latexmk -$engine -jobname=${file/%.tex}-${{ env.os }}-${engine/la/} $file
 
               # # use "%0A" to throw a multiline warning
               # # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
@@ -58,6 +74,11 @@ jobs:
               # echo "::warning file=$file-$engine*.log,line=1,col=1,endColumn=2::$log_filtered"
             done
           done
+
+      - name: LuaTeX font cache - after
+        continue-on-error: true
+        run: |
+          ls $(kpsewhich --var-value TEXMFSYSVAR)/luatex-cache/generic/fonts/otl/lmroman10-regular.*
 
       - name: Archive per OS
         uses: actions/upload-artifact@v3
