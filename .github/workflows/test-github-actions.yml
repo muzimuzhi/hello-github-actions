@@ -25,5 +25,7 @@ jobs:
           echo "Hello GitHub Actions"
 
       - uses: actions/upload-artifact@v3
-        with:
-          path: README.md
+        # input `path` is required, see
+        # https://github.com/actions/upload-artifact/blob/a8a3f3ad30e3422c9c7b888a15615d19a852ae32/action.yml
+        env:
+          INPUT_PATH: README.md
