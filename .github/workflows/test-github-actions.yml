@@ -39,6 +39,6 @@ jobs:
           script: |
             console.log("VAR = " + process.env['VAR'])
             console.log("INPUT_VAR = " + process.env['INPUT_VAR'])
-            
-            const var = core.getInput('var', {required: true})
-            console.log("var = " + var)
+
+            const input = core.getInput('var', {required: true})
+            console.log("var = " + input)
