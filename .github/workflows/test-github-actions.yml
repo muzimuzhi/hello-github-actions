@@ -23,3 +23,24 @@ jobs:
       - name: Run dummy commands
         run: |
           echo "Hello GitHub Actions"
+
+      - uses: actions/upload-artifact@v3
+        # input `path` is required, see
+        # https://github.com/actions/upload-artifact/blob/a8a3f3ad30e3422c9c7b888a15615d19a852ae32/action.yml
+        with:
+          path: README.md
+        env:
+          INPUT_NAME: another-name
+
+      # used by pgf, https://github.com/pgf-tikz/pgf/blob/6e5fd71581ab04351a89553a259b57988bc28140/.github/workflows/main.yml#L91
+      # - uses: actions/github-script@v6
+      #   env:
+      #     VAR: raw_var
+      #     INPUT_VAR: input_var
+      #   with:
+      #     script: |
+      #       console.log("VAR = " + process.env['VAR'])
+      #       console.log("INPUT_VAR = " + process.env['INPUT_VAR'])
+
+      #       const input = core.getInput('var', {required: true})
+      #       console.log("var = " + input)
