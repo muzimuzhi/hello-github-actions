@@ -48,10 +48,10 @@ jobs:
         run: |
           latexdef c_sys_platform_str
 
-          tlmgr install --reinstall latex
-          Write-Output "`n"
+          # tlmgr install --reinstall latex
+          # latexdef c_sys_platform_str
 
-          latexdef c_sys_platform_str
+          pdflatex simple.tex
 
       - name: Archive per OS
         uses: actions/upload-artifact@v3

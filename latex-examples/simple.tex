@@ -1,4 +1,7 @@
 \documentclass{article}
 \begin{document}
-content
+\ExplSyntaxOn
+\PackageWarning {warning}
+  { nul:~ \file_if_exist:nTF { nul: } { exists } { doesn't~ exist } }
+\ExplSyntaxOff
 \end{document}
