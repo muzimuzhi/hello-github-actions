@@ -46,14 +46,11 @@ jobs:
         shell: pwsh
         working-directory: latex-examples
         run: |
-          Write-Output "\c_sys_platform_str = "
           latexdef c_sys_platform_str
-          Write-Output "`n`n"
 
-          tlmgr install --reinstall l3kernel
-          Write-Output "`n`n"
+          tlmgr install --reinstall latex
+          Write-Output "`n"
 
-          Write-Output "\c_sys_platform_str = "
           latexdef c_sys_platform_str
 
       - name: Archive per OS
