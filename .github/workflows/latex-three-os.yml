@@ -51,7 +51,7 @@ jobs:
           # tlmgr install --reinstall latex
           # latexdef c_sys_platform_str
 
-          pdflatex simple.tex
+          pdflatex -shell-escape simple.tex
 
       - name: Archive per OS
         uses: actions/upload-artifact@v3

@@ -1,7 +1,21 @@
 \documentclass{article}
 \begin{document}
 \ExplSyntaxOn
+% does nul: exist?
 \PackageWarning {warning}
   { nul:~ \file_if_exist:nTF { nul: } { exists } { doesn't~ exist } }
+\ExplSyntaxOff
+
+% get current shell
+% ref: https://stackoverflow.com/a/61469226
+% result is one of: CMD, Core, and Desktop
+\begingroup
+\catcode`\#=\the\catcode`\a
+\xdef\x{\detokenize{(dir 2>&1 *`|echo CMD);&<# rem #>echo ($PSVersionTable).PSEdition}}
+\endgroup
+
+\ExplSyntaxOn
+\sys_get_shell:nnN {\x} {} \l_tmpa_tl
+\PackageWarning {debug} { Current~ shell~ is~ \l_tmpa_tl }
 \ExplSyntaxOff
 \end{document}
