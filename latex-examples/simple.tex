@@ -15,7 +15,7 @@
 \endgroup
 
 \ExplSyntaxOn
-\sys_get_shell:nnN {\x} {} \l_tmpa_tl
+\exp_args:No \sys_get_shell:nnN {\x} {} \l_tmpa_tl
 \PackageWarning {debug} { Current~ shell~ is~ \l_tmpa_tl }
 \ExplSyntaxOff
 \end{document}
