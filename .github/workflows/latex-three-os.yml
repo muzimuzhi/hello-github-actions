@@ -21,7 +21,7 @@ jobs:
   run-on-three-os:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -34,6 +34,7 @@ jobs:
           packages: >-
             scheme-basic
             xetex
+            texdef
           update-all-packages: true
 
       - name: Generate unique ID
@@ -42,22 +43,18 @@ jobs:
           set-env-context: true
 
       - name: Run example(s)
+        shell: pwsh
         working-directory: latex-examples
         run: |
-          for file in $(ls *.tex); do
-            for engine in pdflatex lualatex xelatex; do
-              $engine -jobname=${file/%.tex}-${{ env.os }}-${engine/la/} $file
+          Write-Output "\c_sys_platform_str = "
+          latexdef c_sys_platform_str
+          Write-Output "`n`n"
 
-              # # use "%0A" to throw a multiline warning
-              # # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
-              # log_filtered=$(\
-              #   grep -rh "\[debug\] " *.log | \
-              #   awk 'BEGIN {RS=""}{gsub(/\n/,"%0A",$0); print $0}' \
-              # )
-              # # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message
-              # echo "::warning file=$file-$engine*.log,line=1,col=1,endColumn=2::$log_filtered"
-            done
-          done
+          tlmgr install --reinstall l3kernel
+          Write-Output "`n`n"
+
+          Write-Output "\c_sys_platform_str = "
+          latexdef c_sys_platform_str
 
       - name: Archive per OS
         uses: actions/upload-artifact@v3
