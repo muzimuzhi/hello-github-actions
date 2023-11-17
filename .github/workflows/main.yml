@@ -18,8 +18,8 @@ jobs:
 
       - name: Install Noto fonts
         run: |
-          Invoke-WebRequest -Uri ${{ env.NOTO_SERIF_URL }} -OutFile NotoSerifCJK-OTC.zip
-          unzip NotoSerifCJK-OTC.zip "*.ttc"
+          Invoke-WebRequest -Uri ${{ env.NOTO_SERIF_URL }} -OutFile NotoSansCJK-OTC.zip
+          unzip NotoSansCJK-OTC.zip "*.ttc"
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
           NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
