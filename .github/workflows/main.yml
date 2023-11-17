@@ -21,9 +21,7 @@ jobs:
           Invoke-WebRequest -Uri ${{ env.NOTO_SANS_URL }}  -OutFile NotoSansCJK-OTC.zip
           Invoke-WebRequest -Uri ${{ env.NOTO_SERIF_URL }} -OutFile NotoSerifCJK-OTC.zip
           Get-ChildItem "*.zip"
-          unzip -ojd C:\Windows\Fonts\ NotoSerifCJK-OTC.zip "*.ttc"
-          unzip -l NotoSerifCJK-OTC.zip
-          unzip -ojd C:\Windows\Fonts\ NotoSansCJK-OTC.zip "*.ttc"
+          unzip -ojd C:\Windows\Fonts NotoSerifCJK-OTC.zip "*.ttc"
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
           NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
