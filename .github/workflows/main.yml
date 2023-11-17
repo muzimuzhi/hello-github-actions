@@ -1,4 +1,4 @@
-name: A workflow for my Hello World file
+name: Unzip in powershell
 on: 
   push:
     branches-ignore:
@@ -11,11 +11,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Hello world action
-    runs-on: ubuntu-latest
+  build-windows:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./action-a
-        with:
-          MY_NAME: "Mona"
+
+      - name: Install Noto fonts
+        run: |
+          Invoke-WebRequest -Uri ${{ env.NOTO_SANS_URL }}  -OutFile NotoSansCJK-OTC.zip
+          Invoke-WebRequest -Uri ${{ env.NOTO_SERIF_URL }} -OutFile NotoSerifCJK-OTC.zip
+          Get-ChildItem "*.zip"
+          unzip -ojd C:\Windows\Fonts\ "*OTC.zip" "*.ttc"
+        env:
+          NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
+          NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
