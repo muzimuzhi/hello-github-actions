@@ -18,11 +18,12 @@ jobs:
 
       - name: Install Noto fonts
         run: |
-          ${env:PATH} = "D:\a\${{ github.repository }};" + ${env:PATH}
-          Invoke-WebRequest -Uri ${{ env.NOTO_SANS_URL }}  -OutFile NotoSansCJK-OTC.zip
           Invoke-WebRequest -Uri ${{ env.NOTO_SERIF_URL }} -OutFile NotoSerifCJK-OTC.zip
           Get-ChildItem "*.zip"
-          unzip -ojd . NotoSerifCJK-OTC.zip "*.ttc"
+          Write-Host ""
+          unzip -l NotoSerifCJK-OTC.zip
+          Write-Host ""
+          unzip NotoSerifCJK-OTC.zip
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
           NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
