@@ -21,6 +21,8 @@ jobs:
           Invoke-WebRequest -Uri ${{ env.NOTO_SERIF_URL }} -OutFile NotoSansCJK-OTC.zip
           unzip -h
           Write-Host ""
+          unzip -l NotoSansCJK-OTC.zip
+          Write-Host ""
           unzip NotoSansCJK-OTC.zip NotoSansCJK-Regular.ttc
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
