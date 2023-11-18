@@ -17,22 +17,12 @@ jobs:
       # - uses: actions/checkout@v4
 
       - name: Install Noto fonts
+        # see https://github.com/texstudio-org/texstudio/blob/master/.github/workflows/cd.yml
+        shell: msys2 {0}
         run: |
-          Set-StrictMode -Version Latest
-
-          Invoke-WebRequest -Uri ${{ env.NOTO_SANS_URL }} -OutFile NotoSansCJK-OTC.zip
-          Invoke-WebRequest -Uri ${{ env.NOTO_SERIF_URL }} -OutFile NotoSerifCJK-OTC.zip
-
-          unzip -l NotoSerifCJK-OTC.zip
-          Write-Host ""
-          unzip -jo NotoSerifCJK-OTC.zip "**.ttc"
-          Write-Host ""
-          unzip -jo NotoSerifCJK-OTC.zip "*/*.ttc"
-          Write-Host ""
-
-          unzip -l NotoSansCJK-OTC.zip
-          Write-Host ""
-          unzip -jo NotoSansCJK-OTC.zip "*.ttc"
+          curl -LO ${{ env.NOTO_SANS_URL }}
+          curl -LO ${{ env.NOTO_SERIF_URL }}
+          unzip -ojd /Library/Fonts/ "*OTC.zip" "*.ttc"
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
           NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
