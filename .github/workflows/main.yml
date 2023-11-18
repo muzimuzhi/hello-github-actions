@@ -23,7 +23,7 @@ jobs:
           curl -LO ${{ env.NOTO_SANS_URL }}
           curl -LO ${{ env.NOTO_SERIF_URL }}
           where unzip
-          unzip -ojd . "*OTC.zip" "*.ttc"
+          unzip -ojd . '*OTC.zip' "*.ttc"
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
           NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
