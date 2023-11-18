@@ -32,7 +32,7 @@ jobs:
           ls /d/a/_temp/setup-texlive-action/2023/bin/windows
           # which unzip
           
-          ls c/Windows
+          ls /c/Windows
 
       - name: Install Noto fonts
         # see https://github.com/texstudio-org/texstudio/blob/master/.github/workflows/cd.yml
@@ -45,7 +45,7 @@ jobs:
           unzip -l NotoSansCJK-OTC.zip
           unzip -l NotoSerifCJK-OTC.zip
           echo ""
-          unzip -ojd c/Windows/Fonts "*-OTC.zip" "*.ttc"
+          unzip -ojd /c/Windows/Fonts "*-OTC.zip" "*.ttc"
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
           NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
