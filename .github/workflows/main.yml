@@ -26,7 +26,7 @@ jobs:
           where unzip
           unzip -ojd . 03_NotoSansCJK-OTC.zip "**.ttc"
           unzip -l 04_NotoSerifCJKOTC.zip
-          unzip -ojd . 04_NotoSerifCJKOTC.zip "OTC/NotoSerifCJK-*.ttc"
+          unzip -ojd . 04_NotoSerifCJKOTC.zip "**Serif*.ttc"
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
           NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
