@@ -24,8 +24,12 @@ jobs:
       - name: Play with texlive bin dir
         shell: C:\msys64\usr\bin\bash.exe -e {0}
         run: |
+          # paths joined by ":"
+          # $PATH already starts with "/d/a/_temp/setup-texlive-action/2023/bin/windows:"
           echo $PATH
-          du -hd 2 ${{ runner.temp }}/setup-texlive-action
+          # ah, runner.temp is in win style, but msys2bash uses a unix style
+          ls /d/a/_temp/setup-texlive-action/2023/bin/windows
+          which unzip
 
       - name: Install Noto fonts
         # see https://github.com/texstudio-org/texstudio/blob/master/.github/workflows/cd.yml
