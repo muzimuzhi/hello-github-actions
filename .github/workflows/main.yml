@@ -18,12 +18,16 @@ jobs:
 
       - name: Install Noto fonts
         run: |
+          Set-StrictMode -Version Latest
+
           Invoke-WebRequest -Uri ${{ env.NOTO_SANS_URL }} -OutFile NotoSansCJK-OTC.zip
           Invoke-WebRequest -Uri ${{ env.NOTO_SERIF_URL }} -OutFile NotoSerifCJK-OTC.zip
 
           unzip -l NotoSerifCJK-OTC.zip
           Write-Host ""
-          unzip NotoSerifCJK-OTC.zip "*\*.ttc"
+          unzip NotoSerifCJK-OTC.zip "**.ttc"
+          Write-Host ""
+          unzip NotoSerifCJK-OTC.zip "*/*.ttc"
           Write-Host ""
 
           unzip -l NotoSansCJK-OTC.zip
