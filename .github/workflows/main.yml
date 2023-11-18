@@ -20,13 +20,13 @@ jobs:
         # see https://github.com/texstudio-org/texstudio/blob/master/.github/workflows/cd.yml
         shell: C:\msys64\usr\bin\bash.exe -e {0}
         run: |
-          curl -LO ${{ env.NOTO_SANS_URL }}
-          curl -LO ${{ env.NOTO_SERIF_URL }}
+          curl -Lo NotoSansCJK-OTC.zip ${{ env.NOTO_SANS_URL }}
+          curl -Lo NotoSerifCJK-OTC.zip ${{ env.NOTO_SERIF_URL }}
           ls -al *.zip
           where unzip
-          unzip -ojd . 03_NotoSansCJK-OTC.zip "**.ttc"
-          unzip -l 04_NotoSerifCJKOTC.zip
-          unzip -ojd . 04_NotoSerifCJKOTC.zip "**Serif*.ttc"
+          unzip -ojd . NotoSansCJK-OTC.zip "**.ttc"
+          unzip -l NotoSerifCJK-OTC.zip
+          unzip -ojd . NotoSerifCJK-OTC.zip "**Serif*.ttc"
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
           NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
