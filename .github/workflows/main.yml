@@ -18,7 +18,7 @@ jobs:
 
       - name: Install Noto fonts
         # see https://github.com/texstudio-org/texstudio/blob/master/.github/workflows/cd.yml
-        shell: msys2 {0}
+        shell: C:\msys64\usr\bin\bash.exe -e {0}
         run: |
           curl -LO ${{ env.NOTO_SANS_URL }}
           curl -LO ${{ env.NOTO_SERIF_URL }}
