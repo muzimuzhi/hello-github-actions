@@ -25,7 +25,7 @@ jobs:
           where unzip
           echo ""
           unzip -l NotoSansCJK-OTC.zip
-          unzip -ojd . NotoSansCJK-OTC.zip "**.ttc"
+          unzip -ojd . NotoSansCJK-OTC.zip "**Sans*.ttc"
           echo ""
           unzip -l NotoSerifCJK-OTC.zip
           unzip -ojd . NotoSerifCJK-OTC.zip "**Serif*.ttc"
