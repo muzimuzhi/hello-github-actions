@@ -40,10 +40,9 @@ jobs:
           where unzip
           echo ""
           unzip -l NotoSansCJK-OTC.zip
-          unzip -ojd . NotoSansCJK-OTC.zip "**Sans*.ttc"
-          echo ""
           unzip -l NotoSerifCJK-OTC.zip
-          unzip -ojd . NotoSerifCJK-OTC.zip "**Serif*.ttc"
+          echo ""
+          unzip -ojd c/Windows/Fonts "*-OTC.zip" "*.ttc"
         env:
           NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
           NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
