@@ -22,6 +22,7 @@ jobs:
         run: |
           curl -LO ${{ env.NOTO_SANS_URL }}
           curl -LO ${{ env.NOTO_SERIF_URL }}
+          ls -al *.zip
           where unzip
           unzip -ojd . 03_NotoSansCJK-OTC.zip "*.ttc"
           unzip -ojd . 04_NotoSerifCJK-OTC.zip "*.ttc"
