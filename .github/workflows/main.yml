@@ -19,7 +19,7 @@ jobs:
       - name: Install TeX Live
         uses: teatimeguest/setup-texlive-action@v3
         with:
-          packages: amsmath
+          packages: amsmath collection-wintools
 
       - name: Play with texlive bin dir
         shell: C:\msys64\usr\bin\bash.exe -e {0}
