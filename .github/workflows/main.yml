@@ -22,9 +22,11 @@ jobs:
         run: |
           curl -Lo NotoSansCJK-OTC.zip ${{ env.NOTO_SANS_URL }}
           curl -Lo NotoSerifCJK-OTC.zip ${{ env.NOTO_SERIF_URL }}
-          ls -al *.zip
           where unzip
+          echo ""
+          unzip -l NotoSansCJK-OTC.zip
           unzip -ojd . NotoSansCJK-OTC.zip "**.ttc"
+          echo ""
           unzip -l NotoSerifCJK-OTC.zip
           unzip -ojd . NotoSerifCJK-OTC.zip "**Serif*.ttc"
         env:
