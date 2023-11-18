@@ -16,6 +16,17 @@ jobs:
     steps:
       # - uses: actions/checkout@v4
 
+      - name: Install TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
+        with:
+          packages: amsmath
+
+      - name: Play with texlive bin dir
+        shell: C:\msys64\usr\bin\bash.exe -e {0}
+        run: |
+          echo $PATH
+          du -hd 2 ${{ runner.temp }}/setup-texlive-action
+
       - name: Install Noto fonts
         # see https://github.com/texstudio-org/texstudio/blob/master/.github/workflows/cd.yml
         shell: C:\msys64\usr\bin\bash.exe -e {0}
