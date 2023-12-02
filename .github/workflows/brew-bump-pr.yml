@@ -39,4 +39,4 @@ jobs:
 
           brew update
           # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
-          brew bump-cask-pr --version=${{ inputs.version }} ${{ inputs.name }}
+          brew bump-cask-pr --no-browse --version=${{ inputs.version }} ${{ inputs.name }}
