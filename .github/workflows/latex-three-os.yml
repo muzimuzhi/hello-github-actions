@@ -23,6 +23,7 @@ jobs:
       matrix:
         # as of 2023-12-02, macos-latest still uses macos-12
         # see https://github.com/actions/runner-images?tab=readme-ov-file#available-images
+        # and https://github.com/actions/runner-images/issues/7508
         # macos-13 is also used in brew-bump-pr.yml
         os: [ubuntu-latest, windows-latest, macos-13]
     runs-on: ${{ matrix.os }}
