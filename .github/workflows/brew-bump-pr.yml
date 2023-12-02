@@ -1,5 +1,5 @@
 name: Bump a Homebrew Formula/Cask
-# example: 'Bump texstudio cask to 5.0.0'
+# example name: 'Bump texstudio cask to 5.0.0'
 run-name: >-
   Bump ${{ inputs.name }}
   ${{ inputs.command == 'bump-formula-pr' && 'formula' || 'cask' }}
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       command:
-        description: 'Homebrew command to run'
+        description: 'Bump subcommand to run'
         required: false
         default: 'bump-cask-pr'
         type: choice
@@ -27,16 +27,26 @@ on:
         type: string
 
 jobs:
-  bump-cask-pr:
+  run-bump:
+    name: ${{ inputs.command }}
+
     runs-on: macos-latest
 
     steps:
-      - name: Run bump command
+      - name: Preparations
         run: |
-          export HOMEBREW_GITHUB_API_TOKEN="${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}"
           git config --global user.name "${{ secrets.GIT_USER_NAME }}"
           git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
-
           brew update
+
+      - name: Run bump subcommand
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
+        run: |
+          # https://docs.brew.sh/Manpage#bump-formula-pr-options-formula
           # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
-          brew bump-cask-pr --no-browse --version=${{ inputs.version }} ${{ inputs.name }}
+          brew ${{ inputs.command }} \
+            --no-browse \
+            ${{ inputs.command == 'bump-formula-pr' && '--online' }} \
+            --version=${{ inputs.version }} \
+            ${{ inputs.name }}
