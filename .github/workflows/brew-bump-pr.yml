@@ -47,6 +47,6 @@ jobs:
           # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
           brew ${{ inputs.command }} \
             --no-browse \
-            ${{ inputs.command == 'bump-formula-pr' && '--online' }} \
+            ${{ inputs.command == 'bump-formula-pr' && '--online' || '' }} \
             --version=${{ inputs.version }} \
             ${{ inputs.name }}
