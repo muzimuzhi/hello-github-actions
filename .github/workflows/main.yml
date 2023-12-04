@@ -1,4 +1,4 @@
-name: A workflow for my Hello World file
+name: Unzip in powershell
 on: 
   push:
     branches-ignore:
@@ -11,11 +11,41 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    name: Hello world action
-    runs-on: ubuntu-latest
+  build-windows:
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./action-a
+      # - uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        uses: teatimeguest/setup-texlive-action@v3
         with:
-          MY_NAME: "Mona"
+          packages: amsmath collection-wintools
+
+      - name: Play with Win
+        shell: C:\msys64\usr\bin\bash.exe -e {0}
+        run: |
+          # paths joined by ":"
+          # $PATH already starts with "/d/a/_temp/setup-texlive-action/2023/bin/windows:"
+          echo $PATH
+          
+          # ah, runner.temp is in win style, but msys2bash uses a unix style
+          ls /d/a/_temp/setup-texlive-action/2023/bin/windows
+          # which unzip
+          
+          ls /c/Windows
+
+      - name: Install Noto fonts
+        # see https://github.com/texstudio-org/texstudio/blob/master/.github/workflows/cd.yml
+        shell: C:\msys64\usr\bin\bash.exe -e {0}
+        run: |
+          curl -Lo NotoSansCJK-OTC.zip ${{ env.NOTO_SANS_URL }}
+          curl -Lo NotoSerifCJK-OTC.zip ${{ env.NOTO_SERIF_URL }}
+          where unzip
+          echo ""
+          unzip -l NotoSansCJK-OTC.zip
+          unzip -l NotoSerifCJK-OTC.zip
+          echo ""
+          unzip -ojd /c/Windows/Fonts "*-OTC.zip" "*.ttc"
+        env:
+          NOTO_SANS_URL: https://github.com/googlefonts/noto-cjk/releases/download/Sans2.004/03_NotoSansCJK-OTC.zip
+          NOTO_SERIF_URL: https://github.com/googlefonts/noto-cjk/releases/download/Serif2.001/04_NotoSerifCJKOTC.zip
