@@ -64,7 +64,7 @@ jobs:
           done
 
       - name: Archive per OS
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: latex-examples-${{ env.unique-id }}
           path: latex-examples
