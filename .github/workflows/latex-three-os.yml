@@ -68,9 +68,3 @@ jobs:
         with:
           name: latex-examples-${{ env.unique-id }}
           path: latex-examples
-
-      - name: Archive
-        uses: actions/upload-artifact@v3
-        with:
-          name: latex-examples-${{ env.unique-id-no-os }}
-          path: latex-examples
