@@ -27,19 +27,19 @@ jobs:
           echo "c blah blah" > temp-c.txt
 
       - name: Upload artifact - a
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: temp-a
           path: ./temp-a.txt
 
       - name: Upload artifact - b
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: temp-b
           path: ./temp-b.txt
 
       - name: Upload artifact - c
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: temp-c
           path: ./temp-c.txt
