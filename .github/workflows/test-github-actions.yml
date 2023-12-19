@@ -13,13 +13,43 @@ on:
 
 jobs:
   test:
-    name: Hello
+
+    name: Delete artifacts
 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Run dummy commands
+      - name: Preperation
+        shell: bash
         run: |
-          echo "Hello GitHub Actions"
+          echo "a blah blah" > temp-a.txt
+          echo "b blah blah" > temp-b.txt
+          echo "c blah blah" > temp-c.txt
+
+      - name: Upload artifact - a
+        uses: actions/upload-artifact@v3
+        with:
+          name: temp-a
+          path: ./temp-a.txt
+
+      - name: Upload artifact - b
+        uses: actions/upload-artifact@v3
+        with:
+          name: temp-b
+          path: ./temp-b.txt
+
+      - name: Upload artifact - c
+        uses: actions/upload-artifact@v3
+        with:
+          name: temp-c
+          path: ./temp-c.txt
+
+      - name: Delete an artifact
+        uses: GeekyEggo/delete-artifact@v2
+        with:
+          name: temp-a
+
+      - name: Delete multiple artifacts
+        uses: GeekyEggo/delete-artifact@v2
+        with:
+          name: temp-*
