@@ -78,18 +78,20 @@ jobs:
           set -e
           export GH_REPO="${{ github.repository }}"
 
-          artifacts=$(gh api \
-              /repos/{owner}/{repo}/actions/runs/${{ github.run_id }}/artifacts | \
-                  jq --raw-output '.artifacts[] | [.name, .id] | @tsv')
+          artifacts=$(
+            gh api \
+                /repos/{owner}/{repo}/actions/runs/${{ github.run_id }}/artifacts |
+            jq --raw-output '.artifacts[] | [.name, .id] | @tsv'
+          )
 
           echo "$artifacts" | while IFS=$'\t' read -r name id; do
               if [[ $name == temp-* ]]; then
                   gh api \
                       --method DELETE \
                       /repos/{owner}/{repo}/actions/artifacts/"$id"
-                  echo Artifact \""$name"\" with id "$id" deleted.
+                  echo Deleted artifact \""$name"\" with id "$id".
               else
-                  echo Artifact \""$name"\" with id "$id" skipped.
+                  echo Skipped artifact \""$name"\" "(""$id""")".
               fi
           done
         env:
