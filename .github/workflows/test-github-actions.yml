@@ -65,6 +65,7 @@ jobs:
           name: temp-*
 
       # gh api https://cli.github.com/manual/gh_api
+      # GH_PAGER, GH_REPO https://cli.github.com/manual/gh_help_environment
       # jq https://jqlang.github.io/jq/manual
       # github rest api
       # - list workflow run artifacts
@@ -75,16 +76,17 @@ jobs:
         run: |
           set -e
           export GH_PAGER=
+          export GH_REPO="${{ github.repository }}"
 
           artifacts=$(gh api \
-              /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts | \
+              /repos/{owner}/{repo}/actions/runs/${{ github.run_id }}/artifacts | \
                   jq --raw-output '.artifacts[] | [.name, .id] | @tsv')
 
           echo "$artifacts" | while IFS=$'\t' read -r name id; do
               if [[ $name == temp-* ]]; then
                   gh api \
                       --method DELETE \
-                      /repos/${{ github.repository }}/actions/artifacts/"$id"
+                      /repos/{owner}/{repo}/actions/artifacts/"$id"
                   echo Artifact \""$name"\" with id "$id" deleted.
               else
                   echo Artifact \""$name"\" with id "$id" skipped.
