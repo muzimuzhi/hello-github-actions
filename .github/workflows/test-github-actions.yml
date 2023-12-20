@@ -66,8 +66,9 @@ jobs:
 
       - name: Delete multiple artifacts with gh
         run: |
-          set -ex
+          set -e
           export GH_PAGER=
+
           headers=(
               -H "Accept: application/vnd.github+json"
               -H "X-GitHub-Api-Version: 2022-11-28"
@@ -76,9 +77,9 @@ jobs:
           artifacts=$(gh api \
               "${headers[@]}" \
               /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts | \
-                  jq --raw-output '.artifacts[] | [.id, .name] | @tsv')
+                  jq --raw-output '.artifacts[] | [.name, .id] | @tsv')
 
-          echo "$artifacts" | while IFS=$'\t' read -r id name; do
+          echo "$artifacts" | while IFS=$'\t' read -r name id; do
               if [[ $name == temp-* ]]; then
                   gh api \
                       --method DELETE \
