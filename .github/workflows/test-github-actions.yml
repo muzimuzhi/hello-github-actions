@@ -76,7 +76,6 @@ jobs:
       - name: Delete multiple artifacts with gh
         run: |
           set -e
-          export GH_PAGER=
           export GH_REPO="${{ github.repository }}"
 
           artifacts=$(gh api \
