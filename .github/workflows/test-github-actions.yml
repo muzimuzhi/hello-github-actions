@@ -79,11 +79,15 @@ jobs:
                   jq --raw-output '.artifacts[] | [.id, .name] | @tsv')
 
           echo "$artifacts" | while IFS=$'\t' read -r id name; do
-              [[ $name == temp-* ]] && \
+              if [[ $name == temp-* ]]; then
                   gh api \
                       --method DELETE \
                       "${headers[@]}" \
                       /repos/${{ github.repository }}/actions/artifacts/"$id"
+                  echo Artifact \""$name"\" with id "$id" deleted.
+              else
+                  echo Artifact \""$name"\" with id "$id" skipped.
+              fi
           done
         env:
           GH_TOKEN: ${{ github.token }}
