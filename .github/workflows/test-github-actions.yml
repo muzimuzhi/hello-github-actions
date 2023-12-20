@@ -13,6 +13,9 @@ on:
 
 jobs:
   test:
+    permissions:
+      actions: write
+      contents: read
 
     name: Delete artifacts
 
@@ -82,3 +85,5 @@ jobs:
                       "${headers[@]}" \
                       /repos/${{ github.repository }}/actions/artifacts/"$id"
           done
+        env:
+          GH_TOKEN: ${{ github.token }}
