@@ -64,6 +64,13 @@ jobs:
         with:
           name: temp-*
 
+      # gh api https://cli.github.com/manual/gh_api
+      # jq https://jqlang.github.io/jq/manual
+      # github rest api
+      # - list workflow run artifacts
+      #   https://docs.github.com/en/rest/actions/artifacts?apiVersion=2022-11-28#list-workflow-run-artifacts
+      # - delete an artifact
+      #   https://docs.github.com/en/rest/actions/artifacts?apiVersion=2022-11-28#delete-an-artifact
       - name: Delete multiple artifacts with gh
         run: |
           set -e
