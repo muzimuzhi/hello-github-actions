@@ -122,3 +122,4 @@ jobs:
               /repos/{owner}/{repo}/actions/artifacts/"$EXTRA_ID"
         env:
           EXTRA_ID: ${{ needs.upload.outputs.extra-id }}
+          GH_TOKEN: ${{ github.token }}
