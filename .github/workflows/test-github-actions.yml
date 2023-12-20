@@ -67,7 +67,6 @@ jobs:
       - name: Delete multiple artifacts with gh
         run: |
           set -ex
-          pattern=(temp-*)
           headers=(
               -H "Accept: application/vnd.github+json"
               -H "X-GitHub-Api-Version: 2022-11-28"
@@ -79,7 +78,7 @@ jobs:
                   jq '.artifacts[] | [.id, .name] | @tsv')
 
           echo "$artifacts" | while IFS=$'\t' read -r id name; do
-              [[ $name == "${pattern[@]}" ]] && \
+              [[ $name == temp-* ]] && \
                   gh api \
                       --method DELETE \
                       "${headers[@]}" \
