@@ -12,14 +12,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  upload:
     permissions:
       actions: write
       contents: read
 
-    name: Delete artifacts
+    name: Upload artifacts
 
     runs-on: ubuntu-latest
+
+    outputs:
+      extra-id: ${{ steps.extra.outputs.artifact-id }}
 
     steps:
       - name: Preperation
@@ -49,6 +52,7 @@ jobs:
           path: ./temp-c.txt
 
       - name: Upload artifact - extra
+        id: extra
         uses: actions/upload-artifact@v4
         with:
           name: extra
@@ -96,3 +100,25 @@ jobs:
           done
         env:
           GH_TOKEN: ${{ github.token }}
+
+  delete:
+    permissions:
+      actions: write
+    
+    name: Delete artifacts
+
+    runs-on: ubuntu-latest
+
+    # > Job outputs are available to all downstream jobs that depend on this job.
+    # https://docs.github.com/en/actions/using-jobs/defining-outputs-for-jobs
+    needs: upload
+
+    steps:
+      - name: Delete last artifact
+        run: |
+          export GH_REPO="${{ github.repository }}"
+          gh api \
+              --method DELETE \
+              /repos/{owner}/{repo}/actions/artifacts/"$EXTRA_ID"
+        env:
+          EXTRA_ID: ${{ needs.upload.outputs.extra-id }}
