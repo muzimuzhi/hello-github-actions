@@ -25,6 +25,7 @@ jobs:
           echo "a blah blah" > temp-a.txt
           echo "b blah blah" > temp-b.txt
           echo "c blah blah" > temp-c.txt
+          echo "extra extra" > extra.txt
 
       - name: Upload artifact - a
         uses: actions/upload-artifact@v4
@@ -43,6 +44,12 @@ jobs:
         with:
           name: temp-c
           path: ./temp-c.txt
+
+      - name: Upload artifact - extra
+        uses: actions/upload-artifact@v4
+        with:
+          name: extra
+          path: ./extra.txt
 
       - name: Delete an artifact
         uses: GeekyEggo/delete-artifact@v2
