@@ -76,13 +76,7 @@ jobs:
           set -e
           export GH_PAGER=
 
-          headers=(
-              -H "Accept: application/vnd.github+json"
-              -H "X-GitHub-Api-Version: 2022-11-28"
-          )
-
           artifacts=$(gh api \
-              "${headers[@]}" \
               /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts | \
                   jq --raw-output '.artifacts[] | [.name, .id] | @tsv')
 
@@ -90,7 +84,6 @@ jobs:
               if [[ $name == temp-* ]]; then
                   gh api \
                       --method DELETE \
-                      "${headers[@]}" \
                       /repos/${{ github.repository }}/actions/artifacts/"$id"
                   echo Artifact \""$name"\" with id "$id" deleted.
               else
