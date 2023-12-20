@@ -82,10 +82,10 @@ jobs:
           set -e
           export GH_REPO="${{ github.repository }}"
 
-          artifacts=$(\
+          artifacts=$(
             gh api \
                 /repos/{owner}/{repo}/actions/runs/${{ github.run_id }}/artifacts |
-            jq --raw-output '.artifacts[] | [.name, .id] | @tsv'\
+            jq --raw-output '.artifacts[] | [.name, .id] | @tsv'
           )
 
           echo "$artifacts" | while IFS=$'\t' read -r name id; do
@@ -95,7 +95,7 @@ jobs:
                       /repos/{owner}/{repo}/actions/artifacts/"$id"
                   echo Deleted artifact \""$name"\" with id "$id".
               else
-                  echo Skipped artifact \""$name"\" "(""$id""")".
+                  echo Skipped artifact \""$name"\" "(""$id"")".
               fi
           done
         env:
