@@ -60,3 +60,25 @@ jobs:
         uses: muzimuzhi/delete-artifact@bump-deps
         with:
           name: temp-*
+
+      - name: Delete multiple artifacts with gh
+        run: |
+          set -ex
+          pattern=(temp-*)
+          headers=(
+              -H "Accept: application/vnd.github+json"
+              -H "X-GitHub-Api-Version: 2022-11-28"
+          )
+
+          artifacts=$(gh api \
+              "${headers[@]}" \
+              /repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts | \
+                  jq '.artifacts[] | [.id, .name] | @tsv')
+
+          echo "$artifacts" | while IFS=$'\t' read -r id name; do
+              [[ $name == "${pattern[@]}" ]] && \
+                  gh api \
+                      --method DELETE \
+                      "${headers[@]}" \
+                      /repos/${{ github.repository }}/actions/artifacts/"$id"
+          done
