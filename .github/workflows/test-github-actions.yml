@@ -58,6 +58,7 @@ jobs:
         uses: muzimuzhi/delete-artifact@bump-deps
         with:
           name: temp-a
+          useGlob: false # to trigger a warning
 
       - name: Delete multiple artifacts
         uses: muzimuzhi/delete-artifact@bump-deps
