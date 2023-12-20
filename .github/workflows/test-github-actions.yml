@@ -52,11 +52,11 @@ jobs:
           path: ./extra.txt
 
       - name: Delete an artifact
-        uses: GeekyEggo/delete-artifact@v2
+        uses: muzimuzhi/delete-artifact@bump-deps
         with:
           name: temp-a
 
       - name: Delete multiple artifacts
-        uses: GeekyEggo/delete-artifact@v2
+        uses: muzimuzhi/delete-artifact@bump-deps
         with:
           name: temp-*
