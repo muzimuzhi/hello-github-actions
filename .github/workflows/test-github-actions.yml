@@ -59,14 +59,14 @@ jobs:
           path: ./extra.txt
 
       - name: Delete an artifact
-        uses: GeekyEggo/delete-artifact@main
+        uses: GeekyEggo/delete-artifact@v4
         with:
           name: temp-a
           useGlob: false # to trigger a warning
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Delete multiple artifacts
-        uses: GeekyEggo/delete-artifact@main
+        uses: GeekyEggo/delete-artifact@v4
         with:
           name: temp-*
           token: ${{ secrets.GITHUB_TOKEN }}
