@@ -56,5 +56,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: latex-examples-docker-${{ env.unique-id-no-os }}
+          name: latex-examples-docker-${{ env.unique-id }}
           path: latex-examples
