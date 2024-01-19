@@ -1,4 +1,4 @@
-name: Test LaTeX
+name: Test LaTeX - native
 
 on: 
   push:
@@ -13,12 +13,12 @@ on:
     paths:
       - 'latex-examples'
       - '.github/actions/unique-id'
-      - '.github/workflows/latex-three-os.yml'
+      - '.github/workflows/latex-native.yml'
   pull_request:
     paths:
       - 'latex-examples'
       - '.github/actions/unique-id'
-      - '.github/workflows/latex-three-os.yml'
+      - '.github/workflows/latex-native.yml'
   workflow_dispatch:
 
 defaults:
@@ -26,7 +26,7 @@ defaults:
     shell: bash
 
 jobs:
-  run-on-three-os:
+  run-on-native-os:
     strategy:
       matrix:
         # as of 2023-12-02, macos-latest still uses macos-12

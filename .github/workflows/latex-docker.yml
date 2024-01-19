@@ -1,4 +1,4 @@
-name: Test LaTeX (docker image)
+name: Test LaTeX - docker
 
 on:
   push:
@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-latex:
+  run-in-docker:
     runs-on: ubuntu-latest
     container:
       # https://gitlab.com/islandoftex/images/texlive
