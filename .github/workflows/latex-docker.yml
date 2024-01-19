@@ -61,7 +61,7 @@ jobs:
       - name: Run example(s)
         working-directory: latex-examples
         run: |
-          export TEXMFHOME="$(realpath ./tcolorbox)"
+          export TEXMFHOME="$(realpath ../tcolorbox)"
           for file in *.tex; do
             for engine in pdflatex lualatex xelatex; do
               echo -e "\n\n"
@@ -74,6 +74,8 @@ jobs:
               $engine \
                 -interaction=nonstopmode \
                 -jobname="${file/%.tex}"-"${engine/la/}" \
+                # required by tcolorbox library "minted"
+                -shell-escape \
                 "$file"
             done
           done

@@ -1,8 +1,10 @@
+\RequirePackage[enable-debug]{expl3}
 \ExplSyntaxOn
 \debug_on:n { check-declarations, check-expressions, deprecation }
 \cs_generate_variant:Nn \tl_set:Nn { Ne }
 \ExplSyntaxOff
 
+\PassOptionsToPackage{draft}{minted}
 \documentclass{article}
 \usepackage[all]{tcolorbox}
 \listfiles
