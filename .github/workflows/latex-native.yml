@@ -1,6 +1,6 @@
 name: Test LaTeX - native
 
-on: 
+on:
   push:
     branches-ignore:
       - 'self/**' # "**" also matches remaining "/"

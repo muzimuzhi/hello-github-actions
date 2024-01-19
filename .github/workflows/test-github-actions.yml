@@ -1,6 +1,6 @@
 name: Test GitHub Actions
 
-on: 
+on:
   push:
     branches-ignore:
       - 'self/**' # "**" also matches remaining "/"
@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Run dummy commands
         run: |
           echo "Hello GitHub Actions"
