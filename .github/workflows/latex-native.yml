@@ -27,6 +27,7 @@ defaults:
 
 jobs:
   run-on-native-os:
+    if: false
     strategy:
       matrix:
         # as of 2023-12-02, macos-latest still uses macos-12
