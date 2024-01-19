@@ -11,12 +11,12 @@ on:
     # https://yaml.org/spec/1.2.2/#692-node-anchors
     # https://yaml.org/spec/1.2.2/#71-alias-nodes
     paths:
-      - 'latex-examples'
+      # - 'latex-examples'
       - '.github/actions/unique-id'
       - '.github/workflows/latex-native.yml'
   pull_request:
     paths:
-      - 'latex-examples'
+      # - 'latex-examples'
       - '.github/actions/unique-id'
       - '.github/workflows/latex-native.yml'
   workflow_dispatch:
