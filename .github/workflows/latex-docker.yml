@@ -21,15 +21,7 @@ jobs:
     container:
       # https://gitlab.com/islandoftex/images/texlive
 
-      # LaTeX 2021-11-15 was released and added to texlive's SVN on 11-12,
-      # so I'm guessing the image 2021-11-14 might be enough
-      # - latex2e release
-      #   https://github.com/latex3/latex2e/releases/tag/release-2021-11-15
-      # - texlive svn
-      #   https://www.tug.org/svn/texlive/trunk/Master/texmf-dist/doc/latex/base/README.md?r1=59599&r2=61041
-      # - islandoftex docker image
-      #   https://gitlab.com/islandoftex/images/texlive/container_registry/573747?orderBy=NAME&sort=asc&search[]=TL2021-2021-11&search[]=
-      image: registry.gitlab.com/islandoftex/images/texlive:TL2021-2021-11-14-04-43
+      image: registry.gitlab.com/islandoftex/images/texlive:TL2022-2022-11-06-full
     defaults:
       run:
         # The default shell for run steps inside a container is sh instead of bash.
