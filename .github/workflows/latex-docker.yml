@@ -1,0 +1,60 @@
+name: Test LaTeX (docker image)
+
+on:
+  push:
+    branches-ignore:
+      - 'self/**' # "**" also matches remaining "/"
+    paths:
+      - 'latex-examples'
+      - '.github/workflows/latex-docker.yml'
+  pull_request:
+    paths:
+      - 'latex-examples'
+      - '.github/workflows/latex-docker.yml'
+  workflow_dispatch:
+
+jobs:
+  test-latex:
+    runs-on: ubuntu-latest
+    container:
+      # https://gitlab.com/islandoftex/images/texlive
+      image: registry.gitlab.com/islandoftex/images/texlive:latest
+    defaults:
+      run:
+        # The default shell for run steps inside a container is sh instead of bash. 
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idcontainer
+        shell: bash
+
+    steps:
+      - name: Update TeX Live
+        run: |
+          tlmgr update --self --all
+
+      - name: Globally opt-out Git security check
+        run: |
+          git config --global safe.directory "*"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate unique ID
+        uses: ./.github/actions/unique-id
+        with:
+          set-env-context: true
+
+      - name: Run example(s)
+        working-directory: latex-examples
+        run: |
+          for file in *.tex; do
+            for engine in pdflatex lualatex xelatex; do
+              # e.g., executes "pdflatex -jobname=simple-pdftex" simple.tex
+              $engine -jobname="${file/%.tex}"-"${engine/la/}" "$file"
+            done
+          done
+
+      - name: Archive
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: latex-examples-docker-${{ env.unique-id-no-os }}
+          path: latex-examples
