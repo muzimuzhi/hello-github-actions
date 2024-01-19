@@ -3,7 +3,7 @@ name: Generate unique ID
 
 inputs:
   set-env-context:
-    description: "Create environment variables? This allows use of `env.unique-id` instead of the longer `steps.<job_id>.outputs.unique-id`."
+    description: "Create environment variables in addition? This allows use of `env.unique-id` instead of the longer `steps.<job_id>.outputs.unique-id` in following steps."
     default: false
     type: boolean
 outputs:
@@ -21,18 +21,18 @@ runs:
       id: run
       shell: bash
       run: |
-        OS=$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]')
-        SHA1_SHORT=$(git rev-parse --short HEAD)
+        OS="$(echo ${{ runner.os }} | tr '[:upper:]' '[:lower:]')"
+        SHA1_SHORT="$(git rev-parse --short HEAD)"
         if [[ "${{ github.run_attempt }}" -eq 1 ]]; then
-          ID_NO_OS="$SHA1_SHORT"
+          UNIQ_ID="$SHA1_SHORT"
         else
-          ID_NO_OS="$SHA1_SHORT-${{ github.run_attempt }}"
+          UNIQ_ID="$SHA1_SHORT-${{ github.run_attempt }}"
         fi
 
-        echo "os=$OS" >> $GITHUB_OUTPUT
-        echo "unique-id=$ID_NO_OS" >> $GITHUB_OUTPUT
+        echo "os=$OS"             >> "$GITHUB_OUTPUT"
+        echo "unique-id=$UNIQ_ID" >> "$GITHUB_OUTPUT"
 
         if [[ "${{ inputs.set-env-context }}" != 'false' ]]; then
-          echo "os=$OS" >> $GITHUB_ENV
-          echo "unique-id=$ID_NO_OS" >> $GITHUB_ENV
+          echo "os=$OS"             >> "$GITHUB_ENV"
+          echo "unique-id=$UNIQ_ID" >> "$GITHUB_ENV"
         fi
