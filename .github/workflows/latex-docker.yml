@@ -74,7 +74,6 @@ jobs:
               $engine \
                 -interaction=nonstopmode \
                 -jobname="${file/%.tex}"-"${engine/la/}" \
-                # required by tcolorbox library "minted"
                 -shell-escape \
                 "$file"
             done
