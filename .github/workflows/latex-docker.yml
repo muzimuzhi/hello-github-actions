@@ -20,7 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     container:
       # https://gitlab.com/islandoftex/images/texlive
-      image: registry.gitlab.com/islandoftex/images/texlive:latest
+      # LaTeX 2021-11-15 was released and added to texlive's SVN on 11-12,
+      # so I'm guessing the image 2021-11-14 might be enough
+      # https://gitlab.com/islandoftex/images/texlive/container_registry/573747?orderBy=NAME&sort=asc&search[]=TL2021-2021-11&search[]=
+      image: registry.gitlab.com/islandoftex/images/texlive:TL2021-2021-11-14-04-43
     defaults:
       run:
         # The default shell for run steps inside a container is sh instead of bash.
@@ -28,10 +31,6 @@ jobs:
         shell: bash
 
     steps:
-      - name: Update TeX Live
-        run: |
-          tlmgr update --self --all
-
       - name: Globally opt-out Git security check
         run: |
           git config --global safe.directory "*"
@@ -49,6 +48,11 @@ jobs:
         run: |
           for file in *.tex; do
             for engine in pdflatex lualatex xelatex; do
+              echo "\n\n"
+              echo "========================"
+              echo "  $engine $file"
+              echo "========================"
+              echo "\n\n"
               # e.g., executes "pdflatex -jobname=simple-pdftex" simple.tex
               $engine -jobname="${file/%.tex}"-"${engine/la/}" "$file"
             done
