@@ -10,6 +10,9 @@ outputs:
   os:
     description: "Context `runner.os` in lowercase"
     value: ${{ steps.run.outputs.os }}
+  unique-id-no-os:
+    description: "A unique id per commit and run attempt, `<sha1>[-<run>]`"
+    value: ${{ steps.run.outputs.unique-id-no-os }}
   unique-id:
     description: "A unique id per OS, commit, and run attempt `<os>-<sha1>[-<run>]`"
     value: ${{ steps.run.outputs.unique-id }}
@@ -30,9 +33,11 @@ runs:
         fi
 
         echo "os=$OS" >> $GITHUB_OUTPUT
+        echo "unique-id-no-os=$ID_NO_OS" >> $GITHUB_OUTPUT
         echo "unique-id=$OS-$ID_NO_OS" >> $GITHUB_OUTPUT
 
         if [[ "${{ inputs.set-env-context }}" != 'false' ]]; then
           echo "os=$OS" >> $GITHUB_ENV
+          echo "unique-id-no-os=$ID_NO_OS" >> $GITHUB_ENV
           echo "unique-id=$OS-$ID_NO_OS" >> $GITHUB_ENV
         fi
