@@ -1,0 +1,54 @@
+name: Test LaTeX (docker image)
+
+on:
+  push:
+    branches-ignore:
+      - 'self/**' # "**" also matches remaining "/"
+    paths:
+      - 'latex-examples'
+      - '.github/workflows/latex-docker.yml'
+  pull_request:
+    paths:
+      - 'latex-examples'
+      - '.github/workflows/latex-docker.yml'
+  workflow_dispatch:
+
+jobs:
+  test-suite:
+    runs-on: ubuntu-latest
+    container:
+      image: registry.gitlab.com/islandoftex/images/texlive:latest
+
+    steps:
+      - name: Update TeX Live
+        run: |
+          tlmgr update --self --all
+
+      - name: Globally opt-out Git security check
+        run: |
+          git config --global safe.directory "*"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate unique ID
+        uses: ./.github/actions/unique-id
+        with:
+          set-env-context: true
+
+      - name: Run example(s)
+        working-directory: latex-examples
+        run: |
+          for file in $(ls *.tex); do
+            for engine in pdflatex lualatex xelatex; do
+              # e.g., executes "pdflatex -jobname=simple-pdftex" simple.tex
+              $engine -jobname=${file/%.tex}-${engine/la/} $file
+            end
+          done
+
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: latex-examples-docker-${{ env.unique-id }}
+          path: latex-examples
