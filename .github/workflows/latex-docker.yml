@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       # https://gitlab.com/islandoftex/images/texlive
-      
+
       # LaTeX 2021-11-15 was released and added to texlive's SVN on 11-12,
       # so I'm guessing the image 2021-11-14 might be enough
       # - latex2e release
@@ -44,6 +44,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout tcolorbox@v6.2.0
+        uses: actions/checkout@v4
+        with:
+          repository: T-F-S/tcolorbox
+          ref: v6.2.0
+          token: ${{ github.token }}
+          path: tcolorbox
+          sparse-checkout: tex
+
       - name: Generate unique ID
         uses: ./.github/actions/unique-id
         with:
@@ -52,6 +61,7 @@ jobs:
       - name: Run example(s)
         working-directory: latex-examples
         run: |
+          export TEXMFHOME="$(realpath ./tcolorbox)"
           for file in *.tex; do
             for engine in pdflatex lualatex xelatex; do
               echo -e "\n\n"
