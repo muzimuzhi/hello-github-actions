@@ -4,12 +4,20 @@ on:
   push:
     branches-ignore:
       - 'self/**' # "**" also matches remaining "/"
+    # As of Jan, 2024, yaml anchors are not supported in workflow files.
+    # https://github.com/actions/runner/issues/1182
+    # A yaml anchor denoted by &<name> can then be aliased (repeatedly)
+    # by *<name>.
+    # https://yaml.org/spec/1.2.2/#692-node-anchors
+    # https://yaml.org/spec/1.2.2/#71-alias-nodes
     paths:
       - 'latex-examples'
+      - '.github/actions/unique-id'
       - '.github/workflows/latex-three-os.yml'
   pull_request:
     paths:
       - 'latex-examples'
+      - '.github/actions/unique-id'
       - '.github/workflows/latex-three-os.yml'
   workflow_dispatch:
 

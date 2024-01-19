@@ -6,10 +6,12 @@ on:
       - 'self/**' # "**" also matches remaining "/"
     paths:
       - 'latex-examples'
+      - '.github/actions/unique-id'
       - '.github/workflows/latex-docker.yml'
   pull_request:
     paths:
       - 'latex-examples'
+      - '.github/actions/unique-id'
       - '.github/workflows/latex-docker.yml'
   workflow_dispatch:
 
