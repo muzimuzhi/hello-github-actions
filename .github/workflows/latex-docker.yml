@@ -49,8 +49,12 @@ jobs:
         run: |
           for file in *.tex; do
             for engine in pdflatex lualatex xelatex; do
-              # e.g., executes "pdflatex -jobname=simple-pdftex" simple.tex
-              $engine -jobname="${file/%.tex}"-"${engine/la/}" "$file"
+              # e.g., executes
+              #   pdflatex -jobname=simple-pdftex -shell-escape simple.tex
+              $engine \
+                -jobname="${file/%.tex}"-"${engine/la/}" \
+                -shell-escape \
+                "$file"
             done
           done
 

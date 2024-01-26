@@ -58,7 +58,12 @@ jobs:
         run: |
           for file in *.tex; do
             for engine in pdflatex lualatex xelatex; do
-              $engine -jobname="${file/%.tex}"-${{ env.os }}-"${engine/la/}" "$file"
+              # e.g., ececutes
+              #   pdflatex -jobname=simple-linux-pdftex -shell-escape simple.tex
+              $engine \
+                -jobname="${file/%.tex}"-${{ env.os }}-"${engine/la/}" \
+                -shell-escape \
+                "$file"
 
               # # use "%0A" to throw a multiline warning
               # # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
