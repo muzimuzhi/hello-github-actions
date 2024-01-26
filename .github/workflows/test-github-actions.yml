@@ -23,3 +23,10 @@ jobs:
       - name: Run dummy commands
         run: |
           echo "Hello GitHub Actions"
+
+      - name: Debug via SSH
+        if: failure()
+        timeout-minutes: 15
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true

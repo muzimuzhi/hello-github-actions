@@ -19,3 +19,10 @@ jobs:
       - uses: ./action-a
         with:
           MY_NAME: "Mona"
+
+      - name: Debug via SSH
+        if: failure()
+        timeout-minutes: 15
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true

@@ -53,3 +53,10 @@ jobs:
             ${{ inputs.command == 'bump-formula-pr' && '--online' || '' }} \
             --version=${{ inputs.version }} \
             ${{ inputs.name }}
+
+      - name: Debug via SSH
+        if: failure()
+        timeout-minutes: 15
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
