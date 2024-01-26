@@ -77,6 +77,7 @@ jobs:
           done
 
       - name: Archive per OS
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: latex-examples-${{ env.os }}-${{ env.unique-id }}
