@@ -5,7 +5,8 @@ on:
   #   - cron: '48 2 * * 2,6'
   push:
     branches-ignore:
-      - '**/self'
+      - 'self/**'
+  pull_request:
   workflow_dispatch:
 
 # copied from https://github.com/latex3/latex3/blob/main/.github/workflows/cache.yaml
