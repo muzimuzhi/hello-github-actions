@@ -1,0 +1,20 @@
+name: Keep TeX Live cache up-to-date
+on:
+  # schedule:
+  #   # Run every tuesday and saturday at 02:48. The time has been chosen at random.
+  #   - cron: '48 2 * * 2,6'
+  push:
+    branches-ignore:
+      - '**/self'
+  workflow_dispatch:
+
+# copied from https://github.com/latex3/latex3/blob/main/.github/workflows/cache.yaml
+jobs:
+  cache:
+    runs-on: ubuntu-20.04
+    name: Update TeX Live
+    steps:
+      - name: Install TeX Live
+        uses: zauguin/install-texlive@v3
+        with:
+          package_file: .github/tl_packages
