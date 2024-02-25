@@ -76,6 +76,8 @@ jobs:
             done
           done
 
+      # run `touch continue` to continue
+      # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Debug via SSH
         if: failure()
         timeout-minutes: 15
