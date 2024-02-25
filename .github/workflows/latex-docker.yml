@@ -35,6 +35,7 @@ jobs:
 
     steps:
       - name: Update TeX Live
+        id: tlmgr-update
         run: |
           tlmgr update --self --all
 
@@ -67,7 +68,7 @@ jobs:
       # run `touch continue` to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Debug via SSH
-        if: failure()
+        if: steps.tlmgr-update.outcome == 'success' && failure()
         timeout-minutes: 15
         uses: mxschmitt/action-tmate@v3
         with:
