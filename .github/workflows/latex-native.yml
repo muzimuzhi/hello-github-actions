@@ -55,40 +55,39 @@ jobs:
         with:
           set-env-context: true
 
-      - name: Run example(s)
+      - name: Copy an eps file
         shell: bash
         run: |
           cp $(kpsewhich example-image.eps) example-eps.eps
           kpsewhich example-eps.eps
-          kpsewhich amsmath.sty
-          echo "\n\n"
-          cat > setup-texlive-action-gh292.tex << EOF
-          \documentclass{article}
-          \usepackage{graphicx}
+          # kpsewhich amsmath.sty
+          # echo "\n\n"
+          # cat > setup-texlive-action-gh292.tex << EOF
+          # \documentclass{article}
+          # \usepackage{graphicx}
 
-          \begin{document}
-          \includegraphics{example-eps}
-          \end{document}
-          EOF
-          cat setup-texlive-action-gh292.tex
-          echo "\n\n"
-          pdflatex setup-texlive-action-gh292.tex
+          # \begin{document}
+          # \includegraphics{example-eps}
+          # \end{document}
+          # EOF
+          # cat setup-texlive-action-gh292.tex
+          # echo "\n\n"
+          # pdflatex setup-texlive-action-gh292.tex
 
-      - name: Run epstopdf
+      - name: Run epstopdf in bash
         if: always()
         shell: bash
         run: |
           ls .
-          epstopdf example-eps.eps
+          epstopdf --debug example-eps.eps converted-in-bash.eps
           ls .
 
-      - name: Run in default shell (pwsh)
+      - name: Run epstopdf in default shell (pwsh)
         if: always()
         run: |
-          Get-ChildItem -Recurse -Force
-          kpsewhich example-eps.eps
-          kpsewhich amsmath.sty
-          pdflatex setup-texlive-action-gh292.tex
+          Get-ChildItem -Recurse
+          epstopdf --debug example-eps.eps converted-in-pwsh.eps
+          Get-ChildItem -Recurse
 
       # run `touch continue` to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
