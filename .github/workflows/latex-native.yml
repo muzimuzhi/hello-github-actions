@@ -46,6 +46,7 @@ jobs:
         with:
           packages: >-
             scheme-basic
+            epstopdf
             mwe
           update-all-packages: true
 
