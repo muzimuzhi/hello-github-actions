@@ -72,7 +72,7 @@ jobs:
           EOF
           cat setup-texlive-action-gh292.tex
           echo "\n\n"
-          pdflatex setup-texlive-action-gh292.tex
+          # pdflatex setup-texlive-action-gh292.tex
 
       # run `touch continue` to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
