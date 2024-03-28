@@ -79,14 +79,14 @@ jobs:
         shell: bash
         run: |
           ls .
-          epstopdf --debug example-eps.eps converted-in-bash.eps
+          epstopdf --debug example-eps.eps converted-in-bash.pdf
           ls .
 
       - name: Run epstopdf in default shell (pwsh)
         if: always()
         run: |
           Get-ChildItem -Recurse
-          epstopdf --debug example-eps.eps converted-in-pwsh.eps
+          epstopdf --debug example-eps.eps converted-in-pwsh.pdf
           Get-ChildItem -Recurse
 
       # run `touch continue` to continue
