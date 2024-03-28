@@ -79,6 +79,7 @@ jobs:
           pdflatex setup-texlive-action-gh292.tex
 
       - name: Run in default shell (pwsh)
+        if: always()
         working-directory: latex-examples
         run: |
           kpsewhich example-eps.eps
