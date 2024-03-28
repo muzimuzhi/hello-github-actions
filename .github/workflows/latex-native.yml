@@ -21,9 +21,9 @@ on:
       - '.github/workflows/latex-native.yml'
   workflow_dispatch:
 
-defaults:
-  run:
-    shell: bash
+# defaults:
+#   run:
+#     shell: bash
 
 jobs:
   run-on-native-os:
@@ -56,8 +56,12 @@ jobs:
           set-env-context: true
 
       - name: Run example(s)
+        shell: bash
         working-directory: latex-examples
         run: |
+          which epstopdf
+          which tlmgr
+          echo "\n\n"
           cp $(kpsewhich example-image.eps) example-eps.eps
           kpsewhich example-eps.eps
           kpsewhich amsmath.sty
@@ -72,8 +76,14 @@ jobs:
           EOF
           cat setup-texlive-action-gh292.tex
           echo "\n\n"
-          # pdflatex setup-texlive-action-gh292.tex
+          pdflatex setup-texlive-action-gh292.tex
 
+      - name: Run in default shell (pwsh)
+        working-directory: latex-examples
+        run: |
+          kpsewhich example-eps.eps
+          kpsewhich amsmath.sty
+          pdflatex setup-texlive-action-gh292.tex
       # run `touch continue` to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Debug via SSH
