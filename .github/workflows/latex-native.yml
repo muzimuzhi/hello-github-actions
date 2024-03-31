@@ -2,8 +2,6 @@ name: Test LaTeX - native
 
 on:
   push:
-    branches-ignore:
-      - 'self/**' # "**" also matches remaining "/"
     # As of Jan, 2024, yaml anchors are not supported in workflow files.
     # https://github.com/actions/runner/issues/1182
     # A yaml anchor denoted by &<name> can then be aliased (repeatedly)
@@ -15,6 +13,8 @@ on:
       - '.github/actions/unique-id'
       - '.github/workflows/latex-native.yml'
   pull_request:
+    branches-ignore:
+      - 'self/**' # "**" also matches remaining "/"
     paths:
       - 'latex-examples'
       - '.github/actions/unique-id'

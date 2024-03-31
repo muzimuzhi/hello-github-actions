@@ -2,13 +2,13 @@ name: Test LaTeX - docker
 
 on:
   push:
-    branches-ignore:
-      - 'self/**' # "**" also matches remaining "/"
     paths:
       - 'latex-examples'
       - '.github/actions/unique-id'
       - '.github/workflows/latex-docker.yml'
   pull_request:
+    branches-ignore:
+      - 'self/**' # "**" also matches remaining "/"
     paths:
       - 'latex-examples'
       - '.github/actions/unique-id'
