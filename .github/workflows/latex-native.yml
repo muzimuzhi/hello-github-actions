@@ -89,6 +89,17 @@ jobs:
           epstopdf --debug example-eps.eps converted-in-pwsh.pdf
           Get-ChildItem -Recurse
 
+      - name: Run epstopdf in bash, 2nd attempt
+        if: always()
+        shell: bash
+        run: |
+          rm *.pdf
+          ls .
+          # https://stackoverflow.com/q/7250130
+          export MSYS_NO_PATHCONV=1
+          epstopdf --debug example-eps.eps converted-in-bash.pdf
+          ls .
+
       # run `touch continue` to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Debug via SSH
