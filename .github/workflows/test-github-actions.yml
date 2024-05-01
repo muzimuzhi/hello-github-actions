@@ -9,6 +9,9 @@ on:
       - 'self/**' # "**" also matches remaining "/"
     paths:
       - '.github/workflows/test-github-actions.yml'
+    types:
+      # added type of activity "ready_for_review"
+      [opened, ready_for_review, reopened, synchronize]
   workflow_dispatch:
 
 jobs:

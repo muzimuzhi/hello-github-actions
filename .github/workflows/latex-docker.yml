@@ -13,6 +13,9 @@ on:
       - 'latex-examples'
       - '.github/actions/unique-id'
       - '.github/workflows/latex-docker.yml'
+    types:
+      # added type of activity "ready_for_review"
+      [opened, ready_for_review, reopened, synchronize]
   workflow_dispatch:
 
 jobs:

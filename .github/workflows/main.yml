@@ -8,6 +8,13 @@ on:
       - 'self/**'
     paths:
       - '.github/workflows/main.yml'
+    types:
+      # added type of activity "ready_for_review"
+      # all activity types of pull_request
+      # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+      # on.<event_name>.types
+      # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onevent_nametypes
+      [opened, ready_for_review, reopened, synchronize]
   workflow_dispatch:
 
 jobs:
