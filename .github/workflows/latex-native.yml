@@ -26,7 +26,7 @@ on:
 
 defaults:
   run:
-    shell: bash
+    working-directory: latex-examples
 
 jobs:
   run-on-native-os:
@@ -36,7 +36,8 @@ jobs:
         # see https://github.com/actions/runner-images?tab=readme-ov-file#available-images
         # and https://github.com/actions/runner-images/issues/7508
         # macos-13 is also used in brew-bump-pr.yml
-        os: [ubuntu-latest, windows-latest, macos-13]
+        # os: [ubuntu-latest, windows-latest, macos-13]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -48,7 +49,8 @@ jobs:
         with:
           packages: >-
             scheme-basic
-            xetex
+            epstopdf
+            mwe
           update-all-packages: true
 
       - name: Generate unique ID
@@ -56,28 +58,50 @@ jobs:
         with:
           set-env-context: true
 
-      - name: Run example(s)
-        working-directory: latex-examples
+      - name: Copy an eps file
+        shell: bash
         run: |
-          for file in *.tex; do
-            for engine in pdflatex lualatex xelatex; do
-              # e.g., ececutes
-              #   pdflatex -jobname=simple-linux-pdftex -shell-escape simple.tex
-              $engine \
-                -jobname="${file/%.tex}"-${{ env.os }}-"${engine/la/}" \
-                -shell-escape \
-                "$file"
+          cp $(kpsewhich example-image.eps) example-eps.eps
+          kpsewhich example-eps.eps
+          # kpsewhich amsmath.sty
+          # echo "\n\n"
+          # cat > setup-texlive-action-gh292.tex << EOF
+          # \documentclass{article}
+          # \usepackage{graphicx}
 
-              # # use "%0A" to throw a multiline warning
-              # # https://github.com/actions/toolkit/issues/193#issuecomment-605394935
-              # log_filtered=$(\
-              #   grep -rh "\[debug\] " *.log | \
-              #   awk 'BEGIN {RS=""}{gsub(/\n/,"%0A",$0); print $0}' \
-              # )
-              # # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message
-              # echo "::warning file=$file-$engine*.log,line=1,col=1,endColumn=2::$log_filtered"
-            done
-          done
+          # \begin{document}
+          # \includegraphics{example-eps}
+          # \end{document}
+          # EOF
+          # cat setup-texlive-action-gh292.tex
+          # echo "\n\n"
+          # pdflatex setup-texlive-action-gh292.tex
+
+      - name: Run epstopdf in bash
+        if: always()
+        shell: bash
+        run: |
+          ls .
+          epstopdf --debug example-eps.eps converted-in-bash.pdf
+          ls .
+
+      - name: Run epstopdf in default shell (pwsh)
+        if: always()
+        run: |
+          Get-ChildItem -Recurse
+          epstopdf --debug example-eps.eps converted-in-pwsh.pdf
+          Get-ChildItem -Recurse
+
+      - name: Run epstopdf in bash, 2nd attempt
+        if: always()
+        shell: bash
+        run: |
+          rm *.pdf
+          ls .
+          # https://stackoverflow.com/q/7250130
+          export MSYS_NO_PATHCONV=1
+          epstopdf --debug example-eps.eps converted-in-bash.pdf
+          ls .
 
       # run `touch continue` to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
