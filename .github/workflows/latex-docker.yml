@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-in-docker:
+  IoT-docker:
     runs-on: ubuntu-latest
     container:
       # https://gitlab.com/islandoftex/images/texlive
@@ -53,27 +53,31 @@ jobs:
       - name: Run example(s)
         working-directory: latex-examples
         run: |
-          cat > test.tex <<EOL
-          % \RequirePackage[2023-11-01]{latexrelease}
+          TEX_BODY=$(cat <<EOF
           \documentclass{article}
           \usepackage{siunitx}
           \listfiles
           
           \begin{document}
-          
           \begin{tabular}{|S[table-format=2.1]|}
             33.11
           \end{tabular}
-          
           \end{document}
-          EOL
+          EOF
+          )
+
+          echo "\RequirePackage[2023-11-01]{latexrelease}" > test-rollback.tex
+          cat "${TEX_BODY}" >> test.tex
+          cat "${TEX_BODY}" >> test-rollback.tex
+
           pdflatex test.tex
-          grep -r 'Overfull ' *.log
+          pdflatex test-rollback.tex
+          grep -rn 'Overfull ' *.log
 
       # run `touch continue` to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Debug via SSH
-        # if: steps.tlmgr-update.outcome == 'success' && failure()
+        if: failure()
         timeout-minutes: 15
         uses: mxschmitt/action-tmate@v3
         with:
