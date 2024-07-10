@@ -67,8 +67,8 @@ jobs:
           )
 
           echo "\RequirePackage[2023-11-01]{latexrelease}" > test-rollback.tex
-          cat "${TEX_BODY}" >> test.tex
-          cat "${TEX_BODY}" >> test-rollback.tex
+          echo "${TEX_BODY}" >> test.tex
+          echo "${TEX_BODY}" >> test-rollback.tex
 
           pdflatex test.tex
           pdflatex test-rollback.tex
