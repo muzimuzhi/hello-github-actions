@@ -29,7 +29,7 @@ jobs:
       ## latex 2022-11-01
       # image: registry.gitlab.com/islandoftex/images/texlive:TL2022-2022-11-06-full
       ## latest
-      image: registry.gitlab.com/islandoftex/images/texlive:latest
+      image: registry.gitlab.com/islandoftex/images/texlive:TL2024-2024-06-09-full
     defaults:
       run:
         # The default shell for run steps inside a container is sh instead of bash.
@@ -37,10 +37,6 @@ jobs:
         shell: bash
 
     steps:
-      - name: Update TeX Live
-        id: tlmgr-update
-        run: |
-          tlmgr update --self --all
 
       - name: Globally opt-out Git security check
         run: |
@@ -57,21 +53,27 @@ jobs:
       - name: Run example(s)
         working-directory: latex-examples
         run: |
-          for file in *.tex; do
-            for engine in pdflatex lualatex xelatex; do
-              # e.g., executes
-              #   pdflatex -jobname=simple-pdftex -shell-escape simple.tex
-              $engine \
-                -jobname="${file/%.tex}"-"${engine/la/}" \
-                -shell-escape \
-                "$file"
-            done
-          done
+          cat > test.tex <<EOL
+          % \RequirePackage[2023-11-01]{latexrelease}
+          \documentclass{article}
+          \usepackage{siunitx}
+          \listfiles
+          
+          \begin{document}
+          
+          \begin{tabular}{|S[table-format=2.1]|}
+            33.11
+          \end{tabular}
+          
+          \end{document}
+          EOL
+          pdflatex test.tex
+          grep -r 'Overfull ' *.log
 
       # run `touch continue` to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Debug via SSH
-        if: steps.tlmgr-update.outcome == 'success' && failure()
+        # if: steps.tlmgr-update.outcome == 'success' && failure()
         timeout-minutes: 15
         uses: mxschmitt/action-tmate@v3
         with:
