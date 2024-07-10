@@ -8,7 +8,7 @@ on:
       - '.github/workflows/latex-docker.yml'
   pull_request:
     branches-ignore:
-      - 'self/**' # "**" also matches remaining "/"
+      - 'main' # name of target branch
     paths:
       - 'latex-examples'
       - '.github/actions/unique-id'
