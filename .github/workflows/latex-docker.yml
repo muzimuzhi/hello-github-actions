@@ -66,7 +66,13 @@ jobs:
           EOF
           )
 
-          echo "\RequirePackage[2023-11-01]{latexrelease}" > test-rollback.tex
+          # workaround https://github.com/latex3/latex2e/issues/1407
+          cat > test-rollback.tex <<EOL
+          \RemoveFromHook{enddocument/info}[kernel/filelist]
+          \RemoveFromHook{enddocument/info}[kernel/warnings]
+          \RemoveFromHook{enddocument/info}[kernel/release]
+          \RequirePackage[2023-11-01]{latexrelease}
+          EOL
           echo "${TEX_BODY}" >> test.tex
           echo "${TEX_BODY}" >> test-rollback.tex
 
