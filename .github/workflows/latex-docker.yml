@@ -56,7 +56,7 @@ jobs:
           TEX_BODY=$(cat <<EOF
           \documentclass{article}
           \usepackage{siunitx}
-          \listfiles
+          \listfiles[sizes, hashes]
           
           \begin{document}
           \begin{tabular}{|S[table-format=2.1]|}
