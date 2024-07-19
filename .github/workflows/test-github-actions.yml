@@ -13,12 +13,21 @@ on:
       # added type of activity "ready_for_review"
       [opened, ready_for_review, reopened, synchronize]
   workflow_dispatch:
-
+    inputs:
+      runner:
+        description: Name of runner image
+        required: false
+        # full list of GitHub-hosted runners
+        #     https://github.com/actions/runner-images
+        # Defaults to macos-13, not macos-14 because the latter runs on Arm64
+        # architecture, which might behave differently than my X64 one.
+        default: macos-13
+        type: string
 jobs:
   test:
     name: Hello
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
 
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +39,6 @@ jobs:
       # run `touch continue` to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Setup tmate session
-        if: failure()
-        timeout-minutes: 15
+        if: ${{ github.event_name == 'workflow_dispatch' || failure() }}
+        timeout-minutes: ${{ inputs && 120 || 15 }}
         uses: mxschmitt/action-tmate@v3
