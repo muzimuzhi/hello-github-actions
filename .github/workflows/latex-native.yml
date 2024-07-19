@@ -85,8 +85,6 @@ jobs:
         if: failure()
         timeout-minutes: 15
         uses: mxschmitt/action-tmate@v3
-        with:
-          limit-access-to-actor: true
 
       - name: Archive per OS
         if: always()
