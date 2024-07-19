@@ -87,7 +87,11 @@ jobs:
         uses: mxschmitt/action-tmate@v3
 
       - name: Archive per OS
-        if: always()
+        # "!" is reserved in YAML
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsif
+        # > Explicit typing is denoted with a tag using the exclamation point (“!”) symbol.
+        # https://yaml.org/spec/1.2.2/#24-tags
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
           name: latex-examples-${{ env.os }}-${{ env.unique-id }}
