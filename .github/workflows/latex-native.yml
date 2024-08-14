@@ -9,15 +9,15 @@ on:
     # https://yaml.org/spec/1.2.2/#692-node-anchors
     # https://yaml.org/spec/1.2.2/#71-alias-nodes
     paths:
-      - 'latex-examples'
-      - '.github/actions/unique-id'
+      - 'latex-examples/**'
+      - '.github/actions/unique-id/**'
       - '.github/workflows/latex-native.yml'
   pull_request:
     branches-ignore:
       - 'self/**' # "**" also matches remaining "/"
     paths:
-      - 'latex-examples'
-      - '.github/actions/unique-id'
+      - 'latex-examples/**'
+      - '.github/actions/unique-id/**'
       - '.github/workflows/latex-native.yml'
     types:
       # added type of activity "ready_for_review"
