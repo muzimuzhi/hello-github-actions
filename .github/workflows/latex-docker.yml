@@ -3,15 +3,15 @@ name: Test LaTeX - docker
 on:
   push:
     paths:
-      - 'latex-examples'
-      - '.github/actions/unique-id'
+      - 'latex-examples/**'
+      - '.github/actions/unique-id/**'
       - '.github/workflows/latex-docker.yml'
   pull_request:
     branches-ignore:
       - 'self/**' # "**" also matches remaining "/"
     paths:
-      - 'latex-examples'
-      - '.github/actions/unique-id'
+      - 'latex-examples/**'
+      - '.github/actions/unique-id/**'
       - '.github/workflows/latex-docker.yml'
     types:
       # added type of activity "ready_for_review"
