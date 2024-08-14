@@ -3,12 +3,12 @@ name: Test GitHub Actions
 on:
   push:
     paths:
-      - '.github/workflows/test-github-actions.yml'
+      - '.github/workflows/test-actions.yml'
   pull_request:
     branches-ignore:
       - 'self/**' # "**" also matches remaining "/"
     paths:
-      - '.github/workflows/test-github-actions.yml'
+      - '.github/workflows/test-actions.yml'
     types:
       # added type of activity "ready_for_review"
       [opened, ready_for_review, reopened, synchronize]
