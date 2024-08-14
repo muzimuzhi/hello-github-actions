@@ -1,11 +1,20 @@
-# https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# Composite actions
+# - intro
+#   https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-composite-action
+# - syntax
+#   https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions
+# - comparison with reusable workflows
+#   https://docs.github.com/en/actions/sharing-automations/avoiding-duplication#key-differences-between-reusable-workflows-and-composite-actions
 name: Generate unique ID
+
+description: Generate a unique ID useful in artifact names
 
 inputs:
   set-env-context:
     description: "Create environment variables in addition? This allows use of `env.unique-id` instead of the longer `steps.<step_id>.outputs.unique-id` in following steps."
-    default: false
-    type: boolean
+    default: 'false'
+    required: false
+
 outputs:
   os:
     description: "Context `runner.os` in lowercase"
@@ -32,7 +41,7 @@ runs:
         echo "os=$OS"             >> "$GITHUB_OUTPUT"
         echo "unique-id=$UNIQ_ID" >> "$GITHUB_OUTPUT"
 
-        if [[ "${{ inputs.set-env-context }}" != 'false' ]]; then
+        if [[ "${{ inputs.set-env-context }}" == 'true' ]]; then
           echo "os=$OS"             >> "$GITHUB_ENV"
           echo "unique-id=$UNIQ_ID" >> "$GITHUB_ENV"
         fi
