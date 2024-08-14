@@ -1,10 +1,10 @@
 name: Test cli/cli#5268
 
 on:
-  push:
+  # push:
   #   paths:
   #     - '.github/workflows/test-github-actions.yml'
-  # pull_request:
+  pull_request:
   #   branches-ignore:
   #     - 'self/**' # "**" also matches remaining "/"
   #   paths:
