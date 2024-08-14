@@ -54,5 +54,5 @@ jobs:
         #       github.event_name == 'workflow_dispatch'
         # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/expressions#literals
         # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/contexts#inputs-context
-        timeout-minutes: ${{ inputs && inputs.timeout-minutes || 15 }}
+        timeout-minutes: ${{ inputs && fromJson(inputs.timeout-minutes) || 15 }}
         uses: mxschmitt/action-tmate@v3
