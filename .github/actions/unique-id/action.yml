@@ -3,7 +3,7 @@ name: Generate unique ID
 
 inputs:
   set-env-context:
-    description: "Create environment variables in addition? This allows use of `env.unique-id` instead of the longer `steps.<job_id>.outputs.unique-id` in following steps."
+    description: "Create environment variables in addition? This allows use of `env.unique-id` instead of the longer `steps.<step_id>.outputs.unique-id` in following steps."
     default: false
     type: boolean
 outputs:
