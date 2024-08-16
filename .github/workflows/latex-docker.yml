@@ -44,7 +44,7 @@ jobs:
 
       - name: Globally opt-out Git security check
         run: |
-          git config --global safe.directory "*"
+          git config set --global safe.directory "*"
 
       - name: Checkout
         uses: actions/checkout@v4
