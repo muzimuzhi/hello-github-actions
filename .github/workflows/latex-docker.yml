@@ -42,6 +42,9 @@ jobs:
         run: |
           tlmgr update --self --all
 
+      # `actions/checkout` default input `set-safe-directory: true` doesn't work
+      # for containers.
+      # see for example https://github.com/actions/checkout/issues/766
       - name: Globally opt-out Git security check
         run: |
           git config set --global safe.directory "*"
