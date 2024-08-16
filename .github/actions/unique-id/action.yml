@@ -12,7 +12,7 @@ description: Generate a unique ID useful in artifact names
 inputs:
   set-env-context:
     description: "Create environment variables in addition? This allows use of `env.unique-id` instead of the longer `steps.<step_id>.outputs.unique-id` in following steps."
-    default: 'false'
+    default: 'false' # string expected
     required: false
 
 outputs:
@@ -41,7 +41,7 @@ runs:
         echo "os=$OS"             >> "$GITHUB_OUTPUT"
         echo "unique-id=$UNIQ_ID" >> "$GITHUB_OUTPUT"
 
-        if [[ "${{ inputs.set-env-context }}" == 'true' ]]; then
+        if [[ "${{ inputs.set-env-context }}" == "true" ]]; then
           echo "os=$OS"             >> "$GITHUB_ENV"
           echo "unique-id=$UNIQ_ID" >> "$GITHUB_ENV"
         fi
