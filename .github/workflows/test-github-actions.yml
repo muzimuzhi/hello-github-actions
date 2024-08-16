@@ -43,7 +43,7 @@ jobs:
         run: |
           echo "Hello GitHub Actions"
 
-      # run `touch continue` to continue
+      # run `touch continue` in GITHUB_WORKSPACE to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Setup tmate session
         if: ${{ github.event_name == 'workflow_dispatch' || failure() }}

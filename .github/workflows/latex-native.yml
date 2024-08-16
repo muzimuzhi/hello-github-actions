@@ -74,12 +74,12 @@ jobs:
               #   grep -rh "\[debug\] " *.log | \
               #   awk 'BEGIN {RS=""}{gsub(/\n/,"%0A",$0); print $0}' \
               # )
-              # # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-a-warning-message
+              # # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-a-warning-message
               # echo "::warning file=$file-$engine*.log,line=1,col=1,endColumn=2::$log_filtered"
             done
           done
 
-      # run `touch continue` to continue
+      # run `touch continue` in GITHUB_WORKSPACE to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Setup tmate session
         if: failure()
@@ -88,7 +88,7 @@ jobs:
 
       - name: Archive per OS
         # "!" is reserved in YAML
-        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsif
+        # https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsif
         # > Explicit typing is denoted with a tag using the exclamation point (“!”) symbol.
         # https://yaml.org/spec/1.2.2/#24-tags
         if: ${{ !cancelled() }}
