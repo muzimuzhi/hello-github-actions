@@ -23,6 +23,11 @@
     "description": "Pull requests that update a dependency file"
   },
   {
+    "name": "discovery",
+    "color": "72FDC5",
+    "description": "What? Why? How?"
+  },
+  {
     "name": "documentation",
     "color": "0075ca",
     "description": "Improvements or additions to documentation"
