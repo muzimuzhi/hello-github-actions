@@ -1,6 +1,10 @@
 # based on https://github.com/ayoisaiah/f2/blob/8ca4293f512feb762f02bd1e3fed438cfc3664f8/.github/workflows/labeler.yml
 name: Update labels
 
+permissions:
+  contents: read
+  issues: write
+
 on:
   workflow_dispatch:
     inputs:
