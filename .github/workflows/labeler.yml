@@ -1,0 +1,36 @@
+# based on https://github.com/ayoisaiah/f2/blob/8ca4293f512feb762f02bd1e3fed438cfc3664f8/.github/workflows/labeler.yml
+name: Update labels
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        type: boolean
+        default: true
+        description: Dry-run labeler
+  push:
+    branches:
+      - main
+    paths:
+      - .github/labels-data.yml
+      - .github/workflows/labeler.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/labels-data.yml
+      - .github/workflows/labeler.yml
+
+jobs:
+  labeler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run labeler
+        uses: crazy-max/ghaction-github-labeler@v5
+        with:
+          yaml-file: .github/labels-data.yml
+          # only run on "workflow_dispatch" with "dry-run" input set to false
+          dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run || true }}
