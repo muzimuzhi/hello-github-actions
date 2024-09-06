@@ -4,6 +4,8 @@
 #     gh label list --json name,color,description --sort name | jq 'map(pick(.name, .color, .description))'
 #   https://cli.github.com/manual/gh_label_list
 #   - gh's flag --jq doesn't respect the order specified in pick() function
+#     This is a limitation of gojq, one of gh's dependencies.
+#     https://github.com/itchyny/gojq?tab=readme-ov-file#difference-to-jq
 #   - this simple JSON is valid YAML
 #     https://metacpan.org/pod/JSON::XS#JSON-and-YAML
 # - run gh to get a yaml format, using --template flag
