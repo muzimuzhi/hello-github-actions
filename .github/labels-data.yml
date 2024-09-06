@@ -68,6 +68,11 @@
     "description": "Further information is requested"
   },
   {
+    "name": "test",
+    "color": "F9D0C4",
+    "description": "Verify or reproduce something"
+  },
+  {
     "name": "wontfix",
     "color": "ffffff",
     "description": "This will not be worked on"
