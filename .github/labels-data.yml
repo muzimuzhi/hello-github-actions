@@ -28,6 +28,11 @@
     "description": "What? Why? How?"
   },
   {
+    "name": "discovery:github",
+    "color": "72FDC5",
+    "description": "What? Why? How? About GitHub"
+  },
+  {
     "name": "documentation",
     "color": "0075ca",
     "description": "Improvements or additions to documentation"
