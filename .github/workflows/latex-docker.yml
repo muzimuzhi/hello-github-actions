@@ -8,7 +8,7 @@ on:
       - '.github/workflows/latex-docker.yml'
   pull_request:
     branches-ignore:
-      - 'self/**' # "**" also matches remaining "/"
+      - 'main' # name of target branch
     paths:
       - 'latex-examples/**'
       - '.github/actions/unique-id/**'
@@ -19,7 +19,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-in-docker:
+  IoT-docker:
     runs-on: ubuntu-latest
     container:
       # https://gitlab.com/islandoftex/images/texlive
@@ -29,7 +29,7 @@ jobs:
       ## latex 2022-11-01
       # image: registry.gitlab.com/islandoftex/images/texlive:TL2022-2022-11-06-full
       ## latest
-      image: registry.gitlab.com/islandoftex/images/texlive:latest
+      image: registry.gitlab.com/islandoftex/images/texlive:TL2024-2024-06-09-full
     defaults:
       run:
         # The default shell in a container is `sh` instead of `bash`.
@@ -37,10 +37,6 @@ jobs:
         shell: bash
 
     steps:
-      - name: Update TeX Live
-        id: tlmgr-update
-        run: |
-          tlmgr update --self --all
 
       # `actions/checkout` default input `set-safe-directory: true` doesn't work
       # for containers.
@@ -60,21 +56,37 @@ jobs:
       - name: Run example(s)
         working-directory: latex-examples
         run: |
-          for file in *.tex; do
-            for engine in pdflatex lualatex xelatex; do
-              # e.g., executes
-              #   pdflatex -jobname=simple-pdftex -shell-escape simple.tex
-              $engine \
-                -jobname="${file/%.tex}"-"${engine/la/}" \
-                -shell-escape \
-                "$file"
-            done
-          done
+          TEX_BODY=$(cat <<EOF
+          \documentclass{article}
+          \usepackage{siunitx}
+          \listfiles[sizes, hashes]
+          
+          \begin{document}
+          \begin{tabular}{|S[table-format=2.1]|}
+            33.11
+          \end{tabular}
+          \end{document}
+          EOF
+          )
+
+          # workaround https://github.com/latex3/latex2e/issues/1407
+          cat > test-rollback.tex <<EOL
+          \RemoveFromHook{enddocument/info}[kernel/filelist]
+          \RemoveFromHook{enddocument/info}[kernel/warnings]
+          \RemoveFromHook{enddocument/info}[kernel/release]
+          \RequirePackage[2023-11-01]{latexrelease}
+          EOL
+          echo "${TEX_BODY}" >> test.tex
+          echo "${TEX_BODY}" >> test-rollback.tex
+
+          pdflatex test.tex
+          pdflatex test-rollback.tex
+          grep -rn 'Overfull ' *.log
 
       # run `touch continue` in GITHUB_WORKSPACE to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Debug via SSH
-        if: steps.tlmgr-update.outcome == 'success' && failure()
+        if: failure()
         timeout-minutes: 15
         uses: mxschmitt/action-tmate@v3
 
