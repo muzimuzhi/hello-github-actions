@@ -32,9 +32,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # - run: echo ${{ github.event_name != 'workflow_dispatch' || inputs.dry-run }}
+
       - name: Run labeler
         uses: crazy-max/ghaction-github-labeler@v5
         with:
           yaml-file: .github/labels-data.yml
-          # only run on "workflow_dispatch" with "dry-run" input set to false
-          dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run || true }}
+          # only update labels if event == workflow_dispatch and dry-run == true
+          dry-run: ${{ github.event_name != 'workflow_dispatch' || inputs.dry-run }}
