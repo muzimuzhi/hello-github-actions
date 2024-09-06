@@ -1,0 +1,65 @@
+# Ways to get current labels
+# - copy from job run log
+# - run gh to get a json format
+#     gh label list --json name,color,description --sort name | jq 'map(pick(.name, .color, .description))'
+#   https://cli.github.com/manual/gh_label_list
+#   - gh's flag --jq doesn't respect the order specified in pick() function
+#   - this simple JSON is valid YAML
+#     https://metacpan.org/pod/JSON::XS#JSON-and-YAML
+# - run gh to get a yaml format, using --template flag
+#     gh label list --json name,color,description --sort name --template '{{range .}}{{printf "- name: %v\n  color: %v\n  description: %v\n" .name .color .description}}{{end}}'
+#   https://cli.github.com/manual/gh_help_formatting
+#   https://pkg.go.dev/text/template
+
+[
+  {
+    "name": "bug",
+    "color": "d73a4a",
+    "description": "Something isn't working"
+  },
+  {
+    "name": "dependencies",
+    "color": "0366d6",
+    "description": "Pull requests that update a dependency file"
+  },
+  {
+    "name": "documentation",
+    "color": "0075ca",
+    "description": "Improvements or additions to documentation"
+  },
+  {
+    "name": "duplicate",
+    "color": "cfd3d7",
+    "description": "This issue or pull request already exists"
+  },
+  {
+    "name": "enhancement",
+    "color": "a2eeef",
+    "description": "New feature or request"
+  },
+  {
+    "name": "good first issue",
+    "color": "7057ff",
+    "description": "Good for newcomers"
+  },
+  {
+    "name": "help wanted",
+    "color": "008672",
+    "description": "Extra attention is needed"
+  },
+  {
+    "name": "invalid",
+    "color": "e4e669",
+    "description": "This doesn't seem right"
+  },
+  {
+    "name": "question",
+    "color": "d876e3",
+    "description": "Further information is requested"
+  },
+  {
+    "name": "wontfix",
+    "color": "ffffff",
+    "description": "This will not be worked on"
+  }
+]
