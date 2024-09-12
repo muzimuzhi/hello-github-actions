@@ -46,6 +46,10 @@ jobs:
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
         run: |
+          if [[ ${{ inputs.name }} == *"/"* ]]; then
+            tap=${{ inputs.name }}
+            brew tap "${tap%/*}"
+          fi
           # https://docs.brew.sh/Manpage#bump-formula-pr-options-formula
           # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
           brew ${{ inputs.command }} \
