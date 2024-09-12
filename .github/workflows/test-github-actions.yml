@@ -14,3 +14,15 @@ jobs:
       - run: pwd && ls .
       - run: pwd && ls .
         working-directory: latex-examples
+
+      # https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps
+      - name: All properties of a run step
+        if: true
+        id: step-prop
+        run: echo "hello $MY_VAR"
+        shell: bash
+        working-directory: temp
+        env:
+          MY_VAR: world
+        continue-on-error: false
+        timeout-minutes: 5
