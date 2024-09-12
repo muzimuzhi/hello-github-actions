@@ -7,10 +7,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: pwd && mkdir -p temp
-      - run: pwd
+      - run: pwd && ls . && mkdir -p temp
+      - run: pwd && ls .
         working-directory: temp
       - uses: actions/checkout@v4
-      - run: pwd
-      - run: pwd
+      - run: pwd && ls .
+      - run: pwd && ls .
         working-directory: latex-examples
