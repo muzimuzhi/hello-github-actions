@@ -3,13 +3,13 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      MY_VAR: GitHub
     steps:
       - run: mkdir -p temp
       - name: Default shell and working-directory
         run: echo "hello world"
-      - name: Custom shell and working-directory
+      - name: Custom shell, working-directory, and env
         run: echo "hello $MY_VAR"
         shell: bash
         working-directory: temp
+        env:
+          MY_VAR: "world"
