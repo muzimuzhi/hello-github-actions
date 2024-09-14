@@ -13,4 +13,4 @@ jobs:
           echo "\"github.ref\": >>${{ github.ref }}<<"
           echo ""
           echo "\"github\" object"
-          jq --null-input '${{ fromJson(github) }}'
+          jq --null-input '${{ toJSON(github) }}'
