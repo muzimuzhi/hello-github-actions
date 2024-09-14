@@ -1,58 +1,16 @@
 name: Test GitHub Actions
 
 on:
-  push:
-    paths:
-      - '.github/workflows/test-github-actions.yml'
-  pull_request:
-    branches-ignore:
-      - 'self/**' # "**" also matches remaining "/"
-    paths:
-      - '.github/workflows/test-github-actions.yml'
-    types:
-      # added type of activity "ready_for_review"
-      [opened, ready_for_review, reopened, synchronize]
-  workflow_dispatch:
-    inputs:
-      timeout-minutes:
-        description: Max time of the tmate step
-        required: false
-        # Max time of a job is 6h
-        # https://docs.github.com/en/actions/administering-github-actions/usage-limits-billing-and-administration#usage-limits
-        default: 120
-        type: number
-      runner:
-        description: Name of runner image
-        required: false
-        # full list of GitHub-hosted runners
-        #     https://github.com/actions/runner-images
-        # Defaults to macos-13, not macos-14 because the latter runs on Arm64
-        # architecture, which might behave differently than my X64 one.
-        default: macos-13
-        type: string
+  # runs in the base branch, rather than the merge commit as for pull_request event
+  pull_request_target:
+
 jobs:
   test:
-    name: Hello
-
-    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
-
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Run dummy commands
+      - name: Is github.ref availabe in pull_request_target event?
         run: |
-          echo "Hello GitHub Actions"
-
-      # run `touch continue` in GITHUB_WORKSPACE to continue
-      # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
-      - name: Setup tmate session
-        if: ${{ github.event_name == 'workflow_dispatch' || failure() }}
-        # `inputs` object exists => `inputs` is coerced to `true`;
-        #              otherwise => `inputs` is `null` thus coerced to `false`
-        # Moreover, `inputs` alone used in conditional is equivalent to
-        #     github.event_name == 'workflow_call' ||
-        #       github.event_name == 'workflow_dispatch'
-        # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/expressions#literals
-        # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/contexts#inputs-context
-        timeout-minutes: ${{ inputs && fromJson(inputs.timeout-minutes) || 15 }}
-        uses: mxschmitt/action-tmate@v3
+          echo "\"github.ref\": >>${{ github.ref }}<<"
+          echo ""
+          echo "\"github\" object"
+          jq --null-input '${{ fromJson(github) }}'
