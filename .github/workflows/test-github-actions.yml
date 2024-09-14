@@ -7,6 +7,9 @@ jobs:
       MY_VAR: GitHub
     steps:
       - run: mkdir -p temp
-      - run: echo "hello world"
-      - run: echo "hello $MY_VAR"
+      - name: Default shell and working-directory
+        run: echo "hello world"
+      - name: Custom shell and working-directory
+        run: echo "hello $MY_VAR"
+        shell: bash
         working-directory: temp
