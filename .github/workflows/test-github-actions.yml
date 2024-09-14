@@ -2,7 +2,7 @@ name: Test GitHub Actions
 
 on:
   # runs in the base branch, rather than the merge commit as for pull_request event
-  pull_request_target:
+  [pull_request_target]
 
 jobs:
   test:
