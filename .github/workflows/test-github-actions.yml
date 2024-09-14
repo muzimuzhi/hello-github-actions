@@ -1,35 +1,12 @@
-name: Test GitHub Actions
-
-on:
-  push:
+on: [push]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      MY_VAR: GitHub
     steps:
-      - run: pwd && mkdir -p temp && ls .
-      - run: pwd && ls .
+      - run: mkdir -p temp
+      - run: echo "hello world"
+      - run: echo "hello $MY_VAR"
         working-directory: temp
-      - uses: actions/checkout@v4
-        with:
-          ## `clean: false` is usually ignoed. For the case here, it's because
-          ## of the lacking of pre-existing `.git` dir located in `path` input.
-          ## see https://github.com/actions/checkout/pull/561
-          ## Choosing a new sub-dir in ${{ github.workspace}} is a workaround.
-          # clean: false
-          path: repo
-      - run: pwd && ls .
-      - run: pwd && ls .
-        working-directory: repo/latex-examples
-
-      # https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps
-      - name: All properties of a run step
-        if: true
-        id: step-prop
-        run: echo "hello $MY_VAR"
-        shell: bash
-        working-directory: temp
-        env:
-          MY_VAR: world
-        continue-on-error: false
-        timeout-minutes: 5
