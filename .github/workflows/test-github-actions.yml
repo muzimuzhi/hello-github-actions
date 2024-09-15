@@ -8,9 +8,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Is github.ref availabe in pull_request_target event?
+      - name: Selected "github" properties
         run: |
-          echo "\"github.ref\": >>${{ github.ref }}<<"
-          echo ""
-          echo "\"github\" object"
-          jq --null-input '${{ toJSON(github) }}'
+          jq --null-input '${{ toJSON(github) }} | pick(.ref, .base_ref, .head_ref)'
+      - name: Full "github" object
+        run: jq --null-input '${{ toJSON(github) }}'
