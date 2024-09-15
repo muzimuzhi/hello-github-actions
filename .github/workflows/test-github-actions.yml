@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Selected "github" properties
         run: |
-          jq --null-input '${{ toJSON(github) }} | pick(.ref, .base_ref, .head_ref)'
+          echo "github.ref:      >>${{ github.ref }}<<"
+          echo "github.base_ref: >>${{ github.base_ref }}<<"
+          echo "github.head_ref: >>${{ github.head_ref }}<<"
       - name: Full "github" object
         run: jq --null-input '${{ toJSON(github) }}'
