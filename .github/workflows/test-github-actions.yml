@@ -1,7 +1,9 @@
 name: Test GitHub Actions
 
 on:
-  # runs in the base branch, rather than the merge commit as for pull_request event
+  # pull_request_target runs in the base branch, rather than the merge commit
+  # as for pull_request event. Thus to trigger a pull_Request_target event, it
+  # must already exist on the base branch.
   [pull_request, pull_request_target]
 
 jobs:
@@ -10,9 +12,6 @@ jobs:
     steps:
       - name: Selected "github" properties
         run: |
-          echo "github.event_name: >>${{ github.event_name }}<<"
-          echo "github.ref:        >>${{ github.ref }}<<"
-          echo "github.base_ref:   >>${{ github.base_ref }}<<"
-          echo "github.head_ref:   >>${{ github.head_ref }}<<"
+          jq --null-input '${{ toJSON(github) }} | pick(.event_name, .ref, .base_ref, .head_ref)'
       - name: Full "github" object
         run: jq --null-input '${{ toJSON(github) }}'
