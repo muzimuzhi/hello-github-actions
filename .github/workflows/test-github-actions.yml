@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    name: Triggered by \"${{ github.event_name }}\" event
     runs-on: ubuntu-latest
     steps:
       - name: Selected "github" properties
