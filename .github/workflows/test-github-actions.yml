@@ -12,6 +12,6 @@ jobs:
     steps:
       - name: Selected "github" properties
         run: |
-          jq --null-input '${{ toJSON(github) }} | pick(.event_name, .ref, .base_ref, .head_ref)'
+          jq --null-input '${{ toJSON(github) }} | { event_name, ref, base_ref, head_ref}'
       - name: Full "github" object
         run: jq --null-input '${{ toJSON(github) }}'
