@@ -1,0 +1,32 @@
+name: Sync branch
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: main
+
+env:
+  # just in case I'm hesitant about its name
+  base_branch: base
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.base_branch }}
+
+      - name: Sync ${{ env.base_branch }} branch with main
+        run: |
+          git fetch origin main:main
+          git merge main
+          git push origin ${{ env.base_branch }}
+
+      # run `touch continue` in GITHUB_WORKSPACE to continue
+      - name: Setup tmate session
+        if: failure()
+        timeout-minutes: 20
+        uses: mxschmitt/action-tmate@v3
