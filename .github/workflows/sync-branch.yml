@@ -16,14 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ env.base_branch }}
 
       - name: Sync ${{ env.base_branch }} branch with main
+        # syntax: <source>:<destination>
         run: |
-          git fetch origin main:main
-          git merge main
-          git push origin ${{ env.base_branch }}
+          git push -f origin main:${{ env.base_branch }}
 
       # run `touch continue` in GITHUB_WORKSPACE to continue
       - name: Setup tmate session
