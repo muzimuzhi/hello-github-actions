@@ -46,8 +46,9 @@ jobs:
       # for containers.
       # see for example https://github.com/actions/checkout/issues/766
       - name: Globally opt-out Git security check
+        # `git config set` needs Git v2.46.0 (2024-07-29) or later
         run: |
-          git config set --global safe.directory "*"
+          git config --global safe.directory "*"
 
       - name: Checkout
         uses: actions/checkout@v4
