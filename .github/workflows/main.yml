@@ -9,8 +9,8 @@ on:
     paths:
       - '.github/workflows/main.yml'
     types:
-      # added type of activity "ready_for_review"
-      # all activity types of pull_request
+      # added "ready_for_review" activity type
+      # all activity types of "pull_request" event
       # https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#pull_request
       # on.<event_name>.types
       # https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#onevent_nametypes

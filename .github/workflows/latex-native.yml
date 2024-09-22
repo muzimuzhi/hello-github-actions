@@ -20,7 +20,7 @@ on:
       - '.github/actions/unique-id/**'
       - '.github/workflows/latex-native.yml'
     types:
-      # added type of activity "ready_for_review"
+      # added "ready_for_review" activity type
       [opened, ready_for_review, reopened, synchronize]
   workflow_dispatch:
 
