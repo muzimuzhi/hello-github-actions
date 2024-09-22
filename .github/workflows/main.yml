@@ -4,8 +4,8 @@ on:
     paths:
       - '.github/workflows/main.yml'
   pull_request:
-    branches-ignore:
-      - 'self/**'
+    branches:
+      - 'main'
     paths:
       - '.github/workflows/main.yml'
     types:

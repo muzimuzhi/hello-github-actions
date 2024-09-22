@@ -5,8 +5,8 @@ on:
     paths:
       - '.github/workflows/test-github-actions.yml'
   pull_request:
-    branches-ignore:
-      - 'self/**' # "**" also matches remaining "/"
+    branches:
+      - 'main'
     paths:
       - '.github/workflows/test-github-actions.yml'
     types:

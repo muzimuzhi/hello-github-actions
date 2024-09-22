@@ -13,8 +13,8 @@ on:
       - '.github/actions/unique-id/**'
       - '.github/workflows/latex-native.yml'
   pull_request:
-    branches-ignore:
-      - 'self/**' # "**" also matches remaining "/"
+    branches: # the base branch
+      - 'main'
     paths:
       - 'latex-examples/**'
       - '.github/actions/unique-id/**'
