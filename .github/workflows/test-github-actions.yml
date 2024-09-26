@@ -34,7 +34,7 @@ jobs:
   test:
     name: Hello
 
-    runs-on: ${{ inputs.runner || 'ubuntu-latest' }}
+    runs-on: ${{ inputs.runner || 'macos-14.0' }}
 
     steps:
       - uses: actions/checkout@v4
