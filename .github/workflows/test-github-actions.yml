@@ -24,11 +24,7 @@ on:
       runner:
         description: Name of runner image
         required: false
-        # full list of GitHub-hosted runners
-        #     https://github.com/actions/runner-images
-        # Defaults to macos-13, not macos-14 because the latter runs on Arm64
-        # architecture, which might behave differently than my X64 one.
-        default: macos-13
+        default: macos-14
         type: string
 jobs:
   test:

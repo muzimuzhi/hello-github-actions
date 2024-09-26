@@ -32,11 +32,11 @@ jobs:
   run-on-native-os:
     strategy:
       matrix:
-        # as of 2023-12-02, macos-latest still uses macos-12
-        # see https://github.com/actions/runner-images?tab=readme-ov-file#available-images
-        # and https://github.com/actions/runner-images/issues/7508
-        # macos-13 is also used in brew-bump-pr.yml
-        os: [ubuntu-latest, windows-latest, macos-13]
+        # According to https://github.com/github/roadmap/issues/986,
+        # > macos-latest label will incrementally transition from macOS 14 to
+        # > macOS 15 beginning November 2024 and will conclude before the end
+        # > of December 2024
+        os: [ubuntu-latest, windows-latest, macos-14]
     runs-on: ${{ matrix.os }}
 
     steps:

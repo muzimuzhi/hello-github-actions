@@ -30,10 +30,7 @@ jobs:
   run-bump:
     name: ${{ inputs.command }}
 
-    # as of 2023-12-02, macos-latest still uses macos-12
-    # see https://github.com/actions/runner-images?tab=readme-ov-file#available-images
-    # and https://github.com/actions/runner-images/issues/7508
-    runs-on: macos-13
+    runs-on: macos-14
 
     steps:
       - name: Preparations
