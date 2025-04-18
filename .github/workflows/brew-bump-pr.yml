@@ -16,10 +16,13 @@ on:
         options:
           - 'bump-formula-pr'
           - 'bump-cask-pr'
+      # Nowadays casks are updated automatically by scheduled online check.
+      # See https://github.com/Homebrew/homebrew-cask/blob/1d1a05e4a48ff1cb10c21b7b89afe8328144d8f4/.github/workflows/scheduled.yml.
+      # Therefore `brew bump-cask-pr texstudio` is run much less frequently.
       name:
         description: 'Name of formula or cask'
         required: false
-        default: 'texstudio'
+        default: 'texstudio-beta'
         type: string
       version:
         description: 'New version'
