@@ -1,13 +1,13 @@
 name: A workflow for my Hello World file
+
 on:
   push:
-    paths:
+    paths: &paths
       - '.github/workflows/main.yml'
   pull_request:
     branches:
       - 'main'
-    paths:
-      - '.github/workflows/main.yml'
+    paths: *paths
     types:
       # added "ready_for_review" activity type
       # all activity types of "pull_request" event
