@@ -5,7 +5,8 @@ permissions:
 
 on:
   push:
-    branches: main
+    branches:
+      - 'main'
 
 env:
   # just in case I'm hesitant about its name

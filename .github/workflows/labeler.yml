@@ -10,6 +10,7 @@ on:
     inputs:
       dry-run:
         type: boolean
+        description: 'Run labeler in dry-run mode'
         default: true
         required: false
   push:
