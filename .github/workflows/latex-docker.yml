@@ -2,17 +2,14 @@ name: Test LaTeX - docker
 
 on:
   push:
-    paths:
+    paths: &path-filter
       - 'latex-examples/**'
       - '.github/actions/unique-id/**'
       - '.github/workflows/latex-docker.yml'
   pull_request:
     branches: # the base branch
       - 'main'
-    paths:
-      - 'latex-examples/**'
-      - '.github/actions/unique-id/**'
-      - '.github/workflows/latex-docker.yml'
+    paths: *path-filter
     types:
       # added "ready_for_review" activity type
       [opened, ready_for_review, reopened, synchronize]

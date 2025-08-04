@@ -13,18 +13,13 @@ on:
         description: 'Run labeler in dry-run mode'
         default: true
         required: false
-  push:
+  push: &filters
     branches:
       - main
     paths:
       - .github/labels-data.yml
       - .github/workflows/labeler.yml
-  pull_request:
-    branches:
-      - main
-    paths:
-      - .github/labels-data.yml
-      - .github/workflows/labeler.yml
+  pull_request: *filters
 
 jobs:
   labeler:
