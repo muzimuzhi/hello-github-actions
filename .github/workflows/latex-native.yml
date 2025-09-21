@@ -29,11 +29,6 @@ jobs:
   run-on-native-os:
     strategy:
       matrix:
-        # According to https://github.com/github/roadmap/issues/986,
-        # > macos-latest label will incrementally transition from macOS 14 to
-        # > macOS 15 beginning November 2024 and will conclude before the end
-        # > of December 2024
-        # Note macos-14 runs on Arm64 architecture.
         os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
 

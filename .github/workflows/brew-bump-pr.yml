@@ -33,7 +33,7 @@ jobs:
   run-bump:
     name: ${{ inputs.command }}
 
-    runs-on: macos-14
+    runs-on: macos-latest
 
     steps:
       - name: Preparations

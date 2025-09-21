@@ -24,7 +24,7 @@ on:
       runner:
         description: Name of runner image
         required: false
-        default: macos-14
+        default: macos-latest
         type: string
 jobs:
   test:
