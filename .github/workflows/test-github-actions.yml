@@ -26,6 +26,12 @@ on:
         required: false
         default: macos-latest
         type: string
+      commands:
+        description: Commands to run
+        required: false
+        default: ""
+        type: string
+
 jobs:
   test:
     name: Hello
@@ -37,7 +43,7 @@ jobs:
 
       - name: Run dummy commands
         run: |
-          echo "Hello GitHub Actions"
+          ${{ inputs.commands || 'echo "Hello Github Actions"' }}
 
       # run `touch continue` in GITHUB_WORKSPACE to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
