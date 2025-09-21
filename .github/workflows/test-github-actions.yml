@@ -15,10 +15,10 @@ on:
   workflow_dispatch:
     inputs:
       timeout-minutes:
-        description: Max time of the tmate step
+        description: Timeout minutes for the tmate step (positive integer)
         required: false
         # Max time of a job is 6h
-        # https://docs.github.com/en/actions/administering-github-actions/usage-limits-billing-and-administration#usage-limits
+        # https://docs.github.com/en/actions/reference/limits
         default: 120
         type: number
       runner:
@@ -48,13 +48,18 @@ jobs:
       # run `touch continue` in GITHUB_WORKSPACE to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
       - name: Setup tmate session
-        if: ${{ github.event_name == 'workflow_dispatch' || failure() }}
+        # `jobs.<job_id>.steps[*].timeout-minutes` must be a positive integer
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idstepstimeout-minutes
+        #
+        # inputs.timeout-minutes has `number` type, no need to use fromJSON()
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#inputs-context
+        if: ${{ inputs && inputs.timeout-minutes > 0 || failure() }}
         # `inputs` object exists => `inputs` is coerced to `true`;
         #              otherwise => `inputs` is `null` thus coerced to `false`
         # Moreover, `inputs` alone used in conditional is equivalent to
         #     github.event_name == 'workflow_call' ||
         #       github.event_name == 'workflow_dispatch'
-        # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/expressions#literals
-        # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/contexts#inputs-context
-        timeout-minutes: ${{ inputs && fromJson(inputs.timeout-minutes) || 15 }}
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/expressions#literals
+        # https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#inputs-context
+        timeout-minutes: ${{ inputs.timeout-minutes || 15 }}
         uses: mxschmitt/action-tmate@v3
