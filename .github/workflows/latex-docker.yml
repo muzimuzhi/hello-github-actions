@@ -82,7 +82,7 @@ jobs:
         # > Explicit typing is denoted with a tag using the exclamation point (“!”) symbol.
         # https://yaml.org/spec/1.2.2/#24-tags
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: latex-examples-docker-${{ env.unique-id }}
           path: latex-examples
