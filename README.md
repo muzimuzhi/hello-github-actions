@@ -1,5 +1,17 @@
 # Hello GitHub Actions
 
+- Status
+  - [![Hello World workflow](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/main.yml/badge.svg)](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/main.yml)
+  - tool
+    - [![Bump a Homebrew Formula/Cask](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/brew-bump-pr.yml/badge.svg)](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/brew-bump-pr.yml)
+  - playground
+    - [![Test GitHub Actions](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/test-github-actions.yml/badge.svg)](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/test-github-actions.yml)
+    - [![Test LaTeX - native](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/latex-native.yml/badge.svg)](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/latex-native.yml)
+    - [![Test LaTeX - docker](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/latex-docker.yml/badge.svg)](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/latex-docker.yml)
+  - chore
+    - [![Sync branch](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/sync-branch.yml/badge.svg)](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/sync-branch.yml)
+    - [![Update labels](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/labeler.yml/badge.svg)](https://github.com/muzimuzhi/hello-github-actions/actions/workflows/labeler.yml)
+
 - conventions
   - [labels] are managed by manually triggered [`labler.yml`](.github/workflows/labeler.yml), using [`.github/labels-data.yml`](.github/labels-data.yml)
   - exploratory PRs and the `base` branch
