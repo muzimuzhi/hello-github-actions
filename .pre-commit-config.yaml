@@ -1,0 +1,57 @@
+# https://pre-commit.com/
+
+# https://pre-commit.ci/#configuration
+ci:
+  autofix_commit_msg: |
+      chore(deps) auto fixes from pre-commit.com hooks
+
+      for more information, see https://pre-commit.ci
+  autoupdate_commit_msg: 'chore(deps): pre-commit autoupdate'
+  skip: [check-spelling]
+
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  # run "pre-commit autoupdate --freeze" to update the version
+  rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
+  hooks:
+  - id: check-case-conflict
+  - id: check-illegal-windows-names
+  - id: check-merge-conflict
+  - id: check-toml
+  - id: check-yaml
+  - id: end-of-file-fixer
+  - id: trailing-whitespace
+# https://github.com/rhysd/actionlint/blob/v1.7.10/docs/usage.md#pre-commit
+# If shellcheck is available, this also checks `run:` steps using `bash` shell.
+# https://github.com/rhysd/actionlint/blob/main/docs/checks.md#shellcheck-integration-for-run
+# The GitHub-hosted ubuntu-latest image has shellcheck pre-installed.
+- repo: https://github.com/rhysd/actionlint
+  rev: 0933c147c9d6587653d45fdcb4c497c57a65f9af  # frozen: v1.7.10
+  hooks:
+  - id: actionlint
+- repo: local
+  hooks:
+  # typos bumps version frequently, so use system installation instead of the
+  # official pre-commit hook
+  # https://github.com/crate-ci/typos/blob/master/docs/pre-commit.md
+  # https://github.com/crate-ci/typos/blob/master/.pre-commit-hooks.yaml
+  - id: check-spelling
+    alias: typos
+    name: Check spelling
+    language: unsupported
+    # same as the official `typos` hook args
+    # https://github.com/crate-ci/typos/blob/ebc6aac34e3692b3ce373e13f4145e8980875396/.pre-commit-hooks.yaml
+    entry: typos
+    pass_filenames: false
+# https://pre-commit.com/#meta-hooks
+# "pre-commit run --hook-stage manual"
+- repo: meta
+  hooks:
+  - id: check-hooks-apply
+    stages: [manual]
+  - id: check-useless-excludes
+    stages: [manual]
+  # prints all files not excluded
+  # "pre-commit run identity --hook-stage manual -a"
+  - id: identity
+    stages: [manual]
