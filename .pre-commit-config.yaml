@@ -9,15 +9,6 @@ ci:
   autoupdate_commit_msg: 'chore(deps): pre-commit autoupdate'
   skip: [check-spelling]
 
-# path separator is normalized to "/", so no need to use "[\\/]" in python
-# regex, see
-# https://github.com/pre-commit/pre-commit/commit/1509dc497e77d742278ae9f6ed19481a24c972f2
-exclude: |
-  (?x)^(
-    .*\.(md5|tlg)|
-    tabularray/trial/.*
-  )$
-
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   # run "pre-commit autoupdate --freeze" to update the version
