@@ -46,6 +46,7 @@ jobs:
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
         run: |
+          #shellcheck disable=SC2193
           # if extra tap is needed
           if [[ ${{ inputs.name }} == "texstudio-beta" ]]; then
             tap="muzimuzhi/beta"
