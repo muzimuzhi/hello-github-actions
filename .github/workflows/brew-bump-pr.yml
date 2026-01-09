@@ -36,11 +36,15 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Preparations
+      - name: Config git
         run: |
           git config set --global user.name "${{ secrets.GIT_USER_NAME }}"
           git config set --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+      
+      - name: Prepare Homebrew
+        run: |
           brew update
+          brew tap muzimuzhi/beta
 
       - name: Run "brew ${{ inputs.command }}"
         env:
@@ -50,13 +54,9 @@ jobs:
           INPUT_VERSION: ${{ inputs.version }}
         run: |
           # if extra tap is needed
-          if [[ "$INPUT_NAME" == "texstudio-beta" ]]; then
-            tap="muzimuzhi/beta"
-          elif [[ "$INPUT_NAME" == *"/"* ]]; then
-            tap="$INPUT_NAME"
-            tap="${tap%/*}"
+          if [[ "$INPUT_NAME" == *"/"* ]]; then
+            brew tap "${INPUT_NAME%/*}"
           fi
-          brew tap "$tap"
 
           # https://docs.brew.sh/Manpage#bump-formula-pr-options-formula
           # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
