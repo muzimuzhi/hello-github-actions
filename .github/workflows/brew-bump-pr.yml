@@ -55,12 +55,21 @@ jobs:
       # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
       - name: Run "brew ${{ inputs.command }}"
         run: |
+          RUN_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          MESSAGE="Created by [\`brew-bump-pr.yml\` workflow]($RUN_URL). "
+
+          # only bump-formula-pr has the --online option
           if [[ "$INPUT_COMMAND" == "bump-formula-pr" ]]; then
-            brew "$INPUT_COMMAND" --no-browse --online \
-               --version="$INPUT_VERSION" "$INPUT_NAME"
+            brew "$INPUT_COMMAND" \
+              --online \
+              --no-browse \
+              --message="$MESSAGE" \
+              --version="$INPUT_VERSION" "$INPUT_NAME"
           else
-            brew "$INPUT_COMMAND" --no-browse \
-               --version="$INPUT_VERSION" "$INPUT_NAME"
+            brew "$INPUT_COMMAND" \
+              --no-browse \
+              --message="$MESSAGE" \
+              --version="$INPUT_VERSION" "$INPUT_NAME"
           fi
         env:
           HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.HOMEBREW_GITHUB_API_TOKEN }}
