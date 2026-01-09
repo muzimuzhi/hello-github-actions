@@ -14,7 +14,7 @@ on:
         default: 'muzimuzhi/beta'
         type: string
       command:
-        description: 'Bump subcommand to run'
+        description: 'Subcommand to run'
         required: false
         default: 'bump-cask-pr'
         type: choice
@@ -25,7 +25,7 @@ on:
       # See https://github.com/Homebrew/homebrew-cask/blob/1d1a05e4a48ff1cb10c21b7b89afe8328144d8f4/.github/workflows/scheduled.yml.
       # Therefore `brew bump-cask-pr texstudio` is run much less frequently.
       name:
-        description: 'Name of formula or cask'
+        description: 'Formula or cask to bump'
         required: false
         default: 'texstudio-beta'
         type: string
