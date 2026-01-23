@@ -21,11 +21,24 @@ jobs:
   build:
     name: Hello world action
     runs-on: ubuntu-latest
+    env:
+      NORMAL_VALUE: ${{ github.event_name || '' }}
+      NULL_VALUE: ${{ github.null || '' }}
+      EMPTY_VALUE: ''
     steps:
       - uses: actions/checkout@v6
-      - uses: ./action-a
-        with:
-          MY_NAME: "Mona"
+      - name: Test environment variables
+        run: |
+          is_set() {
+            if [ -v "$1" ]; then
+              echo "$1=\"${!1}\""
+            else
+              echo "$1 is not set"
+            fi
+          }
+          is_set NORMAL_VALUE
+          is_set NULL_VALUE
+          is_set EMPTY_VALUE
 
       # run `touch continue` in GITHUB_WORKSPACE to continue
       # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
