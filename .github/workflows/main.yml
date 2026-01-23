@@ -25,6 +25,7 @@ jobs:
       NORMAL_VALUE: ${{ github.event_name || '' }}
       EMPTY_VALUE: ''
       NULL_VALUE: ${{ github.null || '' }}
+      NULL_VALUE2:
     steps:
       - uses: actions/checkout@v6
       - name: Test environment variables
@@ -39,6 +40,7 @@ jobs:
           is_set NORMAL_VALUE
           is_set EMPTY_VALUE
           is_set NULL_VALUE
+          is_set NULL_VALUE2
           is_set NOT_SET_VALUE
 
       # run `touch continue` in GITHUB_WORKSPACE to continue
