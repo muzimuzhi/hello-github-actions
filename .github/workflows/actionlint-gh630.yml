@@ -13,7 +13,7 @@ jobs:
         php: [ '8.3', '8.4', '8.5' ]
         include:
           # Include jobs that test with memcached.
-          - os: 'ubuntu-latest'
+          - os: [ 'ubuntu-latest' ]
             php: [ '8.2' ]
         exclude:
           - os: [ 'macos-latest' ]
