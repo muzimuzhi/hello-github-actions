@@ -6,7 +6,7 @@ on:
 jobs:
   phpunit-tests:
     name: PHP ${{ matrix.php }}
-    runs-on: ubuntu-slim
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ 'ubuntu-latest', 'macos-latest' ]
