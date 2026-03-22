@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       tap:
-        description: 'Tap to add before bumping'
+        description: 'Tap to install before bumping (use empty string to skip)'
         required: false
         default: 'muzimuzhi/beta'
         type: string
@@ -49,7 +49,9 @@ jobs:
       - name: Prepare Homebrew
         run: |
           brew update
-          brew tap "${{ inputs.tap }}"
+          if [[ -n "${{ inputs.tap }}" ]]; then
+            brew tap "${{ inputs.tap }}"
+          fi
 
       # https://docs.brew.sh/Manpage#bump-formula-pr-options-formula
       # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
