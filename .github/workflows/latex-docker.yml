@@ -48,7 +48,7 @@ jobs:
           git config --global safe.directory "*"
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Generate unique ID
         uses: ./.github/actions/unique-id
