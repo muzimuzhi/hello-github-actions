@@ -8,10 +8,14 @@ run-name: >-
 on:
   workflow_dispatch:
     inputs:
+      # Example usage:
+      #   gh workflow run \
+      #     -R muzimuzhi/hello-github-actions \
+      #     brew-bump-pr.yml \
+      #     -f "tap=muzimuzhi/beta" -f "name=texstudio-beta" -f "version=5.0.0"
       tap:
-        description: 'Tap to install before bumping (use empty string to skip)'
+        description: 'Tap to install before bumping'
         required: false
-        default: 'muzimuzhi/beta'
         type: string
       command:
         description: 'Subcommand to run'
@@ -26,8 +30,7 @@ on:
       # Therefore `brew bump-cask-pr texstudio` is run much less frequently.
       name:
         description: 'Formula or cask to bump'
-        required: false
-        default: 'texstudio-beta'
+        required: true
         type: string
       version:
         description: 'New version'
@@ -52,7 +55,7 @@ jobs:
 
       # https://docs.brew.sh/Tap-Trust
       - name: Install tap
-        if: ${{ inputs.tap != '' }}
+        if: ${{ inputs.tap }}
         run: |
           brew tap "${{ inputs.tap }}"
           brew trust "${{ inputs.tap }}"
