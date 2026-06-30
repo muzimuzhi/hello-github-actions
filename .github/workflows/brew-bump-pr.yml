@@ -46,16 +46,20 @@ jobs:
           git config set --global user.name "${{ secrets.GIT_USER_NAME }}"
           git config set --global user.email "${{ secrets.GIT_USER_EMAIL }}"
 
-      - name: Prepare Homebrew
+      - name: Update Homebrew
         run: |
           brew update
-          if [[ -n "${{ inputs.tap }}" ]]; then
-            brew tap "${{ inputs.tap }}"
-          fi
+
+      # https://docs.brew.sh/Tap-Trust
+      - name: Install tap
+        if: ${{ inputs.tap != '' }}
+        run: |
+          brew tap "${{ inputs.tap }}"
+          brew trust "${{ inputs.tap }}"
 
       # https://docs.brew.sh/Manpage#bump-formula-pr-options-formula
       # https://docs.brew.sh/Manpage#bump-cask-pr-options-cask
-      - name: Run "brew ${{ inputs.command }}"
+      - name: Bump ${{ inputs.command == 'bump-formula-pr' && 'formula' || 'cask' }} ${{ inputs.name }} to ${{ inputs.version }}
         run: |
           RUN_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
           MESSAGE="Created by [\`brew-bump-pr.yml\` workflow]($RUN_URL). "
