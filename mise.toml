@@ -1,5 +1,2 @@
-[tools]
-typos = "latest"
-
 [tasks."lint:typos"]
 run = "typos"
