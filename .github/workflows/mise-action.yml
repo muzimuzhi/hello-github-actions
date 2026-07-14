@@ -15,9 +15,6 @@ jobs:
 
     - name: Setup mise
       uses: jdx/mise-action@v4
-      with:
-        tool_versions: |
-          typos: latest
 
     - name: Check mise tool
       run: |
@@ -25,9 +22,4 @@ jobs:
 
     - name: Run mise tasks
       run: |
-        cat <<'EOF' >mise.toml
-        [tasks."lint:typos"]
-        run = "typos"
-        EOF
-
         mise run lint:typos
