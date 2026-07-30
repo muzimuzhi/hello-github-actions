@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: ./action-a
+      - uses: $/action-a
         with:
           MY_NAME: "Mona"
 

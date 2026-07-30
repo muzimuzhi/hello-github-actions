@@ -51,7 +51,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Generate unique ID
-        uses: ./.github/actions/unique-id
+        uses: $/.github/actions/unique-id
         with:
           set-env-context: true
 
