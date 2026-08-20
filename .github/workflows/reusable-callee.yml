@@ -28,3 +28,8 @@ jobs:
 
       - run: echo "${{ toJSON(github) }}"
         shell: bash
+
+      - run: |
+          echo "github.event.workflow=${{ github.event.workflow }}"
+          echo "job.workflow_file_path=${{ job.workflow_file_path }}"
+        if: github.event_name == 'workflow_dispatch'
