@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runs-on: [ubuntu-latest, macos-latest]
+        runs-on: [ubuntu-latest, windows-latest]
     name: Caller
     uses: ./.github/workflows/reusable-callee.yml
     with:
