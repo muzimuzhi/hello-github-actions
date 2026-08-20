@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         runs-on: [ubuntu-latest, macos-latest, windows-latest]
-    name: Caller []
+    name: Caller
     uses: ./.github/workflows/reusable-callee.yml
     with:
       runs-on: ${{ matrix.runs-on }}
