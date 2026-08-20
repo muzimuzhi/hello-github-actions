@@ -1,0 +1,12 @@
+name: reusable caller
+
+on:
+  # push:
+  # pull_request:
+  workflow_dispatch:
+
+jobs:
+  caller-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello from reusable caller"
