@@ -70,9 +70,14 @@ jobs:
           is_workflow_call="${{ inputs.is-workflow_call || 'false' }}"
           is_workflow_refs_match="${{ github.workflow_ref == job.workflow_ref }}"
           is_workflow_file_path_match="${{ job.workflow_file_path == '.github/workflows/reusable-callee.yml' }}"
-          if [[ "$is_workflow_call" != "$is_workflow_refs_match" ]]; then
-            echo "::error::inputs.is-workflow_call=$is_workflow_call, github.workflow_ref=${{ github.workflow_ref }}, job.workflow_ref=${{ job.workflow_ref }}"
+
+          exit_code=0
+          if [[ "$is_workflow_call" == "$is_workflow_refs_match" ]]; then
+            echo "::error title=unexpected (job|workflow).workflow_ref props::inputs.is-workflow_call=$is_workflow_call, github.workflow_ref=${{ github.workflow_ref }}, job.workflow_ref=${{ job.workflow_ref }}"
+            exit_code=1
           fi
-          if [[ "$is_workflow_call" != "$is_workflow_file_path_match" ]]; then
-            echo "::error::inputs.is-workflow_call=$is_workflow_call, job.workflow_file_path=${{ job.workflow_file_path }}"
+          if [[ "$is_workflow_file_path_match" != "true" ]]; then
+            echo "::error title=unexpected job.workflow_file_path::inputs.is-workflow_call=$is_workflow_call, job.workflow_file_path=${{ job.workflow_file_path }}"
+            exit_code=1
           fi
+          exit $exit_code
