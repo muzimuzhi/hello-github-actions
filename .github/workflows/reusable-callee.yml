@@ -18,7 +18,7 @@ jobs:
     # distinguish between normal and inherited `workflow_dispatch` events
     name: |-
       Callee${{ case(
-        github.event_name == 'workflow_dispatch' && github.event.workflow != '.github/workflows/reusable-callee.yml',
+        github.event_name == 'workflow_dispatch' && github.event.workflow == '.github/workflows/reusable-callee.yml',
         format(' ({0})', inputs.runs-on),
         ''
       ) }}
