@@ -1,8 +1,10 @@
 name: reusable callee
 
+run-name: reusable callee (${{ github.event_name }})
+
 on:
-  # push:
-  # pull_request:
+  push:
+  pull_request:
   workflow_dispatch:
     inputs: &inputs
       runs-on:
@@ -10,6 +12,11 @@ on:
         default: 'ubuntu-latest'
         required: false
         type: string
+      is-workflow_call:
+        description: 'Whether this workflow is called by another workflow'
+        default: false
+        required: false
+        type: boolean
   workflow_call:
     inputs: *inputs
 
@@ -48,3 +55,10 @@ jobs:
 
           echo "github.event.workflow=${{ github.event.workflow }}"
           echo "job.workflow_file_path=${{ job.workflow_file_path }}"
+
+          {
+            echo "github.event_name=${{ github.event_name }}"
+            echo "is workflow_call? ${{ inputs.is-workflow_call }}"
+            echo "github.workflow_ref == job.workflow_ref ${{ github.workflow_ref == job.workflow_ref }}"
+            echo "job.workflow_file_path == '.github/workflows/reusable-callee.yml' ${{ job.workflow_file_path == '.github/workflows/reusable-callee.yml' }}"
+          } >> "$GITHUB_STEP_SUMMARY"

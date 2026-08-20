@@ -2,7 +2,7 @@ name: reusable caller
 
 on:
   push:
-  # pull_request:
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -15,3 +15,4 @@ jobs:
     uses: ./.github/workflows/reusable-callee.yml
     with:
       runs-on: ${{ matrix.runs-on }}
+      is-workflow_call: true
