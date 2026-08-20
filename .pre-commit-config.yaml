@@ -28,8 +28,10 @@ repos:
 # If shellcheck is available, this also checks `run:` steps using `bash` shell.
 # https://github.com/rhysd/actionlint/blob/main/docs/checks.md#shellcheck-integration-for-run
 # The GitHub-hosted ubuntu-latest image has shellcheck pre-installed.
-- repo: https://github.com/rhysd/actionlint
-  rev: 914e7df21a07ef503a81201c76d2b11c789d3fca  # frozen: v1.7.12
+#
+# 2026-08-20: switched to an actively maintained fork
+- repo: https://github.com/kjanat/actionlint
+  rev: 6fd027f88d5fdc0b278c750d283a6bec80e7369d  # frozen: v1.10.0
   hooks:
   - id: actionlint
 - repo: local
