@@ -1,0 +1,16 @@
+name: reusable caller
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  caller-job:
+    strategy:
+      fail-fast: false
+      matrix:
+        runs-on: [ubuntu-latest, macos-latest, windows-latest]
+    uses: ./.github/workflows/reusable-callee.yml
+    with:
+      runs-on: ${{ matrix.runs-on }}
