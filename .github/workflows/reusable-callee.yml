@@ -29,6 +29,8 @@ jobs:
       - run: echo "${{ toJSON(github) }}"
         shell: bash
 
+      # `job.workflow_file_path` is not available on GHES
+      # see https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#job-context
       - run: |
           echo "github.event.workflow=${{ github.event.workflow }}"
           echo "job.workflow_file_path=${{ job.workflow_file_path }}"
