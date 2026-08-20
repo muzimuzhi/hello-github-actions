@@ -1,9 +1,0 @@
-name: Reusable action
-
-description: Simple reusable action
-
-runs:
-  using: "composite"
-  steps:
-    - shell: bash
-      run: echo "Hello from reusable action"
