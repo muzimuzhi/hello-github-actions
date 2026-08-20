@@ -2,7 +2,7 @@ name: reusable caller
 
 on:
   push:
-  # pull_request:
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -12,6 +12,7 @@ jobs:
       matrix:
         runs-on: [ubuntu-latest, macos-latest, windows-latest]
     name: Caller
-    uses: ./.github/workflows/reusable-callee.yml
-    with:
-      runs-on: ${{ matrix.runs-on }}
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#example-using-an-action-in-the-same-repository-as-the-workflow-at-the-running-commit-recommended
+      - uses: $/.github/actions/reusable

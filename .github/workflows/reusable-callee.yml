@@ -1,8 +1,8 @@
 name: reusable callee
 
 on:
-  # push:
-  # pull_request:
+  push:
+  pull_request:
   workflow_dispatch:
     inputs: &inputs
       runs-on:
@@ -22,4 +22,4 @@ jobs:
       ) }}
     runs-on: ${{ inputs.runs-on || 'ubuntu-latest' }}
     steps:
-      - run: echo "Hello from reusable callee"
+      - uses: $/.github/actions/reusable
