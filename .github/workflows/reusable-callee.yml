@@ -39,10 +39,14 @@ jobs:
       - run: echo "Hello from reusable callee"
 
       - name: dump github context
-        run: echo "${{ toJSON(github) }}"
+        run: echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
 
       - name: dump job context
-        run: echo "${{ toJSON(job) }}"
+        run: echo "$JOB_CONTEXT"
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
 
       # `job.workflow_file_path` is not available on GHES
       # see https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#job-context
