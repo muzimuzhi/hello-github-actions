@@ -10,7 +10,6 @@ on:
     # https://yaml.org/spec/1.2.2/#71-alias-nodes
     paths: &path-filter
       - 'latex-examples/**'
-      - '.github/actions/unique-id/**'
       - '.github/workflows/latex-native.yml'
   pull_request:
     branches: # the base branch
@@ -44,10 +43,9 @@ jobs:
             xetex
           update-all-packages: true
 
+      # export `env.os` and `env.unique_id`
       - name: Generate unique ID
-        uses: $/.github/actions/unique-id
-        with:
-          set-env-context: true
+        uses: muzimuzhi/actions/unique-id@main
 
       - name: Run example(s)
         working-directory: latex-examples
@@ -87,5 +85,5 @@ jobs:
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7
         with:
-          name: latex-examples-${{ env.os }}-${{ env.unique-id }}
+          name: latex-examples-${{ env.unique_id }}
           path: latex-examples

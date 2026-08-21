@@ -4,7 +4,6 @@ on:
   push:
     paths: &path-filter
       - 'latex-examples/**'
-      - '.github/actions/unique-id/**'
       - '.github/workflows/latex-docker.yml'
   pull_request:
     branches: # the base branch
@@ -50,10 +49,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      # export `env.os` and `env.unique_id`
       - name: Generate unique ID
-        uses: $/.github/actions/unique-id
-        with:
-          set-env-context: true
+        uses: muzimuzhi/actions/unique-id@main
 
       - name: Run example(s)
         working-directory: latex-examples
@@ -84,5 +82,5 @@ jobs:
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7
         with:
-          name: latex-examples-docker-${{ env.unique-id }}
+          name: latex-examples-docker-${{ env.unique_id }}
           path: latex-examples
