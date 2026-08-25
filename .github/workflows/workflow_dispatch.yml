@@ -2,6 +2,10 @@ name: workflow_dispatch
 
 on:
   workflow_dispatch:
+    inputs:
+      run:
+        description: 'Bash commands to run'
+        required: false
 
 jobs:
   job:
@@ -10,3 +14,8 @@ jobs:
       - run: |
           echo "Hello from workflow_dispatch placeholder"
           echo "\`github.event_name=${{ github.event_name }}\`" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Run custom commands from `inputs.run`
+        if: inputs.run
+        run: |
+          ${{ inputs.run }}
