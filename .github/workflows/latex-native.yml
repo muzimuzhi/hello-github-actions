@@ -45,7 +45,7 @@ jobs:
 
       # export `env.os` and `env.unique_id`
       - name: Generate unique ID
-        uses: muzimuzhi/actions/unique-id@main
+        uses: muzimuzhi/reusable/actions/unique-id@main
 
       - name: Run example(s)
         working-directory: latex-examples
