@@ -31,7 +31,7 @@ repos:
 #
 # 2026-08-20: switched to an actively maintained fork
 - repo: https://github.com/kjanat/actionlint
-  rev: 722799fa4b8cc6734debb97bae24aca9e0dbaf59  # frozen: v1.17
+  rev: 2da2ceb4af2c7ecc48f5b9311d85080c3971b5f0  # frozen: v1.17.0
   hooks:
   - id: actionlint
 - repo: local
