@@ -10,7 +10,7 @@ ci:
 
       for more information, see https://pre-commit.ci
   autoupdate_commit_msg: 'chore(pre-commit): autoupdate'
-  skip: [check-spelling]
+  skip: [actionlint,check-spelling]
 
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
