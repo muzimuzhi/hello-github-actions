@@ -14,13 +14,6 @@ on:
       [opened, ready_for_review, reopened, synchronize]
   workflow_dispatch:
     inputs:
-      timeout-minutes:
-        description: Timeout minutes for the tmate step (positive integer)
-        required: false
-        # Max time of a job is 6h
-        # https://docs.github.com/en/actions/reference/limits
-        default: 120
-        type: number
       runner:
         description: Name of runner image
         required: false
@@ -45,29 +38,13 @@ jobs:
         run: |
           ${{ inputs.commands || 'echo "Hello Github Actions"' }}
 
-      # run `touch continue` in GITHUB_WORKSPACE to continue
-      # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
-      - name: Setup tmate session
+      # run `cd "$GITHUB_WORKSPACE" && touch continue` to continue
+      # https://github.com/owenthereal/action-upterm#continue-a-workflow
+      - name: Debug with SSH
         # to respond to cancellation (make the if-expression re-evaluates
         # to false), we need to check `cancelled()` first
         # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-cancellation
-        #
-        # `inputs.timeout-minutes` is always a string, although it has
-        # a `number` type specified in `on.workflow_dispatch`
-        #
-        # nonexistent contexts property evaluates to empty string
-        # https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#available-contexts
-        #
-        # `jobs.<job_id>.steps[*].timeout-minutes` must be a positive integer
-        # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idstepstimeout-minutes
-        if: >-
-          ${{
-            !cancelled() &&
-            (
-              inputs.timeout-minutes != '' &&
-              fromJSON(inputs.timeout-minutes) > 0 ||
-              failure()
-            )
-          }}
-        timeout-minutes: ${{ inputs.timeout-minutes != '' && fromJSON(inputs.timeout-minutes) || 15 }}
-        uses: mxschmitt/action-tmate@v3
+        if: ${{ !cancelled() && failure() }}
+        uses: owenthereal/action-upterm@v2
+        with:
+          wait-timeout-minutes: 5

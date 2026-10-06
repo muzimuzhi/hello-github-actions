@@ -67,12 +67,13 @@ jobs:
             done
           done
 
-      # run `touch continue` in GITHUB_WORKSPACE to continue
-      # https://github.com/mxschmitt/action-tmate/tree/v3/?tab=readme-ov-file#continue-a-workflow
-      - name: Debug via SSH
+      # run `cd "$GITHUB_WORKSPACE" && touch continue` to continue
+      # https://github.com/owenthereal/action-upterm#continue-a-workflow
+      - name: Debug with SSH
         if: steps.tlmgr-update.outcome == 'success' && failure()
-        timeout-minutes: 15
-        uses: mxschmitt/action-tmate@v3
+        uses: owenthereal/action-upterm@v2
+        with:
+          wait-timeout-minutes: 5
 
       - name: Archive
         # "!" is reserved in YAML
